@@ -1,22 +1,22 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
-  const jugador = ref<string | null>(null)
-  const bytes = ref(0)
-  const estaLogueado = ref(false)
+  // Estado
+  const user = ref<string | null>(null)
+  
+  // Getter (saber si está logueado)
+  const isLoggedIn = computed(() => user.value !== null)
 
-  function login(alias: string, saldo: number) {
-    jugador.value = alias
-    bytes.value = saldo
-    estaLogueado.value = true
+  // Acciones
+  function login(nombre: string) {
+    user.value = nombre
+    // Aquí en el futuro conectaremos con el Backend (Java)
   }
 
   function logout() {
-    jugador.value = null
-    bytes.value = 0
-    estaLogueado.value = false
+    user.value = null
   }
 
-  return { jugador, bytes, estaLogueado, login, logout }
+  return { user, isLoggedIn, login, logout }
 })

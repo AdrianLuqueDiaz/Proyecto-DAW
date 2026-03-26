@@ -1,0 +1,4 @@
+com\arcade\backend\controladores\UsuarioControlador.class
+com\arcade\backend\entidades\Usuario.class
+com\arcade\backend\repositorios\UsuarioRepositorio.class
+com\arcade\backend\BackendApplication.class
