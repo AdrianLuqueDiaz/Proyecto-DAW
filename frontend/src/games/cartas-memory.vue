@@ -127,7 +127,7 @@ onMounted(cargarCartas)
     </div>
 
     <div v-if="cartas.length === 0" class="texto-cargando">
-      > CONECTANDO...
+      > CONECTANDO..
     </div>
 
     <div class="cuadricula-tablero">
