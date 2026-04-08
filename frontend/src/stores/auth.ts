@@ -1,22 +1,28 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
-export const useAuthStore = defineStore('auth', () => {
-  const jugador = ref<string | null>(null)
-  const bytes = ref(0)
-  const estaLogueado = ref(false)
-
-  function login(alias: string, saldo: number) {
-    jugador.value = alias
-    bytes.value = saldo
-    estaLogueado.value = true
+export const useAuthStore = defineStore('auth', {
+  // 1. EL ESTADO (Las variables que guardamos)
+  state: () => ({
+    jugador: null as string | null, // Cambiado de 'user' a 'jugador'
+    bytes: 0,                       // Añadimos el saldo de bytes
+    isAuthenticated: false,
+  }),
+  
+  // 2. LAS ACCIONES (Lo que podemos hacer con esas variables)
+  actions: {
+    login(alias: string, contrasena: string) {
+      // De momento simulamos el login exitoso
+      this.jugador = alias
+      this.bytes = 1000 // Le damos 1000 bytes de saldo inicial al entrar
+      this.isAuthenticated = true
+      console.log(`Agente conectado: ${this.jugador} // Saldo: ${this.bytes} Bytes`)
+    },
+    
+    logout() {
+      // Al salir, borramos todo
+      this.jugador = null
+      this.bytes = 0
+      this.isAuthenticated = false
+    }
   }
-
-  function logout() {
-    jugador.value = null
-    bytes.value = 0
-    estaLogueado.value = false
-  }
-
-  return { jugador, bytes, estaLogueado, login, logout }
 })
