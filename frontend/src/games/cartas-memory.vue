@@ -4,18 +4,40 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
+const bancoDePreguntas = ref<any[]>([])
 const cartas = ref<any[]>([])
 const seleccionadas = ref<any[]>([])
+const cartasEnJuego = ref<any[]>([])
 const bloquearTablero = ref(false)
 
 const preguntaActual = ref<any>(null)
 const mostrarPregunta = ref(false)
 const opcionesRespuestas = ref<string[]>([])
-const cartasEnJuego = ref<any[]>([])
 
 const juegoTerminado = computed(() => {
   return cartas.value.length > 0 && cartas.value.every(c => c.resuelta)
 })
+
+
+
+const cargarPreguntas = async () => {
+  try {
+    const res = await fetch(`http://localhost:8080/api/preguntas`)
+    let todasLasPreguntas = await res.json()
+    
+    bancoDePreguntas.value = todasLasPreguntas.map((p: any) => {
+      const opciones = [p.respuestaCorrecta, p.falsa1, p.falsa2, p.falsa3]
+      
+      return {
+        ...p,
+        opcionesBarajadas: opciones.sort(() => Math.random() - 0.5)
+      }
+    }).sort(() => Math.random() - 0.5) 
+
+  } catch (error) {
+    console.error("Error cargando preguntas:", error)
+  }
+}
 
 const cargarCartas = async () => {
   try {
@@ -33,6 +55,9 @@ const cargarCartas = async () => {
   }
 }
 
+
+
+
 const seleccionarCarta = (carta: any) => {
   if (bloquearTablero.value || carta.girada || carta.resuelta) return
 
@@ -46,40 +71,31 @@ const seleccionarCarta = (carta: any) => {
 
 const comprobarPareja = () => {
   bloquearTablero.value = true
-  const [c1, c2] = seleccionadas.value
+  
+  const carta1 = seleccionadas.value[0]
+  const carta2 = seleccionadas.value[1]
 
-  if (c1.idPareja === c2.idPareja) {
-    cartasEnJuego.value = [c1, c2]
-    lanzarPregunta(c1.idPareja)
+  if (carta1.idPareja === carta2.idPareja) {
+    cartasEnJuego.value = [carta1, carta2]
+    lanzarPregunta(carta1.idPareja)
   } else {
+    //Si no las has acertado espera 1 seg y las gira
     setTimeout(() => {
-      c1.girada = false
-      c2.girada = false
+      carta1.girada = false
+      carta2.girada = false
       soltarTurno()
     }, 1000)
   }
 }
 
-const lanzarPregunta = async (idPareja: number) => {
-  try {
-    const res = await fetch(`http://localhost:8080/api/preguntas/${idPareja}`)
-    const pregunta = await res.json()
-    
-    if (pregunta) {
-      preguntaActual.value = pregunta
-      opcionesRespuestas.value = [
-        pregunta.respuestaCorrecta, 
-        pregunta.falsa1, 
-        pregunta.falsa2, 
-        pregunta.falsa3
-      ].sort(() => Math.random() - 0.5)
-      
-      mostrarPregunta.value = true
-    } else {
-      resolverCartasEnJuego(true)
-    }
-  } catch (error) {
-    console.error(error)
+const lanzarPregunta = (idPareja: number) => { 
+  const pregunta = bancoDePreguntas.value.find(p => p.idPareja === idPareja)
+
+  if (pregunta) {
+    preguntaActual.value = pregunta
+    opcionesRespuestas.value = pregunta.opcionesBarajadas
+    mostrarPregunta.value = true
+  } else {
     resolverCartasEnJuego(true)
   }
 }
@@ -91,14 +107,15 @@ const responder = (opcionSeleccionada: string) => {
 }
 
 const resolverCartasEnJuego = (exito: boolean) => {
-  const [c1, c2] = cartasEnJuego.value
+  const carta1 = cartasEnJuego.value[0]
+  const carta2 = cartasEnJuego.value[1]
 
   if (exito) {
-    c1.resuelta = true
-    c2.resuelta = true
+    carta1.resuelta = true
+    carta2.resuelta = true
   } else {
-    c1.girada = false
-    c2.girada = false
+    carta1.girada = false
+    carta2.girada = false
   }
   
   cartasEnJuego.value = []
@@ -112,10 +129,14 @@ const soltarTurno = () => {
 
 const reiniciarJuego = () => {
   cartas.value = []
-  cargarCartas()
+  cargarCartas() 
+  cargarPreguntas()
 }
 
-onMounted(cargarCartas)
+onMounted(() => {
+  cargarCartas()
+  cargarPreguntas()
+})
 </script>
 
 <template>

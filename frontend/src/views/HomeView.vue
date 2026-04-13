@@ -41,7 +41,7 @@ const logout = () => {
         
         <div class="user-stats">
           <div class="bytes-counter neon-border">
-            <span class="gold-text">{{ auth.bytes }} BYTES: </span>
+            <span class="gold-text">BYTES: {{ auth.bytes }}  </span>
           </div>
           <div class="user-info">
             <span class="username">{{ auth.jugador }}</span>
