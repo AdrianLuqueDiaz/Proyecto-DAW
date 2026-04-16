@@ -16,7 +16,8 @@ import com.arcade.backend.repositorios.PreguntaRepositorio;
 
 @RestController
 @RequestMapping("/api/preguntas")
-@CrossOrigin(origins = "*")
+
+@CrossOrigin(origins = "http://localhost:5173")
 public class PreguntaControlador {
 
     private final PreguntaRepositorio preguntaRepositorio;
