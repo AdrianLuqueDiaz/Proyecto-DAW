@@ -56,7 +56,8 @@ const guardarPregunta = async () => {
       <div class="brand-section">
         <h1 @click="router.push('/hub')" class="neon-text clickable">BIT_HUB</h1>
         <div class="status-indicator">
-          <span class="dot pulse"></span> DATABASE_ACTIVE
+          <span class="dot pulse"></span> ONLINE
+          
         </div>
       </div>
       
@@ -68,10 +69,7 @@ const guardarPregunta = async () => {
 
     <main class="viewport">
       <header class="top-nav glass-panel">
-        <div class="cmd-prompt">
-          <span class="prompt-symbol">>_</span>
-          <span class="cmd-text">SYSTEM_ADMIN:QUESTION_BUILDER</span>
-        </div>
+       
       </header>
 
       <section class="form-grid neon-border">
@@ -135,6 +133,7 @@ const guardarPregunta = async () => {
   display: flex; height: 100vh; background: #020808; color: #e0fbfb;
   font-family: 'Consolas', monospace; position: relative; overflow: hidden;
 }
+.nav-menu { margin-top: 60px; }
 
 .ambient-glow {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -211,5 +210,28 @@ textarea.cmd-input { height: 80px; resize: none; }
   background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
               linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
   background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 10;
+}
+
+.status-indicator {
+  font-size: 0.7rem;
+  color: #00ffcc;
+  margin-top: 10px;
+  letter-spacing: 2px;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: #00ffcc;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.pulse { animation: pulse-animation 2s infinite; }
+
+@keyframes pulse-animation {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 255, 204, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
 }
 </style>
