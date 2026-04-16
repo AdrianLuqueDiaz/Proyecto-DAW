@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const nuevaPregunta = ref({
-  idPareja: 100,
+const preguntaNueva = ref({
+  idPareja: 100, 
   enunciado: '',
   respuestaCorrecta: '',
   falsa1: '',
@@ -14,16 +13,37 @@ const nuevaPregunta = ref({
   falsa3: ''
 })
 
-const status = ref({ msg: '', type: '' })
+const mensajeAlerta = ref('')
+const colorAlerta = ref('') 
 
 const guardarPregunta = async () => {
   try {
-    await axios.post('http://localhost:8080/api/preguntas/add', nuevaPregunta.value)
-    status.value = { msg: '>> DATA_INJECTED_SUCCESSFULLY', type: 'success' }
-    // Resetear formulario
-    nuevaPregunta.value = { idPareja: 100, enunciado: '', respuestaCorrecta: '', falsa1: '', falsa2: '', falsa3: '' }
-  } catch (e) {
-    status.value = { msg: '>> ERROR:_DATABASE_CONNECTION_FAILED', type: 'error' }
+    const respuesta = await fetch('http://localhost:8080/api/preguntas/add', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(preguntaNueva.value) 
+    })
+
+    if (respuesta.ok) {
+      mensajeAlerta.value = '>> DATA_INJECTED_SUCCESSFULLY'
+      colorAlerta.value = 'success'
+      
+      preguntaNueva.value.enunciado = ''
+      preguntaNueva.value.respuestaCorrecta = ''
+      preguntaNueva.value.falsa1 = ''
+      preguntaNueva.value.falsa2 = ''
+      preguntaNueva.value.falsa3 = ''
+    } else {
+      mensajeAlerta.value = '>> ERROR: Java no pudo guardar los datos.'
+      colorAlerta.value = 'error'
+    }
+
+  } catch (error) {
+    console.error(error)
+    mensajeAlerta.value = '>> ERROR: Imposible conectar con el servidor.'
+    colorAlerta.value = 'error'
   }
 }
 </script>
@@ -31,7 +51,6 @@ const guardarPregunta = async () => {
 <template>
   <div class="hub-container">
     <div class="ambient-glow"></div>
-    <div class="scanlines"></div>
 
     <aside class="sidebar">
       <div class="brand-section">
@@ -63,7 +82,7 @@ const guardarPregunta = async () => {
           <div class="form-row">
             <div class="input-group">
               <label>LOGIC_CATEGORY</label>
-              <select v-model="nuevaPregunta.idPareja" class="cmd-input neon-border">
+              <select v-model="preguntaNueva.idPareja" class="cmd-input neon-border">
                 <option :value="100">STRINGS (100)</option>
                 <option :value="200">BOOLEANS (200)</option>
                 <option :value="300">ARRAYS (300)</option>
@@ -76,34 +95,34 @@ const guardarPregunta = async () => {
 
           <div class="input-group">
             <label>ENUNCIADO_DEL_PROBLEMA</label>
-            <textarea v-model="nuevaPregunta.enunciado" class="cmd-input neon-border" placeholder="Escribir lógica..."></textarea>
+            <textarea v-model="preguntaNueva.enunciado" class="cmd-input neon-border" placeholder="Escribir lógica..."></textarea>
           </div>
 
           <div class="input-group">
             <label>SOLUCIÓN_CORRECTA (TRUE_BIT)</label>
-            <input v-model="nuevaPregunta.respuestaCorrecta" type="text" class="cmd-input neon-border highlight-green" placeholder="Respuesta correcta" />
+            <input v-model="preguntaNueva.respuestaCorrecta" type="text" class="cmd-input neon-border highlight-green" placeholder="Respuesta correcta" />
           </div>
 
           <div class="options-grid">
             <div class="input-group">
               <label>FALSA_01</label>
-              <input v-model="nuevaPregunta.falsa1" type="text" class="cmd-input neon-border highlight-red" placeholder="Error bit 1" />
+              <input v-model="preguntaNueva.falsa1" type="text" class="cmd-input neon-border highlight-red" placeholder="Error bit 1" />
             </div>
             <div class="input-group">
               <label>FALSA_02</label>
-              <input v-model="nuevaPregunta.falsa2" type="text" class="cmd-input neon-border highlight-red" placeholder="Error bit 2" />
+              <input v-model="preguntaNueva.falsa2" type="text" class="cmd-input neon-border highlight-red" placeholder="Error bit 2" />
             </div>
             <div class="input-group">
               <label>FALSA_03</label>
-              <input v-model="nuevaPregunta.falsa3" type="text" class="cmd-input neon-border highlight-red" placeholder="Error bit 3" />
+              <input v-model="preguntaNueva.falsa3" type="text" class="cmd-input neon-border highlight-red" placeholder="Error bit 3" />
             </div>
           </div>
 
           <button type="submit" class="btn-action">EJECUTAR_INSERT_QUERY()</button>
         </form>
 
-        <div v-if="status.msg" :class="['status-msg', status.type]">
-          {{ status.msg }}
+        <div v-if="mensajeAlerta" :class="['status-msg', colorAlerta]">
+          {{ mensajeAlerta }}
         </div>
       </section>
     </main>

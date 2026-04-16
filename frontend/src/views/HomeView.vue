@@ -28,8 +28,14 @@ const logout = () => {
       
       <nav class="nav-menu">
         <div class="nav-item" @click="router.push('/home')">>> VOLVER_AL_HUB</div>
-        <div class="nav-item" @click="router.push('/preguntas')">>> CREAR_PREGUNTAS(ADMIN)</div>
-
+        
+        <div 
+          v-if="auth.rol === 'ADMIN'" 
+          class="nav-item" 
+          @click="router.push('/preguntas')"
+        >
+          >> CREAR_PREGUNTAS(ADMIN)
+        </div>
       </nav>
 
     </aside>

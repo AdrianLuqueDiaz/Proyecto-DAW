@@ -29,7 +29,15 @@ const cargarPreguntas = async () => {
       const opciones = [p.respuestaCorrecta, p.falsa1, p.falsa2, p.falsa3]
       
       return {
-        ...p,
+        id: p.id,
+        idPareja: p.idPareja,
+        categoria: p.categoria,
+        enunciado: p.enunciado,
+        respuestaCorrecta: p.respuestaCorrecta,
+        falsa1: p.falsa1,
+        falsa2: p.falsa2,
+        falsa3: p.falsa3,
+
         opcionesBarajadas: opciones.sort(() => Math.random() - 0.5)
       }
     }).sort(() => Math.random() - 0.5) 
