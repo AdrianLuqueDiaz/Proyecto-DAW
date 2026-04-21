@@ -1,11 +1,18 @@
 package com.arcade.backend.controladores;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.arcade.backend.entidades.Usuario;
 import com.arcade.backend.repositorios.UsuarioRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -15,24 +22,28 @@ public class UsuarioControlador {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    // Obtener todos los usuarios (para probar)
+    @Autowired
+    private PasswordEncoder passwordEncoder; 
+
     @GetMapping
     public List<Usuario> obtenerTodos() {
         return usuarioRepositorio.findAll();
     }
 
-    // Registrar un nuevo usuario
     @PostMapping("/registro")
     public Usuario registrar(@RequestBody Usuario nuevoUsuario) {
-        // Por ahora lo guardamos tal cual (más adelante encriptaremos la contraseña)
+        
+        String contrasenaCifrada = passwordEncoder.encode(nuevoUsuario.getContrasena());
+        nuevoUsuario.setContrasena(contrasenaCifrada);
+        
         return usuarioRepositorio.save(nuevoUsuario);
     }
+    
     @PostMapping("/login")
     public Usuario login(@RequestBody Usuario datosLogin) {
-        // Buscamos al usuario por su alias
+        
         return usuarioRepositorio.findByAlias(datosLogin.getAlias())
-                .filter(u -> u.getContrasena().equals(datosLogin.getContrasena()))
+                .filter(u -> passwordEncoder.matches(datosLogin.getContrasena(), u.getContrasena()))
                 .orElseThrow(() -> new RuntimeException("Usuario o contraseña incorrectos"));
     }
-    
 }

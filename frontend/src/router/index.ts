@@ -3,6 +3,7 @@ import Login from '../views/Login.vue'
 import Home from '../views/HomeView.vue'
 import Memory from '../games/cartas-memory.vue'
 import Preguntas from '../views/Preguntas.vue'
+import Registro from '../views/Registro.vue'
 
 
 const router = createRouter({
@@ -21,6 +22,11 @@ routes: [
       path: '/home',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/registro',
+      name: 'registro',
+      component: Registro
     },
    
     {

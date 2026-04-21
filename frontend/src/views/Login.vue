@@ -6,17 +6,39 @@ import { useRouter } from 'vue-router'
 const auth = useAuthStore()
 const router = useRouter()
 
-// Usamos los nombres de variables que tenías en tu diseño
 const alias = ref('')
 const contrasena = ref('')
 
-const entrar = () => {
-  if (alias.value && contrasena.value) {
-    // AQUÍ ESTÁ LA MAGIA: Le pasamos los dos valores al store
-    auth.login(alias.value, contrasena.value)
-    router.push('/home') // Te manda al Home una vez logueado
-  } else {
+const entrar = async () => {
+  if (!alias.value || !contrasena.value) {
     alert("ERROR: Credenciales incompletas")
+    return
+  }
+
+  try {
+    const respuesta = await fetch('http://localhost:8080/api/usuarios/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        alias: alias.value,
+        contrasena: contrasena.value
+      })
+    })
+
+    if (respuesta.ok) {
+      const usuario = await respuesta.json()
+
+      auth.setUsuarioLogin(usuario)
+      router.push('/home') 
+    } else {
+      alert(">> ERROR: Credenciales incorrectas o usuario no encontrado.")
+    }
+
+  } catch (error) {
+    console.error(error)
+    alert(">> ERROR: Imposible conectar con el servidor central.")
   }
 }
 </script>
@@ -40,12 +62,16 @@ const entrar = () => {
 
         <div class="input-field">
           <div class="label">SECURITY_TOKEN</div>
-          <input v-model="contrasena" type="password" placeholder="> *********" />
+          <input v-model="contrasena" type="password" placeholder="> *********" @keyup.enter="entrar" />
         </div>
 
         <button @click="entrar" class="login-btn">
           ESTABLISH CONNECTION
         </button>
+
+        <div class="link-registro" @click="router.push('/registro')">
+          >> INITIALIZE_NEW_AGENT (REGISTRARSE)
+        </div>
       </div>
 
       <div class="card-footer">
@@ -57,7 +83,6 @@ const entrar = () => {
 </template>
 
 <style scoped>
-/* Tu CSS original con las animaciones */
 .login-wrapper {
   display: flex;
   justify-content: center;
@@ -65,7 +90,7 @@ const entrar = () => {
   height: 100vh;
   position: relative;
   z-index: 2;
-  background: #020808; /* Fondo oscuro para que resalte el card */
+  background: #020808; 
 }
 
 .cyber-card {
@@ -164,6 +189,21 @@ input:focus {
   background: #00ffcc;
   color: #000;
   box-shadow: 0 0 30px #00ffcc;
+}
+
+.link-registro {
+  text-align: center;
+  margin-top: 25px;
+  color: #558888;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: 0.3s;
+  letter-spacing: 1px;
+}
+
+.link-registro:hover {
+  color: #00ffcc;
+  text-shadow: 0 0 5px #00ffcc;
 }
 
 .card-footer {
