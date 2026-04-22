@@ -29,25 +29,25 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: Home,
-      meta: { requiereAutenticacion: true } // <-- Candado para usuarios logueados
+      meta: { requiereAutenticacion: true } 
     },
     {
       path: '/memory',
       name: 'memory',
       component: Memory,
-      meta: { requiereAutenticacion: true } // <-- Candado
+      meta: { requiereAutenticacion: true } 
     },
     {
       path: '/Codejack',
       name: 'Codejack',
       component: Codejack,
-      meta: { requiereAutenticacion: true } // <-- Candado
+      meta: { requiereAutenticacion: true }
     },
     {
       path: '/preguntas',
       name: 'preguntas',
       component: Preguntas,
-      meta: { requiereAutenticacion: true, requiereAdmin: true } // <-- Candado doble (Solo ADMIN)
+      meta: { requiereAutenticacion: true, requiereAdmin: true }
     }
   ]
 })
@@ -65,7 +65,7 @@ router.beforeEach((to, from, next) => {
   }
 
  
-
+ 
 
   next()
 })
