@@ -33,192 +33,188 @@ const entrar = async () => {
       auth.setUsuarioLogin(usuario)
       router.push('/home') 
     } else {
-      alert(">> ERROR: Credenciales incorrectas o usuario no encontrado.")
+      alert("ERROR: Credenciales incorrectas o usuario no encontrado.")
     }
 
   } catch (error) {
     console.error(error)
-    alert(">> ERROR: Imposible conectar con el servidor central.")
+    alert("ERROR: Imposible conectar con el servidor.")
   }
 }
 </script>
 
 <template>
-  <div class="login-wrapper">
-    <div class="cyber-card">
-      <div class="card-header">
-        <span class="status-dot"></span>
-        <span class="system-text">NODE_AUTH_PROTOCOL // STACK_ARCADE</span>
+  <div class="contenedor">
+    <div class="tarjeta">
+      
+      <div class="cabecera-tarjeta">
+        <div class="logo">
+          <span class="logo-bit">BIT</span><span class="logo-hub">HUB</span>
+        </div>
+        
       </div>
       
-      <div class="card-content">
-        <h1 class="neon-title">BIT-ARCADE</h1>
-        <p class="flavor-text">SISTEMA DE ENTRENAMIENTO LÓGICO Y ALGORÍTMICO</p>
+      <div class="contenido-tarjeta">
+        <h1 class="titulo-principal">Iniciar Sesión</h1>
+        <p class="subtitulo">Accede a tu cuenta para continuar</p>
 
-        <div class="input-field">
-          <div class="label">DEVELOPER_ID</div>
-          <input v-model="alias" placeholder="> GAMER_TAG" />
+        <div class="credenciales">
+          <label>ALIAS</label>
+          <input v-model="alias" placeholder="Introduce tu alias" />
         </div>
 
-        <div class="input-field">
-          <div class="label">SECURITY_TOKEN</div>
-          <input v-model="contrasena" type="password" placeholder="> *********" @keyup.enter="entrar" />
+        <div class="credenciales">
+          <label>CONTRASEÑA</label>
+          <input v-model="contrasena" type="password" placeholder="••••••••"/>
         </div>
 
-        <button @click="entrar" class="login-btn">
-          ESTABLISH CONNECTION
+        <button @click="entrar" class="btn-conectar">
+          CONECTAR
         </button>
 
-        <div class="link-registro" @click="router.push('/registro')">
-          >> INITIALIZE_NEW_AGENT (REGISTRARSE)
+        <div class="enlace-registro" @click="router.push('/registro')">
+          ¿No tienes cuenta? Crear un usuario nuevo
         </div>
       </div>
 
-      <div class="card-footer">
-        <span>ENCRYPTION: AES-256</span>
-        <span>STATUS: READY TO CODE</span>
-      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.login-wrapper {
+
+
+/* fondo y borde de la tarjeta */
+.contenedor {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  position: relative;
-  z-index: 2;
-  background: #020808; 
+  background-color: #0B0E14; 
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #E2E8F0;
 }
 
-.cyber-card {
-  width: 420px;
-  background: rgba(5, 10, 15, 0.98);
-  border: 1px solid #00ffcc;
-  box-shadow: 0 0 40px rgba(0, 255, 204, 0.15);
-  position: relative;
-  font-family: 'Consolas', monospace;
+.tarjeta {
+  width: 400px;
+  background-color: #11151D;
+  border: 1px solid #1E2532;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-.card-header {
-  background: #00ffcc;
-  color: #000;
-  padding: 6px 15px;
+
+/* "header" tarjeta */
+
+.cabecera-tarjeta {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 1px;
+  padding: 20px 30px;
+  background-color: #11151D;
+  
 }
 
-.status-dot {
-  width: 8px;
-  height: 8px;
-  background: #000;
-  border-radius: 50%;
-  animation: pulse 1.5s infinite;
-}
-
-.card-content {
-  padding: 45px 40px;
-}
-
-.neon-title {
-  font-size: 2.8rem;
-  color: #fff;
-  margin: 0;
-  text-shadow: 0 0 10px #00ffcc;
-  letter-spacing: -2px;
-}
-
-.flavor-text {
-  font-size: 0.6rem;
-  color: #00ffcc;
-  margin-top: 5px;
-  margin-bottom: 35px;
+.logo {
+  font-family: 'Consolas', monospace;
+  font-size: 1.2rem;
+  font-weight: 900;
   letter-spacing: 2px;
-  opacity: 0.8;
 }
 
-.input-field {
-  margin-bottom: 25px;
+.logo-bit { color: #E2E8F0; }
+.logo-hub { color: #00E5FF; }
+
+
+
+/* Todo lo que tiene dentro la tarjeta */
+
+.contenido-tarjeta {
+  padding: 40px 30px;
 }
 
-.label {
-  font-size: 0.75rem;
-  color: #00ffcc;
-  margin-bottom: 8px;
-  font-weight: bold;
+.titulo-principal {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 5px 0;
+  color: #F8FAFC;
 }
 
+.subtitulo {
+  font-size: 0.85rem;
+  color: #64748B;
+  margin: 0 0 30px 0;
+}
+
+
+
+.credenciales {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.credenciales label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #94A3B8;
+}
+
+/* El cuadradito de las credenciales */
 input {
   width: 100%;
-  background: #080f0e;
-  border: 1px solid #1a3333;
-  padding: 12px;
-  color: #fff;
+  background-color: #0B0E14;
+  border: 1px solid #1E2532;
+  border-radius: 4px;
+  padding: 12px 15px;
+  color: #E2E8F0;
   font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
   outline: none;
-  transition: all 0.3s;
+  transition: border-color 0.2s ease;
   box-sizing: border-box;
 }
 
+
+
 input:focus {
-  border-color: #00ffcc;
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+  border-color: #00E5FF;
 }
 
-.login-btn {
+
+/* botones */
+.btn-conectar {
   width: 100%;
-  padding: 16px;
-  background: transparent;
-  border: 1px solid #00ffcc;
-  color: #00ffcc;
-  font-weight: 900;
+  background-color: #E2E8F0;
+  color: #0B0E14;
+  border: none;
+  border-radius: 4px;
+  padding: 14px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
   cursor: pointer;
   margin-top: 10px;
-  transition: 0.4s;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  transition: transform 0.1s ease, background 0.2s ease;
 }
 
-.login-btn:hover {
-  background: #00ffcc;
-  color: #000;
-  box-shadow: 0 0 30px #00ffcc;
+.btn-conectar:hover {
+  background-color: #00E5FF;
+  transform: translateY(-2px);
 }
 
-.link-registro {
+.enlace-registro {
   text-align: center;
   margin-top: 25px;
-  color: #558888;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
+  color: #64748B;
   cursor: pointer;
-  transition: 0.3s;
-  letter-spacing: 1px;
+  transition: color 0.2s ease;
 }
 
-.link-registro:hover {
-  color: #00ffcc;
-  text-shadow: 0 0 5px #00ffcc;
-}
-
-.card-footer {
-  padding: 10px 20px;
-  font-size: 0.6rem;
-  color: #00ffcc;
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid #1a3333;
-  opacity: 0.5;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.5; }
-  100% { transform: scale(1); opacity: 1; }
+.enlace-registro:hover {
+  color: #E2E8F0;
 }
 </style>
