@@ -6,7 +6,7 @@ import Home from '../views/HomeView.vue'
 import Memory from '../games/cartas-memory.vue'
 import Preguntas from '../views/Preguntas.vue'
 import Registro from '../views/Registro.vue'
-import Codejack from '../games/CodeJack.vue'
+import Clasificacion from '@/views/Clasificacion.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,19 +29,19 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: Home,
-      meta: { requiereAutenticacion: true } 
+      meta: { requiereAutenticacion: true}
     },
     {
       path: '/memory',
       name: 'memory',
       component: Memory,
-      meta: { requiereAutenticacion: true } 
+      meta: { requiereAutenticacion: true}
     },
     {
-      path: '/Codejack',
-      name: 'Codejack',
-      component: Codejack,
-      meta: { requiereAutenticacion: true }
+      path: '/clasificacion',
+      name: 'clasificacion',
+      component: Clasificacion,
+      meta: { requiereAutenticacion: true}
     },
     {
       path: '/preguntas',
@@ -60,7 +60,7 @@ router.beforeEach((to, from, next) => {
     return next('/home') 
   }
 
-  else if (to.meta.requiereAutenticacion && !auth.rol) {
+  if (to.meta.requiereAutenticacion && !auth.rol) {
     return next('/login') 
   }
 

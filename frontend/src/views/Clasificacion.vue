@@ -1,0 +1,224 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useAuthStore } from '../stores/auth'
+import { useRouter } from 'vue-router'
+
+const auth = useAuthStore()
+const router = useRouter()
+const usuarios = ref([])
+
+const cerrarSesion = () => {
+  auth.logout()
+  router.push('/login')
+}
+
+const cargarClasificacion = async () => {
+  try {
+    const response = await fetch('http://localhost:8080/api/usuarios/clasificacion')
+    if (response.ok) {
+      usuarios.value = await response.json()
+    }
+  } catch (error) {
+    console.error("Error al conectar con el sistema:", error)
+    
+  }
+}
+
+onMounted(cargarClasificacion)
+</script>
+
+<template>
+  <div class="contenedor-principal">
+    
+    <header class="cabecera">
+      <div class="logo">
+        <span class="logo-bit">BIT</span>
+        <span class="logo-hub">HUB</span>
+      </div>
+
+      <nav class="navegacion">
+        <span class="enlace" @click="router.push('/home')">INICIO</span>
+        <span class="enlace activo">CLASIFICACIÓN</span>
+        <span 
+          v-if="auth.rol === 'ADMIN'" 
+          class="enlace" 
+          @click="router.push('/preguntas')"
+        >
+          PREGUNTAS
+        </span>
+      </nav>
+
+      <div class="info-usuario">
+        <div class="bloque-bytes"> 
+          <span class="etiqueta-bytes">BYTES</span>
+          <span class="valor-bytes">{{ auth.bytes }}</span>
+        </div>
+        <span class="nombre-jugador">{{ auth.jugador || 'INVITADO' }}</span>
+        <button class="boton-salir" @click="cerrarSesion">SALIR</button>
+      </div>
+    </header>
+
+    <main class="contenido">
+      
+      <section class="header-contenido">
+        <p class="subtitulo">SISTEMA ONLINE</p>
+        <h1 class="titulo-principal">Ranking Global</h1>
+      </section>
+
+      <section class="lista-ranking">
+        
+        <div class="tabla-header">
+          <span class="col-pos">POS</span>
+          <span class="col-user">JUGADOR</span>
+          <span class="col-bytes text-right">BYTES ACUMULADOS</span>
+        </div>
+
+        <article v-for="(u, index) in usuarios" :key="u.id" class="tarjeta-ranking">
+          
+          <div class="col-pos">
+            <span :class="['num-pos', { 'top-3': index < 3 }]">
+              {{ (index + 1).toString().padStart(2, '0') }}
+            </span>
+          </div>
+
+          <div class="col-info">
+            <span class="categoria" v-if="index === 0">TOP PLAYER</span>
+            <h2 class="nombre-jugador-ranking">{{ u.username }}</h2>
+          </div>
+
+          <div class="col-puntos">
+            <div class="estadistica">
+              <span class="valor-ranking">{{ u.bytes.toLocaleString() }} B</span>
+            </div>
+          </div>
+
+        </article>
+
+      </section>
+
+    </main>
+
+  </div>
+</template>
+
+<style scoped>
+.contenedor-principal {
+  min-height: 100vh;
+  background-color: #0B0E14; 
+  color: #E2E8F0; 
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 80px;
+  background-color: #11151D;
+  border-bottom: 2px solid #1E2532;
+}
+
+.logo {
+  font-family: 'Consolas', monospace;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.logo-bit { color: #E2E8F0; }
+.logo-hub { color: #00E5FF; }
+
+.navegacion { display: flex; height: 100%; }
+
+.enlace {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.enlace:hover { color: #E2E8F0; }
+.enlace.activo { color: #00E5FF; border-bottom: 2px solid #00E5FF; }
+
+.info-usuario { display: flex; align-items: center; gap: 25px; }
+
+.bloque-bytes {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  background: #1E2532;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.etiqueta-bytes { font-size: 0.7rem; font-weight: 700; color: #64748B; letter-spacing: 1px; }
+.valor-bytes { font-family: 'Consolas', monospace; font-weight: bold; color: #FACC15; }
+.nombre-jugador { font-family: 'Consolas', monospace; font-size: 0.9rem; color: #E2E8F0; }
+
+.boton-salir {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #94A3B8;
+  padding: 8px 16px;
+  border-radius: 4px; 
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.boton-salir:hover { background: #EF4444; border-color: #EF4444; color: #fff; }
+
+.contenido { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+.header-contenido { margin-bottom: 40px; }
+.subtitulo { font-family: 'Consolas', monospace; font-size: 0.8rem; color: #00E5FF; letter-spacing: 2px; margin-bottom: 10px; }
+.titulo-principal { font-size: 3rem; font-weight: 800; color: #F8FAFC; letter-spacing: -1px; }
+
+.lista-ranking { display: flex; flex-direction: column; gap: 10px; }
+
+.tabla-header {
+  display: flex;
+  padding: 10px 30px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.75rem;
+  color: #64748B;
+  letter-spacing: 1px;
+}
+
+.tarjeta-ranking {
+  display: flex;
+  align-items: center;
+  background-color: #11151D;
+  border: 1px solid #1E2532;
+  border-radius: 6px;
+  padding: 20px 30px;
+}
+
+.col-pos { width: 60px; }
+.num-pos {
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+  color: #64748B;
+}
+
+.num-pos.top-3 { color: #00E5FF; }
+
+.col-info { flex: 1; }
+.categoria { font-size: 0.65rem; font-weight: 800; color: #FACC15; letter-spacing: 1px; }
+.nombre-jugador-ranking { font-size: 1.2rem; font-weight: 700; color: #F8FAFC; margin: 0; }
+
+.col-puntos { text-align: right; }
+.valor-ranking {
+  font-family: 'Consolas', monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FACC15;
+}
+
+.text-right { text-align: right; margin-left: auto; }
+</style>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth' 
 
 const router = useRouter()
+const auth = useAuthStore()
 
 const preguntaNueva = ref({
   idPareja: 100, 
@@ -16,6 +18,11 @@ const preguntaNueva = ref({
 const mensajeAlerta = ref('')
 const colorAlerta = ref('') 
 
+const cerrarSesion = () => {
+  auth.logout()
+  router.push('/login')
+}
+
 const guardarPregunta = async () => {
   try {
     const respuesta = await fetch('http://localhost:8080/api/preguntas/add', {
@@ -27,7 +34,7 @@ const guardarPregunta = async () => {
     })
 
     if (respuesta.ok) {
-      mensajeAlerta.value = '>> DATA_INJECTED_SUCCESSFULLY'
+      mensajeAlerta.value = 'Pregunta guardada correctamente.'
       colorAlerta.value = 'success'
       
       preguntaNueva.value.enunciado = ''
@@ -36,51 +43,56 @@ const guardarPregunta = async () => {
       preguntaNueva.value.falsa2 = ''
       preguntaNueva.value.falsa3 = ''
     } else {
-      mensajeAlerta.value = '>> ERROR: Java no pudo guardar los datos.'
+      mensajeAlerta.value = 'Error: El servidor no pudo procesar los datos.'
       colorAlerta.value = 'error'
     }
 
   } catch (error) {
     console.error(error)
-    mensajeAlerta.value = '>> ERROR: Imposible conectar con el servidor.'
+    mensajeAlerta.value = 'Error: Imposible conectar con el servidor central.'
     colorAlerta.value = 'error'
   }
 }
 </script>
 
 <template>
-  <div class="hub-container">
-    <div class="ambient-glow"></div>
-
-    <aside class="sidebar">
-      <div class="brand-section">
-        <h1 @click="router.push('/hub')" class="neon-text clickable">BIT_HUB</h1>
-        <div class="status-indicator">
-          <span class="dot pulse"></span> ONLINE
-          
-        </div>
+  <div class="contenedor-principal">
+    
+    <header class="cabecera">
+      <div class="logo">
+        <span class="logo-bit">BIT</span><span class="logo-hub">HUB</span>
       </div>
-      
-      <nav class="nav-menu">
-        <div class="nav-item" @click="router.push('/home')">>> VOLVER_AL_HUB</div>
-        <div class="nav-item" @click="router.push('/preguntas')">>> CREAR_PREGUNTAS(ADMIN)</div>
+
+      <nav class="navegacion">
+        <span class="enlace" @click="router.push('/home')">INICIO</span>
+        <span class="enlace activo">PREGUNTAS</span>
       </nav>
-    </aside>
 
-    <main class="viewport">
-      <header class="top-nav glass-panel">
-       
-      </header>
+      <div class="info-usuario">
+        <div class="bloque-bytes">
+          <span class="etiqueta-bytes">BYTES</span>
+          <span class="valor-bytes">{{ auth.bytes }}</span>
+        </div>
+        <span class="nombre-jugador">{{ auth.jugador || 'ADMIN' }}</span>
+        <button class="boton-salir" @click="cerrarSesion">SALIR</button>
+      </div>
+    </header>
 
-      <section class="form-grid neon-border">
-        <div class="banner-overlay"></div>
-        <h2 class="glitch-title">AÑADIR_DATA_ARCADE</h2>
+    <main class="contenido">
+      
+      <section class="contenido-header">
+        <p class="subtitulo">HERRAMIENTAS DE ADMINISTRADOR</p>
+        <h1 class="titulo-principal">Gestión de Datos</h1>
+      </section>
+
+      <section class="panel-formulario">
         
-        <form @submit.prevent="guardarPregunta" class="arcade-form">
-          <div class="form-row">
-            <div class="input-group">
-              <label>LOGIC_CATEGORY</label>
-              <select v-model="preguntaNueva.idPareja" class="cmd-input neon-border">
+        <form @submit.prevent="guardarPregunta" class="formulario">
+          
+          <div class="fila-formulario">
+            <div class="grupo-cajitas">
+              <label>CATEGORÍA</label>
+              <select v-model="preguntaNueva.idPareja" class="cajitas-texto">
                 <option :value="100">STRINGS (100)</option>
                 <option :value="200">BOOLEANS (200)</option>
                 <option :value="300">ARRAYS (300)</option>
@@ -91,147 +103,282 @@ const guardarPregunta = async () => {
             </div>
           </div>
 
-          <div class="input-group">
-            <label>ENUNCIADO_DEL_PROBLEMA</label>
-            <textarea v-model="preguntaNueva.enunciado" class="cmd-input neon-border" placeholder="Escribir lógica..."></textarea>
+          <div class="grupo-cajitas">
+            <label>ENUNCIADO DEL PROBLEMA</label>
+            <textarea v-model="preguntaNueva.enunciado" class="cajitas-texto area-texto" placeholder="Escribe aquí la expresión o problema a resolver..."></textarea>
           </div>
 
-          <div class="input-group">
-            <label>SOLUCIÓN_CORRECTA (TRUE_BIT)</label>
-            <input v-model="preguntaNueva.respuestaCorrecta" type="text" class="cmd-input neon-border highlight-green" placeholder="Respuesta correcta" />
+          <div class="grupo-cajitas">
+            <label class="etiqueta-correcta">SOLUCIÓN</label>
+            <input v-model="preguntaNueva.respuestaCorrecta" type="text" class="cajitas-texto" placeholder="Introduce la respuesta" />
           </div>
 
-          <div class="options-grid">
-            <div class="input-group">
-              <label>FALSA_01</label>
-              <input v-model="preguntaNueva.falsa1" type="text" class="cmd-input neon-border highlight-red" placeholder="Error bit 1" />
+          <div class="cuadricula-opciones">
+            <div class="grupo-cajitas">
+              <label class="etiqueta-falsa">OPCIÓN FALSA 01</label>
+              <input v-model="preguntaNueva.falsa1" type="text" class="cajitas-texto" placeholder="Miente" />
             </div>
-            <div class="input-group">
-              <label>FALSA_02</label>
-              <input v-model="preguntaNueva.falsa2" type="text" class="cmd-input neon-border highlight-red" placeholder="Error bit 2" />
+            <div class="grupo-cajitas">
+              <label class="etiqueta-falsa">OPCIÓN FALSA 02</label>
+              <input v-model="preguntaNueva.falsa2" type="text" class="cajitas-texto" placeholder="Engaña" />
             </div>
-            <div class="input-group">
-              <label>FALSA_03</label>
-              <input v-model="preguntaNueva.falsa3" type="text" class="cmd-input neon-border highlight-red" placeholder="Error bit 3" />
+            <div class="grupo-cajitas">
+              <label class="etiqueta-falsa">OPCIÓN FALSA 03</label>
+              <input v-model="preguntaNueva.falsa3" type="text" class="cajitas-texto" placeholder="Inventa" />
             </div>
           </div>
 
-          <button type="submit" class="btn-action">EJECUTAR_INSERT_QUERY()</button>
+          <button type="submit" class="boton-guardar">
+            GUARDAR PREGUNTA
+          </button>
         </form>
 
-        <div v-if="mensajeAlerta" :class="['status-msg', colorAlerta]">
+        <div v-if="mensajeAlerta" :class="['mensaje-estado', colorAlerta]">
           {{ mensajeAlerta }}
         </div>
+
       </section>
+
     </main>
   </div>
 </template>
 
 <style scoped>
-/* HEREDADOS DEL HUB */
-.hub-container {
-  display: flex; height: 100vh; background: #020808; color: #e0fbfb;
-  font-family: 'Consolas', monospace; position: relative; overflow: hidden;
-}
-.nav-menu { margin-top: 60px; }
 
-.ambient-glow {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% -20%, #0e2a2a 0%, transparent 70%);
-  pointer-events: none;
+
+.contenedor-principal {
+  min-height: 100vh;
+  background-color: #0B0E14;
+  color: #E2E8F0;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
-.sidebar {
-  width: 280px; background: rgba(0, 0, 0, 0.6); border-right: 2px solid #00ffcc;
-  padding: 40px 20px; backdrop-filter: blur(10px); z-index: 5;
+
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 80px;
+  background-color: #11151D;
+  border-bottom: 2px solid #1E2532;
 }
 
-.neon-text { color: #fff; text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; cursor: default; }
-.clickable { cursor: pointer; }
-
-.nav-item { padding: 15px 10px; color: #558888; cursor: pointer; transition: 0.3s; }
-.nav-item:hover { color: #00ffcc; text-shadow: 0 0 5px #00ffcc; }
-.nav-item.active { color: #00ffcc; border-left: 2px solid #00ffcc; background: rgba(0, 255, 204, 0.05); }
-
-.viewport { flex: 1; padding: 30px 50px; overflow-y: auto; z-index: 5; }
-
-.top-nav { padding: 15px 25px; background: rgba(0, 20, 20, 0.4); border-radius: 4px; margin-bottom: 30px; }
-.cmd-text { color: #00ffcc; margin-left: 10px; }
-
-/* ESTILO ESPECÍFICO DEL FORMULARIO */
-.form-grid {
-  padding: 40px; position: relative;
-  background: linear-gradient(135deg, rgba(0, 255, 204, 0.05), transparent);
-}
-
-.glitch-title {
-  font-size: 2rem; margin-bottom: 30px; color: #fff;
-  text-shadow: 2px 0 #ff0055, -2px 0 #00ffcc;
-}
-
-.input-group { margin-bottom: 20px; display: flex; flex-direction: column; }
-label { color: #00ffcc; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 1px; }
-
-.cmd-input {
-  background: rgba(0, 0, 0, 0.5); border: 1px solid #00ffcc !important;
-  color: #00ffcc; padding: 12px; font-family: 'Consolas', monospace; outline: none;
-}
-
-.neon-border {
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
-}
-
-textarea.cmd-input { height: 80px; resize: none; }
-
-.highlight-green { border-color: #00ffcc !important; box-shadow: 0 0 10px rgba(0, 255, 204, 0.4); }
-.highlight-red { border-color: #ff0055 !important; }
-
-.options-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;
-}
-
-.btn-action {
-  background: transparent; border: 2px solid #00ffcc; color: #00ffcc;
-  padding: 15px; font-weight: bold; cursor: pointer; transition: 0.3s;
-  width: 100%; font-family: 'Consolas', monospace;
-}
-
-.btn-action:hover {
-  background: #00ffcc; color: #000; box-shadow: 0 0 20px #00ffcc;
-}
-
-.status-msg { margin-top: 20px; padding: 10px; text-align: center; border: 1px solid; }
-.success { color: #00ffcc; border-color: #00ffcc; background: rgba(0, 255, 204, 0.1); }
-.error { color: #ff0055; border-color: #ff0055; background: rgba(255, 0, 85, 0.1); }
-
-/* Scanlines Effect */
-.scanlines {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-              linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 10;
-}
-
-.status-indicator {
-  font-size: 0.7rem;
-  color: #00ffcc;
-  margin-top: 10px;
+.logo {
+  font-family: 'Consolas', monospace;
+  font-size: 1.5rem;
+  font-weight: 900;
   letter-spacing: 2px;
 }
 
-.dot {
-  display: inline-block;
-  width: 8px; height: 8px;
-  background: #00ffcc;
-  border-radius: 50%;
-  margin-right: 5px;
+.logo-bit {
+  color: #E2E8F0;
 }
 
-.pulse { animation: pulse-animation 2s infinite; }
+.logo-hub {
+  color: #00E5FF;
+}
 
-@keyframes pulse-animation {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.7); }
-  70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 255, 204, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
+.navegacion {
+  display: flex;
+  height: 100%;
+}
+
+.enlace {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.enlace:hover {
+  color: #E2E8F0;
+}
+
+.enlace.activo {
+  color: #00E5FF;
+  border-bottom: 2px solid #00E5FF;
+}
+
+.info-usuario {
+  display: flex;
+  align-items:
+  center; gap: 25px;
+}
+
+.bloque-bytes {
+  display: flex;
+  align-items:
+  baseline; gap: 8px;
+  background: #1E2532;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.etiqueta-bytes {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748B;
+  letter-spacing: 1px;
+}
+
+.valor-bytes {
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+  color: #FACC15;
+}
+
+.nombre-jugador {
+  font-family: 'Consolas', monospace;
+  font-size: 0.9rem;
+  color: #E2E8F0; }
+
+.boton-salir {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #94A3B8;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.boton-salir:hover {
+  background: #EF4444;
+  border-color: #EF4444;
+  color: #fff;
+}
+
+
+.contenido {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.contenido-header {
+  margin-bottom: 40px;
+}
+
+.subtitulo {
+  font-family: 'Consolas', monospace;
+  font-size: 0.8rem;
+  color: #00E5FF;
+  letter-spacing: 2px;
+  margin: 0 0 10px 0;
+}
+
+.titulo-principal {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+  color: #F8FAFC;
+  letter-spacing: -1px;
+}
+
+
+.panel-formulario {
+  background-color: #11151D;
+  border: 1px solid #1E2532;
+  border-radius: 6px;
+  padding: 40px;
+}
+
+.grupo-cajitas {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #94A3B8;
+}
+
+.etiqueta-correcta { color: #10B981; }
+.etiqueta-falsa { color: #EF4444; }
+
+.cajitas-texto {
+  width: 100%;
+  background-color: #0B0E14;
+  border: 1px solid #1E2532;
+  border-radius: 4px;
+  padding: 14px 16px;
+  color: #E2E8F0;
+  font-size: 0.95rem;
+  font-family: 'Consolas', monospace;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.cajitas-texto:focus { border-color: #00E5FF; }
+
+.area-texto {
+  height: 100px;
+  resize: vertical;
+}
+
+
+.cuadricula-opciones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.boton-guardar {
+  width: 100%;
+  background-color: #E2E8F0;
+  color: #0B0E14;
+  border: none;
+  border-radius: 4px;
+  padding: 16px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+
+.boton-guardar:hover {
+  background-color: #00E5FF;
+  transform: translateY(-2px);
+}
+
+
+
+.mensaje-estado {
+  margin-top: 25px;
+  padding: 15px;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.success {
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid #10B981;
+}
+
+.error {
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #EF4444;
 }
 </style>

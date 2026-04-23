@@ -23,6 +23,8 @@ const cerrarSesion = () => {
 
       <nav class="navegacion">
         <span class="enlace activo">INICIO</span>
+        <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
+
         <span 
           v-if="auth.rol === 'ADMIN'" 
           class="enlace" 
