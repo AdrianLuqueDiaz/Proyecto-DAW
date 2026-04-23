@@ -1,6 +1,11 @@
 package com.arcade.backend.entidades;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
@@ -20,14 +25,15 @@ public class Usuario {
     private String contrasena;
 
     @Column(name = "saldo_bytes")
-    private Integer saldoBytes = 1000; // Empezamos con 1000 bytes
+    private Integer saldoBytes = 1000; 
+
+    @Column(name = "partidas_jugadas")
+    private Integer partidasJugadas = 0;
 
     private String rol = "USUARIO";
 
-    // --- Constructor vacío (Obligatorio para JPA) ---
     public Usuario() {}
 
-    // --- Getters y Setters (Para que otras partes del código lean/escriban datos) ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -42,6 +48,9 @@ public class Usuario {
 
     public Integer getSaldoBytes() { return saldoBytes; }
     public void setSaldoBytes(Integer saldoBytes) { this.saldoBytes = saldoBytes; }
+
+    public Integer getPartidasJugadas() { return partidasJugadas; }
+    public void setPartidasJugadas(Integer partidasJugadas) { this.partidasJugadas = partidasJugadas; }
 
     public String getRol() { return rol; }
     public void setRol(String rol) { this.rol = rol; }

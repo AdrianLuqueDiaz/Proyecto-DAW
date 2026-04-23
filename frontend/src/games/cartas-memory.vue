@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
+const auth = useAuthStore()
 
 const bancoDePreguntas = ref<any[]>([])
 const cartas = ref<any[]>([])
@@ -18,7 +20,10 @@ const juegoTerminado = computed(() => {
   return cartas.value.length > 0 && cartas.value.every(c => c.resuelta)
 })
 
-
+const cerrarSesion = () => {
+  auth.logout()
+  router.push('/login')
+}
 
 const cargarPreguntas = async () => {
   try {
@@ -63,9 +68,6 @@ const cargarCartas = async () => {
   }
 }
 
-
-
-
 const seleccionarCarta = (carta: any) => {
   if (bloquearTablero.value || carta.girada || carta.resuelta) return
 
@@ -87,7 +89,6 @@ const comprobarPareja = () => {
     cartasEnJuego.value = [carta1, carta2]
     lanzarPregunta(carta1.idPareja)
   } else {
-    //Si no las has acertado espera 1 seg y las gira
     setTimeout(() => {
       carta1.girada = false
       carta2.girada = false
@@ -148,144 +149,290 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="contenedor-juego">
+  <div class="pantalla-entera">
     
-    <div class="cabecera-juego">
-      <button @click="router.push('/home')" class="btn-volver"><< VOLVER_AL_HUB</button>
-      <h2 class="titulo-neon">MEMORY_LEAK // FASE_1</h2>
-    </div>
+    <header class="barra-superior">
+      <div class="logo">
+        <span class="texto-bit">BIT</span><span class="texto-hub">HUB</span>
+      </div>
 
-    <div v-if="cartas.length === 0" class="texto-cargando">
-      > CONECTANDO..
-    </div>
+      <nav class="menu-navegacion">
+        <span class="enlace activo" @click="router.push('/home')">INICIO</span>
+        <span v-if="auth.rol === 'ADMIN'" class="enlace" @click="router.push('/preguntas')">PREGUNTAS</span>
+      </nav>
 
-    <div class="cuadricula-tablero">
-      <div 
-        v-for="carta in cartas" 
-        :key="carta.id" 
-        class="carta-hex"
-        :class="{ 'esta-girada': carta.girada || carta.resuelta, 'esta-resuelta': carta.resuelta }"
-        @click="seleccionarCarta(carta)"
-      >
-        <div class="carta-interior">
-          <div class="carta-frontal">
-            <span class="icono-glitch">?</span>
+      <div class="zona-usuario">
+        <div class="caja-bytes">
+          <span class="etiqueta-bytes">BYTES</span>
+          <span class="numero-bytes">{{ auth.bytes }}</span>
+        </div>
+        <span class="nombre-usuario">{{ auth.jugador || 'INVITADO' }}</span>
+        <button class="boton-salir" @click="cerrarSesion">SALIR</button>
+      </div>
+    </header>
+
+    <main class="zona-juego">
+      
+      <div class="encabezado-juego">
+        <div class="boton-volver" @click="router.push('/home')">
+          ← Volver al Módulo Principal
+        </div>
+        <h1 class="titulo">Logic Slots</h1>
+        <p class="subtitulo">Empareja los conceptos y valida la lógica.</p>
+      </div>
+
+      <div v-if="cartas.length === 0" class="mensaje-cargando">
+        <span class="texto-cargando">Sincronizando datos...</span>
+      </div>
+
+      <div class="tablero">
+        <div 
+          v-for="carta in cartas" 
+          :key="carta.id" 
+          class="carta"
+          :class="{ 'girada': carta.girada || carta.resuelta, 'resuelta': carta.resuelta }"
+          @click="seleccionarCarta(carta)"
+        >
+          <div class="interior-carta">
+            <div class="frente-carta">
+              <span class="icono-interrogacion">?</span>
+            </div>
+            <div class="dorso-carta">
+              <span class="texto-carta">{{ carta.texto }}</span>
+            </div>
           </div>
-          <div class="carta-dorso">
-            <span class="texto-carta">{{ carta.texto }}</span>
+        </div>
+      </div>
+
+      <div v-if="mostrarPregunta" class="capa-oscura">
+        <div class="caja-flotante caja-grande">
+          <div class="cabecera-caja">
+            <h3 class="titulo-caja">Validación de Lógica Requerida</h3>
+          </div>
+          <div class="cuerpo-caja">
+            <p class="texto-pregunta">{{ preguntaActual.enunciado }}</p>
+            
+            <div class="caja-respuestas">
+              <button 
+                v-for="(opcion, index) in opcionesRespuestas" 
+                :key="index"
+                @click="responder(opcion)"
+                class="boton-respuesta"
+              >
+                {{ opcion }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div v-if="mostrarPregunta" class="capa-modal">
-      <div class="modal-ciber modal-pregunta">
-        <h3 class="titulo-modal titulo-alerta">¡CORTAFUEGOS DETECTADO!</h3>
-        <p class="texto-modal texto-pregunta">{{ preguntaActual.enunciado }}</p>
-        
-        <div class="cuadricula-respuestas">
-          <button 
-            v-for="(opcion, index) in opcionesRespuestas" 
-            :key="index"
-            @click="responder(opcion)"
-            class="btn-respuesta"
-          >
-            {{ opcion }}
-          </button>
+      <div v-if="juegoTerminado && !mostrarPregunta" class="capa-oscura">
+        <div class="caja-flotante">
+          <h3 class="titulo-caja">Módulo Completado</h3>
+          <p class="texto-caja">Has resuelto correctamente todas las validaciones lógicas del tablero.</p>
+          <div class="botones-accion">
+            <button @click="reiniciarJuego" class="boton-principal">JUGAR DE NUEVO</button>
+            <button @click="router.push('/home')" class="boton-secundario">SALIR</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div v-if="juegoTerminado && !mostrarPregunta" class="capa-modal">
-      <div class="modal-ciber">
-        <h3 class="titulo-modal">SISTEMA_RESTAURADO</h3>
-        <p class="texto-modal">> Fugas reparadas.</p>
-        <div class="acciones-modal">
-          <button @click="reiniciarJuego" class="btn-accion">REINICIAR()</button>
-          <button @click="router.push('/home')" class="btn-salir">SALIR</button>
-        </div>
-      </div>
-    </div>
-
+    </main>
   </div>
 </template>
 
 <style scoped>
-.contenedor-juego {
-  min-height: 100vh; 
-  background: #020808; 
-  padding: 40px;
-  display: flex; 
-  flex-direction: column; 
+.pantalla-entera {
+  min-height: 100vh;
+  background-color: #0B0E14;
+  color: #E2E8F0;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.barra-superior {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  padding: 0 40px;
+  height: 80px;
+  background-color: #11151D;
+  border-bottom: 2px solid #1E2532;
+  flex-shrink: 0;
+}
+
+.logo {
+font-family: 'Consolas', monospace;
+font-size: 1.5rem;
+font-weight: 900;
+letter-spacing: 2px;
+}
+
+.texto-bit {
+color: #E2E8F0;
+}
+
+.texto-hub {
+color: #00E5FF;
+}
+
+.menu-navegacion {
+display: flex;
+height: 100%;
+}
+
+.enlace {
+display: flex;
+align-items: center;
+padding: 0 20px;
+font-size: 0.85rem;
+font-weight: 600;
+letter-spacing: 1px;
+color: #64748B;
+cursor: pointer;
+transition: all 0.2s ease;
+border-bottom: 2px solid transparent;
+}
+
+.enlace:hover {
+color: #E2E8F0;
+}
+
+.enlace.activo {
+color: #00E5FF;
+border-bottom: 2px solid #00E5FF;
+}
+
+.zona-usuario {
+display: flex;
+align-items:
+center; gap: 25px;
+}
+
+.caja-bytes {
+display: flex;
+align-items: baseline;
+gap: 8px;
+background: #1E2532;
+padding: 6px 12px;
+border-radius: 4px;
+}
+
+.etiqueta-bytes {
+font-size: 0.7rem;
+font-weight: 700;
+color: #64748B;
+letter-spacing: 1px;
+}
+
+.numero-bytes {
+font-family: 'Consolas', monospace;
+font-weight: bold;
+color: #FACC15;
+}
+
+.nombre-usuario {
+font-family: 'Consolas', monospace;
+font-size: 0.9rem;
+color: #E2E8F0;
+}
+
+.boton-salir {
+background: transparent;
+border: 1px solid #334155;
+color: #94A3B8;
+padding: 8px 16px;
+font-size: 0.75rem;
+font-weight: bold;
+letter-spacing: 1px;
+border-radius: 4px;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.boton-salir:hover {
+background: #EF4444;
+border-color: #EF4444;
+color: #fff;
+}
+
+.zona-juego {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.encabezado-juego {
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.boton-volver {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: color 0.2s;
+}
+
+.boton-volver:hover { color: #E2E8F0; }
+
+.titulo {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 5px 0;
+  color: #F8FAFC;
+  letter-spacing: -1px;
+}
+
+.subtitulo {
   font-family: 'Consolas', monospace;
+  font-size: 0.85rem;
+  color: #00E5FF;
+  margin: 0;
 }
 
-.cabecera-juego { 
-  width: 100%; 
-  max-width: 800px; 
-  margin-bottom: 20px; 
+.mensaje-cargando {
+  margin-top: 50px;
+  font-family: 'Consolas', monospace;
+  color: #64748B;
 }
 
-.titulo-neon { 
-  color: #00ffcc; 
-  text-shadow: 0 0 15px #00ffcc; 
-  font-size: 2rem; 
-  margin: 0; 
-}
-
-.btn-volver { 
-  background: transparent; 
-  border: none; 
-  color: #558888; 
-  cursor: pointer; 
-  margin-bottom: 10px; 
-}
-
-.btn-volver:hover { 
-  color: #00ffcc; 
-}
-
-.texto-cargando { 
-  color: #ff0055; 
-  margin-top: 50px; 
-  font-size: 1.2rem; 
-  animation: parpadeo 1s infinite; 
-}
-
-@keyframes parpadeo { 
-  0%, 100% { opacity: 1; } 
-  50% { opacity: 0; } 
-}
-
-.cuadricula-tablero {
+.tablero {
   display: grid; 
   grid-template-columns: repeat(4, 1fr); 
-  gap: 20px;
-  margin-top: 50px; 
-  max-width: 800px;
+  gap: 15px;
+  max-width: 650px;
+  width: 100%;
 }
 
-.carta-hex { 
-  width: 150px; 
-  height: 180px; 
+.carta { 
+  width: 100%; 
+  aspect-ratio: 3 / 4; 
   perspective: 1000px; 
   cursor: pointer; 
 }
 
-.carta-interior {
+.interior-carta {
   position: relative; 
   width: 100%; 
   height: 100%;
-  transition: transform 0.6s; 
+  transition: transform 0.4s ease-in-out; 
   transform-style: preserve-3d;
 }
 
-.carta-hex.esta-girada .carta-interior { 
+.carta.girada .interior-carta { 
   transform: rotateY(180deg); 
 }
 
-.carta-frontal, .carta-dorso {
+.frente-carta, .dorso-carta {
   position: absolute; 
   width: 100%; 
   height: 100%; 
@@ -294,140 +441,174 @@ onMounted(() => {
   justify-content: center; 
   align-items: center;
   box-sizing: border-box; 
-  border-radius: 4px;
+  border-radius: 6px;
+  padding: 15px;
 }
 
-.carta-frontal {
-  background: rgba(0, 20, 20, 0.8); 
-  border: 2px solid #1a3333;
-  color: #00ffcc; 
-  font-size: 3rem; 
-  text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+.frente-carta {
+  background-color: #1E2532; 
+  border: 1px solid #334155;
+  transition: background-color 0.2s;
 }
 
-.carta-dorso {
+.carta:hover .frente-carta {
+  background-color: #334155;
+}
+
+.icono-interrogacion {
+  font-family: 'Consolas', monospace;
+  color: #64748B; 
+  font-size: 2.5rem; 
+  font-weight: bold;
+}
+
+.dorso-carta {
   transform: rotateY(180deg); 
-  background: rgba(0, 255, 204, 0.1);
-  border: 2px solid #00ffcc; 
-  color: #fff; 
+  background-color: #11151D;
+  border: 2px solid #00E5FF; 
+  color: #E2E8F0; 
+}
+
+.texto-carta {
+  font-family: 'Consolas', monospace;
   font-weight: bold; 
+  font-size: 0.9rem;
   text-align: center; 
-  padding: 10px;
+  word-break: break-word;
 }
 
-.esta-resuelta .carta-dorso {
-  background: rgba(255, 215, 0, 0.1); 
-  border-color: #ffd700; 
-  color: #ffd700;
-  box-shadow: 0 0 15px #ffd700;
+.resuelta .dorso-carta {
+  background-color: rgba(16, 185, 129, 0.05); 
+  border-color: #10B981; 
+  color: #10B981;
 }
 
-.capa-modal {
+.resuelta .texto-carta {
+  color: #10B981;
+}
+
+.capa-oscura {
   position: fixed; 
   top: 0; left: 0; 
   width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.85); 
-  backdrop-filter: blur(5px);
+  background: rgba(11, 14, 20, 0.85); 
   display: flex; 
   justify-content: center; 
   align-items: center; 
   z-index: 100;
 }
 
-.modal-ciber {
-  background: rgba(0, 10, 10, 0.95); 
-  border: 2px solid #00ffcc;
-  box-shadow: 0 0 30px rgba(0, 255, 204, 0.3); 
+.caja-flotante {
+  background: #11151D; 
+  border: 1px solid #1E2532;
+  border-radius: 6px;
   padding: 40px; 
   text-align: center; 
-  max-width: 400px;
+  max-width: 450px;
+  width: 100%;
 }
 
-.modal-pregunta { 
+.caja-grande { 
   max-width: 600px; 
-  border-color: #ff0055; 
-  box-shadow: 0 0 30px rgba(255, 0, 85, 0.3); 
+  padding: 0;
+  text-align: left;
 }
 
-.titulo-alerta { 
-  color: #ff0055 !important; 
-  text-shadow: 0 0 10px #ff0055 !important; 
+.cabecera-caja {
+  background-color: #1E2532;
+  padding: 20px 30px;
+  border-bottom: 1px solid #334155;
+}
+
+.cuerpo-caja {
+  padding: 30px;
+}
+
+.titulo-caja { 
+  color: #F8FAFC; 
+  font-size: 1.2rem; 
+  font-weight: 800;
+  margin: 0; 
+}
+
+.texto-caja { 
+  color: #94A3B8; 
+  margin: 15px 0 30px 0; 
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .texto-pregunta { 
-  font-size: 1.2rem; 
-  margin-bottom: 30px; 
+  font-family: 'Consolas', monospace;
+  font-size: 1.1rem; 
+  color: #E2E8F0;
+  margin: 0 0 30px 0; 
   line-height: 1.5; 
 }
 
-.cuadricula-respuestas { 
+.caja-respuestas { 
   display: grid; 
   grid-template-columns: 1fr 1fr; 
   gap: 15px; 
 }
 
-.btn-respuesta {
-  background: rgba(0, 255, 204, 0.05); 
-  border: 1px solid #00ffcc; 
-  color: #00ffcc;
+.boton-respuesta {
+  background: #0B0E14; 
+  border: 1px solid #334155; 
+  color: #E2E8F0;
+  border-radius: 4px;
   padding: 15px; 
   cursor: pointer; 
-  transition: 0.2s; 
-  font-family: inherit; 
-  font-size: 1rem;
+  transition: all 0.2s ease; 
+  font-family: 'Inter', sans-serif; 
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
-.btn-respuesta:hover { 
-  background: rgba(0, 255, 204, 0.2); 
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); 
+.boton-respuesta:hover { 
+  border-color: #00E5FF; 
+  color: #00E5FF;
 }
 
-.titulo-modal { 
-  color: #00ffcc; 
-  font-size: 1.5rem; 
-  margin-top: 0; 
-  text-shadow: 0 0 10px #00ffcc; 
-}
-
-.texto-modal { 
-  color: #e0fbfb; 
-  margin: 20px 0 40px 0; 
-}
-
-.acciones-modal { 
+.botones-accion { 
   display: flex; 
   justify-content: center; 
-  gap: 20px; 
+  gap: 15px; 
 }
 
-.btn-accion, .btn-salir { 
-  padding: 10px 20px; 
-  cursor: pointer; 
-  transition: 0.3s; 
-  font-family: inherit;
+.boton-principal { 
+  background-color: #E2E8F0;
+  color: #0B0E14;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.2s ease;
 }
 
-.btn-accion { 
-  background: rgba(0, 255, 204, 0.1); 
-  border: 1px solid #00ffcc; 
-  color: #00ffcc; 
+.boton-principal:hover { 
+  background-color: #00E5FF;
+  transform: translateY(-2px);
 }
 
-.btn-accion:hover { 
-  background: #00ffcc; 
-  color: #000; 
-  box-shadow: 0 0 15px #00ffcc; 
-}
-
-.btn-salir { 
+.boton-secundario { 
   background: transparent; 
-  border: 1px solid #ff0055; 
-  color: #ff0055; 
+  border: 1px solid #334155; 
+  color: #94A3B8; 
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.btn-salir:hover { 
-  background: #ff0055; 
-  color: #fff; 
-  box-shadow: 0 0 15px #ff0055; 
+.boton-secundario:hover { 
+  border-color: #E2E8F0; 
+  color: #E2E8F0; 
 }
 </style>

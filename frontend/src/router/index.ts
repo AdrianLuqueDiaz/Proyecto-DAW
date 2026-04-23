@@ -7,6 +7,7 @@ import Memory from '../games/cartas-memory.vue'
 import Preguntas from '../views/Preguntas.vue'
 import Registro from '../views/Registro.vue'
 import Codejack from '../games/CodeJack.vue'
+import Clasificacion from '../views/Clasificacion.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,9 +39,15 @@ const router = createRouter({
       meta: { requiereAutenticacion: true } 
     },
     {
-      path: '/Codejack',
+      path: '/codejack',
       name: 'Codejack',
       component: Codejack,
+      meta: { requiereAutenticacion: true }
+    },
+    {
+      path: '/clasificacion',
+      name: 'Clasificacion',
+      component: Clasificacion,
       meta: { requiereAutenticacion: true }
     },
     {
@@ -56,13 +63,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
   
+  if (to.meta.requiereAutenticacion && !auth.rol) {
+    return next('/login') 
+
+  }
   if (to.meta.requiereAdmin && auth.rol !== 'ADMIN') {
     return next('/home') 
   }
 
-  else if (to.meta.requiereAutenticacion && !auth.rol) {
-    return next('/login') 
-  }
+  
 
  
  

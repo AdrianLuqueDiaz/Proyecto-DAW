@@ -23,6 +23,7 @@ const cerrarSesion = () => {
 
       <nav class="navegacion">
         <span class="enlace activo">INICIO</span>
+        <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
         <span 
           v-if="auth.rol === 'ADMIN'" 
           class="enlace" 
@@ -97,7 +98,7 @@ const cerrarSesion = () => {
           </div>
 
           <div class="columna-iniciar">
-            <button class="boton-jugar" @click="router.push('/')">INICIAR</button>
+            <button class="boton-jugar" @click="router.push('/Codejack')">INICIAR</button>
           </div>
 
         </article>

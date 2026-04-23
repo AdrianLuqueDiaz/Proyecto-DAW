@@ -10,6 +10,7 @@ export const useAuthStore = defineStore('auth', {
     return {
       jugador: datosPrevios?.jugador || null as string | null,
       bytes: datosPrevios?.bytes || 0,
+      partidasJugadas: datosPrevios?.partidasJugadas || 0, // <-- AÑADIDO
       isAuthenticated: datosPrevios?.isAuthenticated || false,
       rol: datosPrevios?.rol || null as string | null 
     }
@@ -19,15 +20,22 @@ export const useAuthStore = defineStore('auth', {
     setUsuarioLogin(usuario: any) {
       this.jugador = usuario.alias
       this.bytes = usuario.saldoBytes || 0 
+      this.partidasJugadas = usuario.partidasJugadas || 0 // <-- AÑADIDO
       this.rol = usuario.rol             
       this.isAuthenticated = true
       
       console.log(`Usuario conectado: ${this.jugador} // Rol: ${this.rol} // Saldo: ${this.bytes} Bytes`)
       
-      // 3. Guardamos la "cookie" (sesión) en el disco duro del navegador
+      // Llamamos a la función auxiliar para guardar
+      this.guardarEnLocal()
+    },
+
+    // 3. Función auxiliar para actualizar el localStorage fácilmente desde otros archivos
+    guardarEnLocal() {
       localStorage.setItem('bithub_auth', JSON.stringify({
         jugador: this.jugador,
         bytes: this.bytes,
+        partidasJugadas: this.partidasJugadas, // <-- AÑADIDO
         isAuthenticated: this.isAuthenticated,
         rol: this.rol
       }))
@@ -36,6 +44,7 @@ export const useAuthStore = defineStore('auth', {
     logout() {
       this.jugador = null
       this.bytes = 0
+      this.partidasJugadas = 0 // <-- AÑADIDO
       this.isAuthenticated = false
       this.rol = null
       

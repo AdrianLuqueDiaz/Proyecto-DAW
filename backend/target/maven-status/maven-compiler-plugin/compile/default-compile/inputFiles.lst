@@ -1,11 +1,14 @@
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\BackendApplication.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\config\SecurityConfig.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\controladores\CartaControlador.java
+D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\controladores\CodejackControlador.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\controladores\PreguntaControlador.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\controladores\UsuarioControlador.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\entidades\Carta.java
+D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\entidades\CartaCodejack.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\entidades\Pregunta.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\entidades\Usuario.java
+D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\repositorios\CartaCodejackRepositorio.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\repositorios\CartaRepositorio.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\repositorios\PreguntaRepositorio.java
 D:\Usuaris\alum-01\Documents\codeoos\Proyecto-DAW-master\backend\src\main\java\com\arcade\backend\repositorios\UsuarioRepositorio.java
