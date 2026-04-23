@@ -6,16 +6,13 @@ import { useAuthStore } from '../stores/auth'
 const router = useRouter()
 const auth = useAuthStore()
 
-// Definimos el tipo exacto para que TypeScript sea estricto
 interface Carta {
   texto: string;
   valor: number;
 }
 
-// 1. La baraja esperando a Java
 const cartasPosibles = ref<Carta[]>([])
 
-// 2. Las manos de los dos jugadores
 const miMano = ref<Carta[]>([])
 const manoBanca = ref<Carta[]>([])
 
