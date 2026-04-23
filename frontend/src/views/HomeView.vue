@@ -68,7 +68,7 @@ const cerrarSesion = () => {
           <div class="columna-estadisticas">
             <div class="estadistica">
               <span class="coste">COSTE</span>
-              <span class="valor">10 B</span>
+              <span class="valor">50 B</span>
             </div>
             
           </div>

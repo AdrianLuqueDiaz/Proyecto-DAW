@@ -20,6 +20,24 @@ const juegoTerminado = computed(() => {
   return cartas.value.length > 0 && cartas.value.every(c => c.resuelta)
 })
 
+const actualizarBytes = async (cantidad: number) => {
+  if (!auth.jugador) return;
+  try {
+    const res = await fetch(`http://localhost:8080/api/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`, {
+      method: 'PUT'
+    });
+    if (res.ok) {
+      const usuarioActualizado = await res.json();
+      auth.bytes = usuarioActualizado.saldoBytes;
+      auth.partidasJugadas = usuarioActualizado.partidasJugadas;
+      auth.guardarEnLocal();
+      console.log("Progreso guardado en Logic Slots");
+    }
+  } catch (error) {
+    console.error("Error al guardar progreso:", error);
+  }
+}
+
 const cerrarSesion = () => {
   auth.logout()
   router.push('/login')
@@ -32,21 +50,11 @@ const cargarPreguntas = async () => {
     
     bancoDePreguntas.value = todasLasPreguntas.map((p: any) => {
       const opciones = [p.respuestaCorrecta, p.falsa1, p.falsa2, p.falsa3]
-      
       return {
-        id: p.id,
-        idPareja: p.idPareja,
-        categoria: p.categoria,
-        enunciado: p.enunciado,
-        respuestaCorrecta: p.respuestaCorrecta,
-        falsa1: p.falsa1,
-        falsa2: p.falsa2,
-        falsa3: p.falsa3,
-
+        ...p,
         opcionesBarajadas: opciones.sort(() => Math.random() - 0.5)
       }
     }).sort(() => Math.random() - 0.5) 
-
   } catch (error) {
     console.error("Error cargando preguntas:", error)
   }
@@ -56,13 +64,11 @@ const cargarCartas = async () => {
   try {
     const res = await fetch('http://localhost:8080/api/cartas')
     const datos = await res.json()
-    
     cartas.value = datos.map((c: any) => ({ 
       ...c, 
       girada: false, 
       resuelta: false 
     })).sort(() => Math.random() - 0.5)
-
   } catch (error) { 
     console.error(error) 
   }
@@ -70,10 +76,8 @@ const cargarCartas = async () => {
 
 const seleccionarCarta = (carta: any) => {
   if (bloquearTablero.value || carta.girada || carta.resuelta) return
-
   carta.girada = true
   seleccionadas.value.push(carta)
-
   if (seleccionadas.value.length === 2) {
     comprobarPareja()
   }
@@ -81,7 +85,6 @@ const seleccionarCarta = (carta: any) => {
 
 const comprobarPareja = () => {
   bloquearTablero.value = true
-  
   const carta1 = seleccionadas.value[0]
   const carta2 = seleccionadas.value[1]
 
@@ -99,7 +102,6 @@ const comprobarPareja = () => {
 
 const lanzarPregunta = (idPareja: number) => { 
   const pregunta = bancoDePreguntas.value.find(p => p.idPareja === idPareja)
-
   if (pregunta) {
     preguntaActual.value = pregunta
     opcionesRespuestas.value = pregunta.opcionesBarajadas
@@ -122,6 +124,13 @@ const resolverCartasEnJuego = (exito: boolean) => {
   if (exito) {
     carta1.resuelta = true
     carta2.resuelta = true
+    
+    setTimeout(() => {
+      if (juegoTerminado.value) {
+        actualizarBytes(100); 
+      }
+    }, 500);
+
   } else {
     carta1.girada = false
     carta2.girada = false
@@ -158,6 +167,7 @@ onMounted(() => {
 
       <nav class="menu-navegacion">
         <span class="enlace activo" @click="router.push('/home')">INICIO</span>
+        <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
         <span v-if="auth.rol === 'ADMIN'" class="enlace" @click="router.push('/preguntas')">PREGUNTAS</span>
       </nav>
 

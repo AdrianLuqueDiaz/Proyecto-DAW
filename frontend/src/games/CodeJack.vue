@@ -6,22 +6,27 @@ import { useAuthStore } from '../stores/auth'
 const router = useRouter()
 const auth = useAuthStore()
 
-// 1. La baraja ahora estará vacía al principio, esperando a Java
-const cartasPosibles = ref<any[]>([])
+// Definimos el tipo exacto para que TypeScript sea estricto
+interface Carta {
+  texto: string;
+  valor: number;
+}
+
+// 1. La baraja esperando a Java
+const cartasPosibles = ref<Carta[]>([])
 
 // 2. Las manos de los dos jugadores
-const miMano = ref<{ texto: string, valor: number }[]>([])
-const manoBanca = ref<{ texto: string, valor: number }[]>([])
+const miMano = ref<Carta[]>([])
+const manoBanca = ref<Carta[]>([])
 
-const estado = ref('jugando') // 'jugando', 'evaluando', 'ganado', 'perdido', 'empate'
+const estado = ref<string>('jugando') // jugando, evaluando, ganado, perdido, empate
 
-// 3. Calculadoras automáticas para ambos
-const totalGB = computed(() => {
-  let suma = 0; for (let c of miMano.value) suma += c.valor; return suma;
+const totalGB = computed<number>(() => {
+  return miMano.value.reduce((suma, c) => suma + c.valor, 0)
 })
 
-const totalBanca = computed(() => {
-  let suma = 0; for (let c of manoBanca.value) suma += c.valor; return suma;
+const totalBanca = computed<number>(() => {
+  return manoBanca.value.reduce((suma, c) => suma + c.valor, 0)
 })
 
 const cerrarSesion = () => {
@@ -29,10 +34,8 @@ const cerrarSesion = () => {
   router.push('/login')
 }
 
-// NUEVO: Función para traer las cartas de la Base de Datos
 const cargarCartas = async () => {
   try {
-    // ATENCIÓN: Esta es la ruta que tendrás que crear en Java
     const respuesta = await fetch('http://localhost:8080/api/codejack/cartas')
     if (respuesta.ok) {
       cartasPosibles.value = await respuesta.json()
@@ -44,9 +47,30 @@ const cargarCartas = async () => {
   }
 }
 
-// 4. Tu turno (Robar carta de la baraja descargada)
+const actualizarBytes = async (cantidad: number) => {
+  if (!auth.jugador) return;
+
+  try {
+    const respuesta = await fetch(`http://localhost:8080/api/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`, {
+      method: 'PUT'
+    });
+
+    if (respuesta.ok) {
+      const usuarioActualizado = await respuesta.json();
+      
+      auth.bytes = usuarioActualizado.saldoBytes;
+      auth.partidasJugadas = usuarioActualizado.partidasJugadas;
+      auth.guardarEnLocal();
+      
+    } else {
+      console.error("El servidor rechazó la actualización.");
+    }
+  } catch (error) {
+    console.error("Fallo en la sincronización de datos:", error);
+  }
+}
+
 const robarCarta = () => {
-  // Evitamos errores si haces clic antes de que Java responda
   if (cartasPosibles.value.length === 0) return 
 
   const azar = Math.floor(Math.random() * cartasPosibles.value.length)
@@ -56,17 +80,15 @@ const robarCarta = () => {
     miMano.value.push(cartaRobada)
   }
 
-  // Si explotas, pierdes al instante
   if (totalGB.value > 21) {
     estado.value = 'perdido'
+    actualizarBytes(-50) 
   }
 }
 
-// 5. EL TURNO DE LA MÁQUINA
 const plantarse = () => {
   estado.value = 'evaluando' 
 
-  // La Banca roba cartas MIENTRAS tenga menos de 17
   while (totalBanca.value < 17) {
     const azar = Math.floor(Math.random() * cartasPosibles.value.length)
     const cartaRobada = cartasPosibles.value[azar]
@@ -75,26 +97,27 @@ const plantarse = () => {
     }
   }
 
-  // Comparamos quién ha ganado
   if (totalBanca.value > 21) {
     estado.value = 'ganado' 
+    actualizarBytes(75) 
   } else if (totalGB.value > totalBanca.value) {
     estado.value = 'ganado' 
+    actualizarBytes(75) 
   } else if (totalGB.value < totalBanca.value) {
     estado.value = 'perdido' 
+    actualizarBytes(-50) 
   } else {
     estado.value = 'empate' 
+    actualizarBytes(0) 
   }
 }
 
-// 6. Limpiar la mesa
 const nuevaRonda = () => {
   miMano.value = []
   manoBanca.value = []
   estado.value = 'jugando'
 }
 
-// Al arrancar el componente, pedimos las cartas a Java
 onMounted(() => {
   cargarCartas()
 })
@@ -110,6 +133,7 @@ onMounted(() => {
 
       <nav class="navegacion">
         <span class="enlace activo" @click="router.push('/home')">INICIO</span>
+        <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
         <span v-if="auth.rol === 'ADMIN'" class="enlace" @click="router.push('/preguntas')">PREGUNTAS</span>
       </nav>
 
@@ -118,6 +142,9 @@ onMounted(() => {
           <span class="etiqueta-bytes">BYTES</span>
           <span class="valor-bytes">{{ auth.bytes }}</span>
         </div>
+        
+       
+
         <span class="nombre-jugador">{{ auth.jugador || 'INVITADO' }}</span>
         <button class="boton-salir" @click="cerrarSesion">SALIR</button>
       </div>

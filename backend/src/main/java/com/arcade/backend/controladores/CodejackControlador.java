@@ -13,7 +13,7 @@ import com.arcade.backend.repositorios.CartaCodejackRepositorio;
 
 @RestController
 @RequestMapping("/api/codejack")
-@CrossOrigin(origins = "*") // Permite que Vue (localhost:5173) pida los datos sin errores de seguridad
+@CrossOrigin(origins = "*") 
 public class CodejackControlador {
 
     @Autowired
@@ -21,7 +21,7 @@ public class CodejackControlador {
 
     @GetMapping("/cartas")
     public List<CartaCodejack> obtenerBaraja() {
-        // Devuelve todas las cartas de la base de datos al frontend
+       
         return cartaRepositorio.findAll();
     }
 }
