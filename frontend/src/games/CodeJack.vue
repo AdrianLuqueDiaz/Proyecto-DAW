@@ -241,15 +241,24 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* ESTILOS GENERALES Y CABECERA */
 .contenedor-principal {
-  min-height: 100vh; background-color: #0B0E14; color: #E2E8F0;
-  font-family: 'Inter', system-ui, sans-serif; display: flex; flex-direction: column;
+  min-height: 100vh;
+  background-color: #0B0E14;
+  color: #E2E8F0;
+  font-family: 'Inter', system-ui,
+  sans-serif; display: flex;
+  flex-direction: column;
 }
 
 .cabecera {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 40px; height: 80px; background-color: #11151D; border-bottom: 2px solid #1E2532; flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px; 
+  height: 80px; 
+  background-color: #11151D; 
+  border-bottom: 2px solid #1E2532; 
+  flex-shrink: 0;
 }
 
 .boton-volver {
@@ -262,27 +271,103 @@ onMounted(() => {
   transition: color 0.2s;
 }
 
-.boton-volver:hover { color: #E2E8F0; }
+.boton-volver:hover { 
+color: #E2E8F0; 
+}
 
-.logo { font-family: 'Consolas', monospace; font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
-.logo-bit { color: #E2E8F0; }
-.logo-hub { color: #00E5FF; }
+.logo {
+ font-family: 'Consolas', monospace; 
+ font-size: 1.5rem; 
+ font-weight: 900; 
+ letter-spacing: 2px; 
+ }
+.logo-bit { 
+color: #E2E8F0;
+}
+.logo-hub { 
+color: #00E5FF;
+}
 
-.navegacion { display: flex; height: 100%; }
-.enlace { display: flex; align-items: center; padding: 0 20px; font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; color: #64748B; cursor: pointer; transition: all 0.2s ease; border-bottom: 2px solid transparent; }
-.enlace:hover { color: #E2E8F0; }
-.enlace.activo { color: #00E5FF; border-bottom: 2px solid #00E5FF; }
+.navegacion { 
+  display: flex; 
+  height: 100%; 
+}
+.enlace { 
+  display: flex; 
+  align-items: center; 
+  padding: 0 20px; 
+  font-size: 0.85rem; 
+  font-weight: 600; 
+  letter-spacing: 1px; 
+  color: #64748B; 
+  cursor: pointer; 
+  transition: all 0.2s ease; 
+  border-bottom: 2px solid transparent; 
+}
 
-.info-usuario { display: flex; align-items: center; gap: 25px; }
-.bloque-bytes { display: flex; align-items: baseline; gap: 8px; background: #1E2532; padding: 6px 12px; border-radius: 4px; }
-.etiqueta-bytes { font-size: 0.7rem; font-weight: 700; color: #64748B; letter-spacing: 1px; }
-.valor-bytes { font-family: 'Consolas', monospace; font-weight: bold; color: #FACC15; }
-.nombre-jugador { font-family: 'Consolas', monospace; font-size: 0.9rem; color: #E2E8F0; }
+.enlace:hover { 
+  color: #E2E8F0; 
+}
+.enlace.activo { 
+  color: #00E5FF; 
+  border-bottom: 2px solid #00E5FF; 
+}
 
-.boton-salir { background: transparent; border: 1px solid #334155; color: #94A3B8; padding: 8px 16px; font-size: 0.75rem; font-weight: bold; letter-spacing: 1px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
-.boton-salir:hover { background: #EF4444; border-color: #EF4444; color: #fff; }
+.info-usuario { 
+  display: flex; 
+  align-items: 
+  center; 
+  gap: 25px; 
+}
 
-/* ÁREA DE JUEGO PRINCIPAL */
+.bloque-bytes { 
+  display: flex; 
+  align-items: baseline; 
+  gap: 8px; 
+  background: #1E2532; 
+  padding: 6px 12px; 
+  border-radius: 
+  4px; 
+}
+
+.etiqueta-bytes { 
+  font-size: 0.7rem; 
+  font-weight: 700; 
+  color: #64748B; 
+  letter-spacing: 1px; 
+}
+
+.valor-bytes { 
+  font-family: 'Consolas', monospace; 
+  font-weight: bold; 
+  color: #FACC15; 
+}
+
+.nombre-jugador { 
+  font-family: 'Consolas', monospace; 
+  font-size: 0.9rem; 
+  color: #E2E8F0; 
+}
+
+.boton-salir { 
+  background: transparent; 
+  border: 1px solid #334155; 
+  color: #94A3B8; 
+  padding: 8px 16px; 
+  font-size: 0.75rem; 
+  font-weight: bold; 
+  letter-spacing: 1px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  transition: all 0.2s; 
+}
+
+.boton-salir:hover { 
+  background: #EF4444; 
+  border-color: #EF4444; 
+  color: #fff; 
+}
+
 .contenido-juego {
   flex: 1;
   display: flex;
@@ -293,7 +378,7 @@ onMounted(() => {
   position: relative;
 }
 
-/* PANEL LATERAL (CHULETA) */
+
 .panel-lateral {
   width: 250px;
   flex-shrink: 0;
@@ -334,11 +419,18 @@ onMounted(() => {
   border-radius: 4px;
 }
 
-.valor-base { color: #94A3B8; }
-.separador { color: #334155; }
-.valor-final { color: #00E5FF; font-weight: bold; }
+.valor-base { 
+  color: #94A3B8; 
+}
+.separador { 
+  color: #334155; 
+}
+.valor-final { 
+  color: #00E5FF; 
+  font-weight: bold; 
+}
 
-/* MESA CENTRAL */
+
 .mesa-central {
   width: 100%;
   max-width: 700px;
@@ -414,7 +506,6 @@ onMounted(() => {
   margin: 30px 0;
 }
 
-/* CARTAS */
 .zona-cartas {
   display: flex;
   flex-wrap: wrap;
@@ -465,9 +556,12 @@ onMounted(() => {
   color: #F8FAFC;
 }
 
-.mini .texto-carta { font-size: 0.75rem; color: #94A3B8; }
+.mini .texto-carta { 
+  font-size: 0.75rem; 
+  color: #94A3B8; 
+}
 
-/* MENSAJES DE RESULTADO */
+
 .resultados {
   margin-bottom: 30px;
 }
@@ -478,14 +572,31 @@ onMounted(() => {
   text-align: center;
 }
 
-.mensaje h3 { margin: 0 0 5px 0; font-size: 1.2rem; font-weight: 800; }
-.mensaje p { margin: 0; font-size: 0.9rem; }
+.mensaje h3 { 
+  margin: 0 0 5px 0; 
+  font-size: 1.2rem; 
+  font-weight: 800; 
+}
+.mensaje p { 
+  margin: 0; 
+  font-size: 0.9rem; 
+}
 
-.exito { background: rgba(16, 185, 129, 0.1); border: 1px solid #10B981; color: #10B981; }
-.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #EF4444; color: #EF4444; }
-.neutral { background: rgba(250, 204, 21, 0.1); border: 1px solid #FACC15; color: #FACC15; }
+.exito { 
+  background: rgba(16, 185, 129, 0.1); 
+  border: 1px solid #10B981; 
+  color: #10B981; 
+}
+.error { background: rgba(239, 68, 68, 0.1); 
+  border: 1px solid #EF4444; 
+  color: #EF4444; 
+}
+.neutral { background: rgba(250, 204, 21, 0.1); 
+  border: 1px solid #FACC15;
+  color: #FACC15; 
+}
 
-/* CONTROLES */
+
 .controles {
   display: flex;
   gap: 15px;
@@ -505,7 +616,10 @@ onMounted(() => {
   transition: transform 0.1s ease, background 0.2s ease;
 }
 
-.boton-primario:hover { background-color: #00E5FF; transform: translateY(-2px); }
+.boton-primario:hover {
+   background-color: #00E5FF; 
+   transform: translateY(-2px); 
+}
 
 .boton-secundario {
   background: transparent;
@@ -520,5 +634,8 @@ onMounted(() => {
   transition: all 0.2s ease;
 }
 
-.boton-secundario:hover { border-color: #E2E8F0; color: #E2E8F0; }
+.boton-secundario:hover {
+  border-color: #E2E8F0; 
+  color: #E2E8F0; 
+}
 </style>
