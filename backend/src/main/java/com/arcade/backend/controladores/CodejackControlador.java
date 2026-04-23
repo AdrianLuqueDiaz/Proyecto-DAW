@@ -13,7 +13,7 @@ import com.arcade.backend.repositorios.CartaCodejackRepositorio;
 
 @RestController
 @RequestMapping("/api/codejack")
-@CrossOrigin(origins = "*") // Permite que Vue (localhost:5173) pida los datos sin errores de seguridad
+@CrossOrigin(origins = "*") 
 public class CodejackControlador {
 
     @Autowired
