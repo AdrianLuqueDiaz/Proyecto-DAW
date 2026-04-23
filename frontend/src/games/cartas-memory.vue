@@ -382,7 +382,9 @@ color: #fff;
   transition: color 0.2s;
 }
 
-.boton-volver:hover { color: #E2E8F0; }
+.boton-volver:hover {
+color: #E2E8F0;
+}
 
 .titulo {
   font-size: 2.5rem;

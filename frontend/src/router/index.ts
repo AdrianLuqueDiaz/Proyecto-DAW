@@ -9,6 +9,7 @@ import Registro from '../views/Registro.vue'
 import Codejack from '../games/CodeJack.vue'
 import Clasificacion from '../views/Clasificacion.vue'
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -30,26 +31,29 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: Home,
-      meta: { requiereAutenticacion: true } 
+      meta: { requiereAutenticacion: true}
     },
     {
       path: '/memory',
       name: 'memory',
       component: Memory,
-      meta: { requiereAutenticacion: true } 
+      meta: { requiereAutenticacion: true}
     },
     {
       path: '/codejack',
       name: 'Codejack',
       component: Codejack,
       meta: { requiereAutenticacion: true }
+
+     
     },
     {
       path: '/clasificacion',
-      name: 'Clasificacion',
+      name: 'clasificacion',
       component: Clasificacion,
-      meta: { requiereAutenticacion: true }
+      meta: { requiereAutenticacion: true}
     },
+    
     {
       path: '/preguntas',
       name: 'preguntas',
