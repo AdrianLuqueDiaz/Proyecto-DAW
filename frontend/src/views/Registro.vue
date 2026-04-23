@@ -76,7 +76,7 @@ const registrarUsuario = async () => {
 
         <div class="credenciales">
           <label>CONTRASEÑA</label>
-          <input v-model="nuevoUsuario.contrasena" type="password" placeholder="••••••••" />
+          <input v-model="nuevoUsuario.contrasena" type="password" placeholder="••••••••" @keyup.enter="registrarUsuario"/>
         </div>
 
         <button @click="registrarUsuario" class="btn-conectar">

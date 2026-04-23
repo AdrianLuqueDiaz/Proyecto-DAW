@@ -65,7 +65,7 @@ const entrar = async () => {
 
         <div class="credenciales">
           <label>CONTRASEÑA</label>
-          <input v-model="contrasena" type="password" placeholder="••••••••"/>
+          <input v-model="contrasena" type="password" placeholder="••••••••" @keyup.enter="entrar"/>
         </div>
 
         <button @click="entrar" class="btn-conectar">

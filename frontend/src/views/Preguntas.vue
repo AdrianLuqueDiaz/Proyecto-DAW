@@ -65,6 +65,8 @@ const guardarPregunta = async () => {
 
       <nav class="navegacion">
         <span class="enlace" @click="router.push('/home')">INICIO</span>
+        <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
+
         <span class="enlace activo">PREGUNTAS</span>
       </nav>
 
