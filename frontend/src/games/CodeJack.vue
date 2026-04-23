@@ -18,12 +18,19 @@ const manoBanca = ref<Carta[]>([])
 
 const estado = ref<string>('jugando') // jugando, evaluando, ganado, perdido, empate
 
-const totalGB = computed<number>(() => {
-  return miMano.value.reduce((suma, c) => suma + c.valor, 0)
+  const totalGB = computed<number>(() => {
+  let total = 0
+  miMano.value.forEach((carta) => {
+    total = total + carta.valor
+  })
+
+  return total
 })
 
 const totalBanca = computed<number>(() => {
-  return manoBanca.value.reduce((suma, c) => suma + c.valor, 0)
+  let total = 0
+  manoBanca.value.forEach(carta => total += carta.valor)
+  return total
 })
 
 const cerrarSesion = () => {
