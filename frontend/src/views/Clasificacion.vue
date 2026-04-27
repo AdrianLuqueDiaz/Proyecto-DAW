@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 const auth = useAuthStore()
 const router = useRouter()
 const usuarios = ref<any[]>([])
+
 const cerrarSesion = () => {
   auth.logout()
   router.push('/login')
@@ -67,9 +68,9 @@ onMounted(cargarClasificacion)
         
         <div class="tabla-header">
           <span class="col-pos">POS</span>
-          <span class="col-user">JUGADOR</span>
+          <span class="col-info">JUGADOR</span>
           <span class="col-partidas">PARTIDAS JUGADAS</span>
-          <span class="col-bytes text-right">BYTES ACUMULADOS</span>
+          <span class="col-puntos text-right">BYTES ACUMULADOS</span>
         </div>
 
         <article v-for="(u, index) in usuarios" :key="u.id" class="tarjeta-ranking">
@@ -118,34 +119,127 @@ onMounted(cargarClasificacion)
   border-bottom: 2px solid #1E2532;
 }
 
-.logo { font-family: 'Consolas', monospace; font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
-.logo-bit { color: #E2E8F0; }
-.logo-hub { color: #00E5FF; }
+.logo { 
+  font-family: 'Consolas', monospace; 
+  font-size: 1.5rem; 
+  font-weight: 900; 
+  letter-spacing: 2px; 
+}
 
-.navegacion { display: flex; height: 100%; }
-.enlace { display: flex; align-items: center; padding: 0 20px; font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; color: #64748B; cursor: pointer; transition: all 0.2s ease; border-bottom: 2px solid transparent; }
-.enlace:hover { color: #E2E8F0; }
-.enlace.activo { color: #00E5FF; border-bottom: 2px solid #00E5FF; }
+.logo-bit { 
+  color: #E2E8F0; 
+}
 
-.info-usuario { display: flex; align-items: center; gap: 25px; }
-.bloque-bytes { display: flex; align-items: baseline; gap: 8px; background: #1E2532; padding: 6px 12px; border-radius: 4px; }
-.etiqueta-bytes { font-size: 0.7rem; font-weight: 700; color: #64748B; letter-spacing: 1px; }
-.valor-bytes { font-family: 'Consolas', monospace; font-weight: bold; color: #FACC15; }
-.nombre-jugador { font-family: 'Consolas', monospace; font-size: 0.9rem; color: #E2E8F0; }
+.logo-hub { 
+  color: #00E5FF; 
+}
 
-.boton-salir { background: transparent; border: 1px solid #334155; color: #94A3B8; padding: 8px 16px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
-.boton-salir:hover { background: #EF4444; border-color: #EF4444; color: #fff; }
+.navegacion { display: flex; 
+  height: 100%; 
+}
 
-.contenido { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
-.header-contenido { margin-bottom: 40px; }
-.subtitulo { font-family: 'Consolas', monospace; font-size: 0.8rem; color: #00E5FF; letter-spacing: 2px; margin-bottom: 10px; }
-.titulo-principal { font-size: 3rem; font-weight: 800; color: #F8FAFC; letter-spacing: -1px; }
+.enlace { display: flex;
+   align-items: center; 
+   padding: 0 20px; 
+   font-size: 0.85rem; 
+   font-weight: 600; 
+   letter-spacing: 1px; 
+   color: #64748B; 
+   cursor: pointer; 
+   transition: all 0.2s ease; 
+   border-bottom: 2px solid transparent; 
+}
 
-.lista-ranking { display: flex; flex-direction: column; gap: 10px; }
+.enlace:hover { 
+  color: #E2E8F0; 
+}
+
+.enlace.activo { 
+  color: #00E5FF; 
+  border-bottom: 2px solid #00E5FF; 
+}
+
+.info-usuario { display: flex; 
+  align-items: center; 
+  gap: 25px; 
+}
+
+.bloque-bytes { display: flex; 
+  align-items: baseline; 
+  gap: 8px; 
+  background: #1E2532; 
+  padding: 6px 12px; 
+  border-radius: 4px; 
+}
+
+.etiqueta-bytes { 
+  font-size: 0.7rem; 
+  font-weight: 700; 
+  color: #64748B; 
+  letter-spacing: 1px; 
+}
+
+.valor-bytes { 
+  font-family: 'Consolas', monospace; 
+  font-weight: bold; 
+  color: #FACC15; 
+}
+
+.nombre-jugador { font-family: 'Consolas', monospace; 
+font-size: 0.9rem; 
+color: #E2E8F0; 
+}
+
+.boton-salir { background: transparent; 
+  border: 1px solid #334155; 
+  color: #94A3B8; 
+  padding: 8px 16px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  transition: all 0.2s; 
+}
+
+.boton-salir:hover { 
+  background: #EF4444; 
+  border-color: #EF4444; 
+  color: #fff; 
+}
+
+.contenido { max-width: 1000px; 
+  margin: 0 auto; 
+  padding: 60px 20px; 
+}
+
+.header-contenido { 
+  margin-bottom: 40px; 
+}
+
+.subtitulo { 
+  font-family: 'Consolas', monospace; 
+  font-size: 0.8rem; 
+  color: #00E5FF; 
+  letter-spacing: 2px; 
+  margin-bottom: 10px; 
+}
+
+.titulo-principal { 
+  font-size: 3rem; 
+  font-weight: 800; 
+  color: #F8FAFC; 
+  letter-spacing: -1px; 
+}
+
+.lista-ranking { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px; 
+}
 
 .tabla-header {
   display: flex;
-  padding: 10px 30px;
+  align-items: center;
+  padding: 0 30px; 
+  margin-bottom: 10px;
   font-family: 'Consolas', monospace;
   font-size: 0.75rem;
   color: #64748B;
@@ -158,24 +252,73 @@ onMounted(cargarClasificacion)
   background-color: #11151D;
   border: 1px solid #1E2532;
   border-radius: 6px;
-  padding: 20px 30px;
+  padding: 20px 30px; 
+  transition: border-color 0.2s;
 }
 
-.col-pos { width: 60px; }
-.num-pos { font-family: 'Consolas', monospace; font-weight: bold; color: #64748B; }
-.num-pos.top-3 { color: #00E5FF; }
+.tarjeta-ranking:hover {
+  border-color: #334155;
+}
 
-.col-info { flex: 1; }
-.categoria { font-size: 0.65rem; font-weight: 800; color: #FACC15; letter-spacing: 1px; }
-.nombre-jugador-ranking { font-size: 1.2rem; font-weight: 700; color: #F8FAFC; margin: 0; }
 
-/* ESTILOS PARA LAS COLUMNAS DERECHAS */
-.col-partidas { width: 200px; text-align: center; }
-.valor-partidas { font-family: 'Consolas', monospace; color: #94A3B8; font-weight: bold; }
+.col-pos { 
+  width: 60px; 
+  flex-shrink: 0; 
+}
 
-.col-puntos { width: 200px; text-align: right; }
-.valor-ranking { font-family: 'Consolas', monospace; font-size: 1.2rem; font-weight: bold; color: #FACC15; }
+.col-info { 
+  flex: 1; 
+}
 
-.text-right { text-align: right; }
-.col-bytes { width: 200px; }
+.col-partidas { 
+  width: 200px; 
+  text-align: center; 
+  flex-shrink: 0;
+}
+
+.col-puntos { 
+  width: 200px; 
+  text-align: right; 
+  flex-shrink: 0;
+}
+
+.num-pos { 
+  font-family: 'Consolas', monospace; 
+  font-weight: bold; 
+  color: #64748B; 
+}
+
+.num-pos.top-3 { 
+  color: #00E5FF; 
+}
+
+.categoria { font-size: 0.65rem; 
+  font-weight: 800; 
+  color: #FACC15; 
+  letter-spacing: 1px; 
+}
+
+.nombre-jugador-ranking { 
+  font-size: 1.2rem; 
+  font-weight: 700; 
+  color: #F8FAFC; 
+  margin: 0; 
+}
+
+.valor-partidas { 
+  font-family: 'Consolas', monospace; 
+  color: #94A3B8; 
+  font-weight: bold;
+}
+
+.valor-ranking { font-family: 'Consolas', monospace; 
+font-size: 1.2rem; 
+font-weight: bold; 
+color: #FACC15; 
+}
+
+.text-right { 
+  text-align: right; 
+}
+
 </style>

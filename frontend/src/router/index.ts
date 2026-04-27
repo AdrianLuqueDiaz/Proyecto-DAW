@@ -8,6 +8,7 @@ import Preguntas from '../views/Preguntas.vue'
 import Registro from '../views/Registro.vue'
 import Codejack from '../games/CodeJack.vue'
 import Clasificacion from '../views/Clasificacion.vue'
+import DeciBit from '../games/DeciBit.vue'
 
 
 const router = createRouter({
@@ -44,9 +45,14 @@ const router = createRouter({
       name: 'Codejack',
       component: Codejack,
       meta: { requiereAutenticacion: true }
-
-     
     },
+    {
+      path: '/decibit',
+      name: 'DeciBit',
+      component: DeciBit,
+      meta: { requiereAutenticacion: true }
+    },
+
     {
       path: '/clasificacion',
       name: 'clasificacion',

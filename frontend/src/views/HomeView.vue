@@ -103,6 +103,30 @@ const cerrarSesion = () => {
 
         </article>
 
+        <article class="tarjeta-juego">
+          
+          
+
+          <div class="columna-info">
+            <span class="categoria">THINKING</span>
+            <h2 class="nombre-juego">DeciBit</h2>
+            <p class="descripcion">Alcanza la cantidad de bits en un tiempo limite.</p>
+          </div>
+
+          <div class="columna-estadisticas">
+            <div class="estadistica">
+              <span class="coste">COSTE</span>
+              <span class="valor">50 B</span>
+            </div>
+            
+          </div>
+
+          <div class="columna-iniciar">
+            <button class="boton-jugar" @click="router.push('/decibit')">INICIAR</button>
+          </div>
+
+        </article>
+
       </section>
 
     </main>
