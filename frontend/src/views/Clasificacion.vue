@@ -185,18 +185,23 @@ onMounted(cargarClasificacion)
   color: #FACC15; 
 }
 
-.nombre-jugador { font-family: 'Consolas', monospace; 
-font-size: 0.9rem; 
-color: #E2E8F0; 
+.nombre-jugador { 
+  font-family: 'Consolas', monospace; 
+  font-size: 0.9rem; 
+  color: #E2E8F0; 
 }
 
-.boton-salir { background: transparent; 
-  border: 1px solid #334155; 
-  color: #94A3B8; 
-  padding: 8px 16px; 
+.boton-salir { 
+   background: transparent;
+  border: 1px solid #334155;
+  color: #94A3B8;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
   border-radius: 4px; 
-  cursor: pointer; 
-  transition: all 0.2s; 
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .boton-salir:hover { 
