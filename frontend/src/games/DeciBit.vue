@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 const auth = useAuthStore()
 const router = useRouter()
 
+const numeroObjetivo = ref(0)
 const bits = ref([0, 0, 0, 0]) 
 const mensaje = ref('')
 const juegoTerminado = ref(false)
@@ -15,6 +16,12 @@ const cerrarSesion = () => {
   router.push('/login')
 }
 
+const generarNumero = () => {
+  numeroObjetivo.value = Math.floor(Math.random() * 16)
+  bits.value = [0, 0, 0, 0]
+  mensaje.value = ''
+  juegoTerminado.value = false
+}
 
 const toggleBit = (index: number) => {
   if (juegoTerminado.value) return
@@ -22,8 +29,7 @@ const toggleBit = (index: number) => {
 }
 
 
-
-
+onMounted(generarNumero)
 </script>
 
 <template>
@@ -36,7 +42,8 @@ const toggleBit = (index: number) => {
       </div>
 
       <nav class="navegacion">
-        <span class="enlace activo" @click="router.push('/home')">INICIO</span>
+        <span class="enlace" @click="router.push('/home')">INICIO</span>
+        <span class="enlace activo">DECIBIT</span>
         <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
         <span 
           v-if="auth.rol === 'ADMIN'" 
@@ -68,6 +75,9 @@ const toggleBit = (index: number) => {
         <div class="tarjeta-central">
           <p class="instruccion">CONVIERTE EL DECIMAL A BINARIO</p>
           
+          <div class="numero-target">
+            {{ numeroObjetivo }}
+          </div>
 
           <div class="contenedor-bits">
             <div 
