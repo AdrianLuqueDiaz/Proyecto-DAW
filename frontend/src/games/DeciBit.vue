@@ -28,6 +28,21 @@ const toggleBit = (index: number) => {
   bits.value[index] = bits.value[index] === 0 ? 1 : 0
 }
 
+const comprobarRespuesta = () => {
+  const decimalResult = bits.value.reduce((acc, bit, idx) => {
+    return acc + (bit * Math.pow(2, (bits.value.length - 1) - idx))
+  }, 0)
+
+  if (decimalResult === numeroObjetivo.value) {
+    mensaje.value = "VALOR CORRECTO"
+    juegoTerminado.value = true
+    
+  
+  } else {
+    mensaje.value = `ERROR DE PROTOCOLO`
+    juegoTerminado.value = true
+  }
+}
 
 onMounted(generarNumero)
 </script>
@@ -42,8 +57,7 @@ onMounted(generarNumero)
       </div>
 
       <nav class="navegacion">
-        <span class="enlace" @click="router.push('/home')">INICIO</span>
-        <span class="enlace activo">DECIBIT</span>
+        <span class="enlace activo" @click="router.push('/home')">INICIO</span>
         <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
         <span 
           v-if="auth.rol === 'ADMIN'" 
@@ -88,6 +102,15 @@ onMounted(generarNumero)
             >
               {{ bit }}
             </div>
+          </div>
+
+          <div class="acciones">
+            <button v-if="!juegoTerminado" @click="comprobarRespuesta" class="btn-accion">
+              CHECK BINARY
+            </button>
+            <button v-else @click="generarNumero" class="btn-siguiente">
+              NEXT CHALLENGE
+            </button>
           </div>
 
           <p :class="['mensaje-sistema', { 'error': mensaje.includes('ERROR') }]">
