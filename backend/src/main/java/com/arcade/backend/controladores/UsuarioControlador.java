@@ -1,8 +1,6 @@
 package com.arcade.backend.controladores;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,35 +34,30 @@ public class UsuarioControlador {
         return usuarioRepositorio.findAll();
     }
 
-    // --- NUEVO: ENDPOINT PARA LA CLASIFICACIÓN ---
     @GetMapping("/clasificacion")
     public List<Usuario> obtenerClasificacion() {
-        // Obtenemos todos y los ordenamos de mayor a menor por saldo de Bytes
-        return usuarioRepositorio.findAll().stream()
-                .sorted((u1, u2) -> u2.getSaldoBytes().compareTo(u1.getSaldoBytes()))
-                .collect(Collectors.toList());
+        List<Usuario> lista = usuarioRepositorio.findAll();
+        
+        lista.sort((u1, u2) -> u2.getSaldoBytes().compareTo(u1.getSaldoBytes()));
+        
+        return lista;
     }
 
-    // --- NUEVO: ENDPOINT PARA ACTUALIZAR BYTES Y PARTIDAS DESDE LOS JUEGOS ---
     @PutMapping("/{alias}/bytes")
-    public ResponseEntity<?> actualizarBytes(@PathVariable String alias, @RequestParam int cantidad) {
-        Optional<Usuario> usuarioOpt = usuarioRepositorio.findByAlias(alias);
+    public ResponseEntity<Usuario> actualizarBytes(@PathVariable String alias, @RequestParam int cantidad) {
+        Usuario usuario = usuarioRepositorio.findByAlias(alias).orElse(null);
         
-        if (usuarioOpt.isPresent()) {
-            Usuario usuario = usuarioOpt.get();
-            
-            // Actualizamos los bytes
-            int nuevoSaldo = usuario.getSaldoBytes() + cantidad;
-            usuario.setSaldoBytes(nuevoSaldo);
-            
-            // Sumamos 1 a las partidas jugadas
-            usuario.setPartidasJugadas(usuario.getPartidasJugadas() + 1);
-            
-            usuarioRepositorio.save(usuario);
-            return ResponseEntity.ok(usuario);
-        } else {
+        if (usuario == null) {
             return ResponseEntity.notFound().build();
         }
+        
+        usuario.setSaldoBytes(usuario.getSaldoBytes() + cantidad);
+        
+        // Suma 1 cada partida jugada
+        usuario.setPartidasJugadas(usuario.getPartidasJugadas() + 1);
+        
+        usuarioRepositorio.save(usuario);
+        return ResponseEntity.ok(usuario);
     }
 
     @PostMapping("/registro")
@@ -77,8 +70,14 @@ public class UsuarioControlador {
     
     @PostMapping("/login")
     public Usuario login(@RequestBody Usuario datosLogin) {
-        return usuarioRepositorio.findByAlias(datosLogin.getAlias())
-                .filter(u -> passwordEncoder.matches(datosLogin.getContrasena(), u.getContrasena()))
-                .orElseThrow(() -> new RuntimeException("Usuario o contraseña incorrectos"));
+
+        Usuario usuario = usuarioRepositorio.findByAlias(datosLogin.getAlias()).orElse(null);
+
+
+        if (usuario != null && passwordEncoder.matches(datosLogin.getContrasena(), usuario.getContrasena())) {
+            return usuario;
+        }
+        
+        throw new RuntimeException("Usuario o contraseña incorrectos");
     }
 }
