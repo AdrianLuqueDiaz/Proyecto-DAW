@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 
@@ -11,9 +11,22 @@ const bits = ref([0, 0, 0, 0])
 const mensaje = ref('')
 const juegoTerminado = ref(false)
 
-const cerrarSesion = () => {
-  auth.logout()
-  router.push('/login')
+const tiempo = ref(20)
+let intervalo: any = null
+
+const iniciarTemporizador = () => {
+  tiempo.value = 20
+  if (intervalo) clearInterval(intervalo)
+  
+  intervalo = setInterval(() => {
+    if (tiempo.value > 0) {
+      tiempo.value--
+    } else {
+      clearInterval(intervalo)
+      juegoTerminado.value = true
+      mensaje.value = 'ERROR DE PROTOCOLO'
+    }
+  }, 1000)
 }
 
 const generarNumero = () => {
@@ -21,6 +34,7 @@ const generarNumero = () => {
   bits.value = [0, 0, 0, 0]
   mensaje.value = ''
   juegoTerminado.value = false
+  iniciarTemporizador()
 }
 
 const toggleBit = (index: number) => {
@@ -29,6 +43,8 @@ const toggleBit = (index: number) => {
 }
 
 const comprobarRespuesta = () => {
+  if (intervalo) clearInterval(intervalo)
+
   const decimalResult = bits.value.reduce((acc, bit, idx) => {
     return acc + (bit * Math.pow(2, (bits.value.length - 1) - idx))
   }, 0)
@@ -36,15 +52,23 @@ const comprobarRespuesta = () => {
   if (decimalResult === numeroObjetivo.value) {
     mensaje.value = "VALOR CORRECTO"
     juegoTerminado.value = true
-    
-  
   } else {
     mensaje.value = `ERROR DE PROTOCOLO`
     juegoTerminado.value = true
   }
 }
 
+const cerrarSesion = () => {
+  if (intervalo) clearInterval(intervalo)
+  auth.logout()
+  router.push('/login')
+}
+
 onMounted(generarNumero)
+
+onUnmounted(() => {
+  if (intervalo) clearInterval(intervalo)
+})
 </script>
 
 <template>
@@ -87,6 +111,11 @@ onMounted(generarNumero)
 
       <section class="panel-juego">
         <div class="tarjeta-central">
+          
+          <div class="simple-timer">
+            TEMPORIZADOR: <span class="tiempo-rojo">{{ tiempo }}s</span>
+          </div>
+
           <p class="instruccion">CONVIERTE EL DECIMAL A BINARIO</p>
           
           <div class="numero-target">
@@ -125,6 +154,19 @@ onMounted(generarNumero)
 </template>
 
 <style scoped>
+
+.simple-timer {
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #E2E8F0;
+}
+
+.tiempo-rojo {
+  color: #EF4444; 
+}
+
 .contenedor-principal {
   min-height: 100vh;
   background-color: #0B0E14; 
