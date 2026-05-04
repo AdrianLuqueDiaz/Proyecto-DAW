@@ -11,11 +11,11 @@ const bits = ref([0, 0, 0, 0])
 const mensaje = ref('')
 const juegoTerminado = ref(false)
 
-const tiempo = ref(20)
+const tiempo = ref(10)
 let intervalo: any = null
 
 const iniciarTemporizador = () => {
-  tiempo.value = 20
+  tiempo.value = 10
   if (intervalo) clearInterval(intervalo)
   
   intervalo = setInterval(() => {
@@ -42,21 +42,46 @@ const toggleBit = (index: number) => {
   bits.value[index] = bits.value[index] === 0 ? 1 : 0
 }
 
-const comprobarRespuesta = () => {
-  if (intervalo) clearInterval(intervalo)
+const comprobarRespuesta = async () => {
+  if (intervalo) clearInterval(intervalo);
 
   const decimalResult = bits.value.reduce((acc, bit, idx) => {
-    return acc + (bit * Math.pow(2, (bits.value.length - 1) - idx))
-  }, 0)
+    return acc + (bit * Math.pow(2, (bits.value.length - 1) - idx));
+  }, 0);
+
+  let puntosACambiar = 0;
 
   if (decimalResult === numeroObjetivo.value) {
-    mensaje.value = "VALOR CORRECTO"
-    juegoTerminado.value = true
+    mensaje.value = "VALOR CORRECTO";
+    puntosACambiar = 10;
+    juegoTerminado.value = true;
   } else {
-    mensaje.value = `ERROR DE PROTOCOLO`
-    juegoTerminado.value = true
+    mensaje.value = "ERROR DE PROTOCOLO";
+    puntosACambiar = -10;
+    juegoTerminado.value = true;
   }
-}
+
+  try {
+    const url = `http://localhost:8080/api/usuarios/${auth.jugador}/bytes?cantidad=${puntosACambiar}`;
+    
+    const response = await fetch(url, {
+      method: 'PUT', 
+      headers: { 
+        'Content-Type': 'application/json' 
+      }
+    });
+
+    if (response.ok) {
+      const usuarioActualizado = await response.json();
+      auth.bytes = usuarioActualizado.saldoBytes; 
+      console.log("Bytes actualizados correctamente");
+    } else {
+      console.error("Error en la respuesta:", response.status);
+    }
+  } catch (error) {
+    console.error("Error de conexión:", error);
+  }
+};
 
 const cerrarSesion = () => {
   if (intervalo) clearInterval(intervalo)
