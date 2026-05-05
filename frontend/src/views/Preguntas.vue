@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth' 
 
@@ -15,6 +15,8 @@ const preguntaNueva = ref({
   falsa3: ''
 })
 
+const listaPreguntas = ref<any[]>([])
+
 const mensajeAlerta = ref('')
 const colorAlerta = ref('') 
 
@@ -22,6 +24,22 @@ const cerrarSesion = () => {
   auth.logout()
   router.push('/login')
 }
+
+// Cargar todas las preguntas al entrar en la página
+const cargarPreguntas = async () => {
+  try {
+    const respuesta = await fetch('http://localhost:8080/api/preguntas')
+    if (respuesta.ok) {
+      listaPreguntas.value = await respuesta.json()
+    }
+  } catch (error) {
+    console.error('Error al cargar la lista de preguntas:', error)
+  }
+}
+
+onMounted(() => {
+  cargarPreguntas()
+})
 
 const guardarPregunta = async () => {
   try {
@@ -42,6 +60,9 @@ const guardarPregunta = async () => {
       preguntaNueva.value.falsa1 = ''
       preguntaNueva.value.falsa2 = ''
       preguntaNueva.value.falsa3 = ''
+
+      // recargar la tabla para que salga la nueva
+      await cargarPreguntas()
     } else {
       mensajeAlerta.value = 'Error: El servidor no pudo procesar los datos.'
       colorAlerta.value = 'error'
@@ -53,6 +74,36 @@ const guardarPregunta = async () => {
     colorAlerta.value = 'error'
   }
 }
+
+const borrarPregunta = async (id: number) => {
+  if (
+    !confirm(`¿Estás seguro de que quieres eliminar la pregunta con ID ${id}?`)
+  )
+    return
+
+  try {
+    const respuesta = await fetch(`http://localhost:8080/api/preguntas/${id}`, {
+      method: 'DELETE', 
+    })
+
+    if (respuesta.ok) {
+      mensajeAlerta.value = `Pregunta con ID ${id} eliminada correctamente.`
+      colorAlerta.value = 'success'
+      
+      // Refrescar la tabla para que desaparezca la borrada
+      await cargarPreguntas()
+    } else {
+      mensajeAlerta.value = 'Error: No se encontró la pregunta o hubo un problema en el servidor.'
+      colorAlerta.value = 'error'
+    }
+
+  } catch (error) {
+    console.error(error)
+    mensajeAlerta.value = 'Error: Imposible conectar con el servidor central.'
+    colorAlerta.value = 'error'
+  }
+}
+
 </script>
 
 <template>
@@ -66,7 +117,6 @@ const guardarPregunta = async () => {
       <nav class="navegacion">
         <span class="enlace" @click="router.push('/home')">INICIO</span>
         <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
-
         <span class="enlace activo">PREGUNTAS</span>
       </nav>
 
@@ -87,8 +137,13 @@ const guardarPregunta = async () => {
         <h1 class="titulo-principal">Gestión de Datos</h1>
       </section>
 
+      <div v-if="mensajeAlerta" :class="['mensaje-estado', 'alerta-global', colorAlerta]">
+        {{ mensajeAlerta }}
+      </div>
+
+      <!-- Crear pregunta -->
       <section class="panel-formulario">
-        
+        <h2 class="titulo-seccion">Añadir Nueva Pregunta</h2>
         <form @submit.prevent="guardarPregunta" class="formulario">
           
           <div class="fila-formulario">
@@ -134,11 +189,38 @@ const guardarPregunta = async () => {
             GUARDAR PREGUNTA
           </button>
         </form>
+      </section>
 
-        <div v-if="mensajeAlerta" :class="['mensaje-estado', colorAlerta]">
-          {{ mensajeAlerta }}
+      <!-- Eliminar pregunta -->
+      <section class="panel-formulario panel-margen">
+        <h2 class="titulo-seccion">Preguntas Existentes</h2>
+        
+        <div v-if="listaPreguntas.length === 0" class="mensaje-vacio">
+          No hay preguntas guardadas en la base de datos.
         </div>
 
+        <div v-else class="contenedor-tabla">
+          <table class="tabla-preguntas">
+            <thead>
+              <tr>
+                <th>CATEGORÍA</th>
+                <th>ENUNCIADO</th>
+                <th class="celda-accion">ACCIÓN</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="pregunta in listaPreguntas" :key="pregunta.id">
+                <td>{{ pregunta.idPareja }}</td>
+                <td class="celda-enunciado">{{ pregunta.enunciado }}</td>
+                <td class="celda-accion">
+                  <button class="boton-borrar-fila" @click="borrarPregunta(pregunta.id)">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
     </main>
@@ -146,15 +228,12 @@ const guardarPregunta = async () => {
 </template>
 
 <style scoped>
-
-
 .contenedor-principal {
   min-height: 100vh;
   background-color: #0B0E14;
   color: #E2E8F0;
   font-family: 'Inter', system-ui, sans-serif;
 }
-
 
 .cabecera {
   display: flex;
@@ -173,13 +252,8 @@ const guardarPregunta = async () => {
   letter-spacing: 2px;
 }
 
-.logo-bit {
-  color: #E2E8F0;
-}
-
-.logo-hub {
-  color: #00E5FF;
-}
+.logo-bit { color: #E2E8F0; }
+.logo-hub { color: #00E5FF; }
 
 .navegacion {
   display: flex;
@@ -199,10 +273,7 @@ const guardarPregunta = async () => {
   border-bottom: 2px solid transparent;
 }
 
-.enlace:hover {
-  color: #E2E8F0;
-}
-
+.enlace:hover { color: #E2E8F0; }
 .enlace.activo {
   color: #00E5FF;
   border-bottom: 2px solid #00E5FF;
@@ -210,14 +281,14 @@ const guardarPregunta = async () => {
 
 .info-usuario {
   display: flex;
-  align-items:
-  center; gap: 25px;
+  align-items: center; 
+  gap: 25px;
 }
 
 .bloque-bytes {
   display: flex;
-  align-items:
-  baseline; gap: 8px;
+  align-items: baseline; 
+  gap: 8px;
   background: #1E2532;
   padding: 6px 12px;
   border-radius: 4px;
@@ -239,7 +310,8 @@ const guardarPregunta = async () => {
 .nombre-jugador {
   font-family: 'Consolas', monospace;
   font-size: 0.9rem;
-  color: #E2E8F0; }
+  color: #E2E8F0; 
+}
 
 .boton-salir {
   background: transparent;
@@ -260,15 +332,14 @@ const guardarPregunta = async () => {
   color: #fff;
 }
 
-
 .contenido {
-  max-width: 900px;
+  max-width: 1000px; 
   margin: 0 auto;
   padding: 60px 20px;
 }
 
 .contenido-header {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .subtitulo {
@@ -287,12 +358,29 @@ const guardarPregunta = async () => {
   letter-spacing: -1px;
 }
 
+.titulo-seccion {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #F8FAFC;
+}
 
 .panel-formulario {
   background-color: #11151D;
   border: 1px solid #1E2532;
   border-radius: 6px;
   padding: 40px;
+  margin-top: 30px;
+}
+
+
+.panel-margen {
+  margin-top: 30px;
+}
+
+.alerta-global {
+  margin-bottom: 30px;
 }
 
 .grupo-cajitas {
@@ -333,7 +421,6 @@ label {
   resize: vertical;
 }
 
-
 .cuadricula-opciones {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -361,10 +448,7 @@ label {
   transform: translateY(-2px);
 }
 
-
-
 .mensaje-estado {
-  margin-top: 25px;
   padding: 15px;
   text-align: center;
   border-radius: 4px;
@@ -382,5 +466,87 @@ label {
   color: #EF4444;
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid #EF4444;
+}
+
+
+
+
+.mensaje-vacio {
+  text-align: center;
+  color: #64748B;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+.contenedor-tabla {
+  overflow-x: auto;
+  border: 1px solid #1E2532;
+  border-radius: 6px;
+  background-color: #0B0E14;
+}
+
+.tabla-preguntas {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.tabla-preguntas th {
+  padding: 16px;
+  background-color: #11151D;
+  color: #94A3B8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #1E2532;
+}
+
+.tabla-preguntas td {
+  padding: 16px;
+  border-bottom: 1px solid #1E2532;
+  color: #E2E8F0;
+}
+
+.tabla-preguntas tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla-preguntas tbody tr:hover {
+  background-color: #131823;
+}
+
+.celda-id {
+  font-family: 'Consolas', monospace;
+  color: #00E5FF;
+  font-weight: bold;
+}
+
+.celda-enunciado {
+  max-width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.celda-accion {
+  text-align: right;
+}
+
+.boton-borrar-fila {
+  background-color: transparent;
+  color: #EF4444;
+  border: 1px solid #EF4444;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.boton-borrar-fila:hover {
+  background-color: #EF4444;
+  color: #fff;
 }
 </style>
