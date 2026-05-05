@@ -27,9 +27,9 @@ const cerrarSesion = () => {
         <span 
           v-if="auth.rol === 'ADMIN'" 
           class="enlace" 
-          @click="router.push('/preguntas')"
+          @click="router.push('/admin')"
         >
-          PREGUNTAS
+          ADMINISTRACIÓN
         </span>
       </nav>
 

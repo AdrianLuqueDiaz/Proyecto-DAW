@@ -4,11 +4,14 @@ import { useAuthStore } from '../stores/auth'
 import Login from '../views/Login.vue'
 import Home from '../views/HomeView.vue'
 import Memory from '../games/cartas-memory.vue'
-import Preguntas from '../views/Preguntas.vue'
+import Preguntas from '../views/AdminPreguntas.vue'
 import Registro from '../views/Registro.vue'
 import Codejack from '../games/CodeJack.vue'
 import Clasificacion from '../views/Clasificacion.vue'
 import DeciBit from '../games/DeciBit.vue'
+import Admin from '../views/AdminMenu.vue'
+import Cartas from '../views/AdminCartas.vue'
+
 
 
 const router = createRouter({
@@ -45,6 +48,20 @@ const router = createRouter({
       name: 'Codejack',
       component: Codejack,
       meta: { requiereAutenticacion: true }
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin,
+      meta: { requiereAutenticacion: true, requiereAdmin: true }
+
+    },
+    {
+      path: '/cartas',
+      name: 'Cartas',
+      component: Cartas,
+      meta: { requiereAutenticacion: true, requiereAdmin: true }
+
     },
     {
       path: '/decibit',

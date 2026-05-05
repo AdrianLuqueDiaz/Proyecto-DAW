@@ -117,7 +117,7 @@ const borrarPregunta = async (id: number) => {
       <nav class="navegacion">
         <span class="enlace" @click="router.push('/home')">INICIO</span>
         <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
-        <span class="enlace activo">PREGUNTAS</span>
+        <span class="enlace activo">ADMINISTRACIÓN</span>
       </nav>
 
       <div class="info-usuario">

@@ -168,7 +168,7 @@ onMounted(() => {
       <nav class="menu-navegacion">
         <span class="enlace activo" @click="router.push('/home')">INICIO</span>
         <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
-        <span v-if="auth.rol === 'ADMIN'" class="enlace" @click="router.push('/preguntas')">PREGUNTAS</span>
+        <span v-if="auth.rol === 'ADMIN'" class="enlace" @click="router.push('/admin')">ADMINISTRACIÓN</span>
       </nav>
 
       <div class="zona-usuario">
