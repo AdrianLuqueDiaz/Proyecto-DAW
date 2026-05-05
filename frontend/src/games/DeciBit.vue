@@ -10,21 +10,17 @@ const numeroObjetivo = ref(0)
 const bits = ref([0, 0, 0, 0]) 
 const mensaje = ref('')
 const juegoTerminado = ref(false)
-
-const tiempo = ref(10)
+const tiempo = ref(20)
 let intervalo: any = null
 
 const iniciarTemporizador = () => {
   tiempo.value = 10
   if (intervalo) clearInterval(intervalo)
-  
   intervalo = setInterval(() => {
     if (tiempo.value > 0) {
       tiempo.value--
     } else {
-      clearInterval(intervalo)
-      juegoTerminado.value = true
-      mensaje.value = 'ERROR DE PROTOCOLO'
+      comprobarRespuesta()
     }
   }, 1000)
 }
@@ -37,51 +33,40 @@ const generarNumero = () => {
   iniciarTemporizador()
 }
 
-const toggleBit = (index: number) => {
+const cambiarBit = (index: number) => {
   if (juegoTerminado.value) return
   bits.value[index] = bits.value[index] === 0 ? 1 : 0
 }
 
 const comprobarRespuesta = async () => {
-  if (intervalo) clearInterval(intervalo);
+  if (intervalo) clearInterval(intervalo)
+  if (juegoTerminado.value) return
 
-  const decimalResult = bits.value.reduce((acc, bit, idx) => {
-    return acc + (bit * Math.pow(2, (bits.value.length - 1) - idx));
-  }, 0);
+  const resultadoDecimal = (bits.value[0]! * 8) + (bits.value[1]! * 4) + (bits.value[2]! * 2) + (bits.value[3]! * 1)
+  
+  let cantidad = 0
 
-  let puntosACambiar = 0;
-
-  if (decimalResult === numeroObjetivo.value) {
-    mensaje.value = "VALOR CORRECTO";
-    puntosACambiar = 10;
-    juegoTerminado.value = true;
+  if (resultadoDecimal === numeroObjetivo.value && tiempo.value > 0) {
+    mensaje.value = "VALOR CORRECTO"
+    cantidad = 10
   } else {
-    mensaje.value = "ERROR DE PROTOCOLO";
-    puntosACambiar = -10;
-    juegoTerminado.value = true;
+    mensaje.value = "ERROR"
+    cantidad = -10
   }
+
+  juegoTerminado.value = true
 
   try {
-    const url = `http://localhost:8080/api/usuarios/${auth.jugador}/bytes?cantidad=${puntosACambiar}`;
-    
-    const response = await fetch(url, {
-      method: 'PUT', 
-      headers: { 
-        'Content-Type': 'application/json' 
-      }
-    });
-
+    const url = `http://localhost:8080/api/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`
+    const response = await fetch(url, { method: 'PUT' })
     if (response.ok) {
-      const usuarioActualizado = await response.json();
-      auth.bytes = usuarioActualizado.saldoBytes; 
-      console.log("Bytes actualizados correctamente");
-    } else {
-      console.error("Error en la respuesta:", response.status);
+      const usuario = await response.json()
+      auth.bytes = usuario.saldoBytes
     }
   } catch (error) {
-    console.error("Error de conexión:", error);
+    console.error("Error de red")
   }
-};
+}
 
 const cerrarSesion = () => {
   if (intervalo) clearInterval(intervalo)
@@ -90,33 +75,21 @@ const cerrarSesion = () => {
 }
 
 onMounted(generarNumero)
-
-onUnmounted(() => {
-  if (intervalo) clearInterval(intervalo)
-})
+onUnmounted(() => { if (intervalo) clearInterval(intervalo) })
 </script>
 
 <template>
   <div class="contenedor-principal">
-    
     <header class="cabecera">
       <div class="logo">
         <span class="logo-bit">BIT</span>
         <span class="logo-hub">HUB</span>
       </div>
-
       <nav class="navegacion">
         <span class="enlace activo" @click="router.push('/home')">INICIO</span>
         <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
-        <span 
-          v-if="auth.rol === 'ADMIN'" 
-          class="enlace" 
-          @click="router.push('/preguntas')"
-        >
-          PREGUNTAS
-        </span>
+        <span v-if="auth.rol === 'ADMIN'" class="enlace" @click="router.push('/preguntas')">PREGUNTAS</span>
       </nav>
-
       <div class="info-usuario">
         <div class="bloque-bytes"> 
           <span class="etiqueta-bytes">BYTES</span>
@@ -128,7 +101,6 @@ onUnmounted(() => {
     </header>
 
     <main class="contenido">
-      
       <section class="header-contenido">
         <p class="subtitulo">MÓDULO DE ENTRENAMIENTO</p>
         <h1 class="titulo-principal">DeciBit</h1>
@@ -136,45 +108,32 @@ onUnmounted(() => {
 
       <section class="panel-juego">
         <div class="tarjeta-central">
+          <p style="font-family: monospace; font-weight: bold;">
+            TEMPORIZADOR: <span style="color: #EF4444;">{{ tiempo }}s</span>
+          </p>
           
-          <div class="simple-timer">
-            TEMPORIZADOR: <span class="tiempo-rojo">{{ tiempo }}s</span>
-          </div>
-
           <p class="instruccion">CONVIERTE EL DECIMAL A BINARIO</p>
-          
-          <div class="numero-target">
-            {{ numeroObjetivo }}
-          </div>
+          <div class="numero-target">{{ numeroObjetivo }}</div>
 
           <div class="contenedor-bits">
             <div 
-              v-for="(bit, index) in bits" 
-              :key="index"
+              v-for="(bit, index) in bits" :key="index"
               :class="['caja-bit', { 'activo': bit === 1 }]"
-              @click="toggleBit(index)"
+              @click="cambiarBit(index)" 
             >
               {{ bit }}
             </div>
           </div>
 
           <div class="acciones">
-            <button v-if="!juegoTerminado" @click="comprobarRespuesta" class="btn-accion">
-              CHECK BINARY
-            </button>
-            <button v-else @click="generarNumero" class="btn-siguiente">
-              NEXT CHALLENGE
-            </button>
+            <button v-if="!juegoTerminado" @click="comprobarRespuesta" class="btn-accion">COMPROBAR</button>
+            <button v-else @click="generarNumero" class="btn-siguiente">CONTINUAR</button>
           </div>
 
-          <p :class="['mensaje-sistema', { 'error': mensaje.includes('ERROR') }]">
-            {{ mensaje }}
-          </p>
+          <p :class="['mensaje-sistema', { 'error': mensaje.includes('ERROR') }]">{{ mensaje }}</p>
         </div>
       </section>
-
     </main>
-
   </div>
 </template>
 
