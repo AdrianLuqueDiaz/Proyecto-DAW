@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid; // Importación necesaria para la validación
+
 import com.arcade.backend.entidades.Usuario;
 import com.arcade.backend.repositorios.UsuarioRepositorio;
 
@@ -61,7 +63,7 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/registro")
-    public Usuario registrar(@RequestBody Usuario nuevoUsuario) {
+    public Usuario registrar(@Valid @RequestBody Usuario nuevoUsuario) { // <-- Se añade @Valid aquí
         String contrasenaCifrada = passwordEncoder.encode(nuevoUsuario.getContrasena());
         nuevoUsuario.setContrasena(contrasenaCifrada);
         
@@ -72,7 +74,6 @@ public class UsuarioControlador {
     public Usuario login(@RequestBody Usuario datosLogin) {
 
         Usuario usuario = usuarioRepositorio.findByAlias(datosLogin.getAlias()).orElse(null);
-
 
         if (usuario != null && passwordEncoder.matches(datosLogin.getContrasena(), usuario.getContrasena())) {
             return usuario;

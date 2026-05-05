@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "usuarios")
@@ -18,6 +19,7 @@ public class Usuario {
     @Column(unique = true, nullable = false)
     private String alias;
 
+    @Email(message = "El formato del correo no es válido")
     @Column(unique = true, nullable = false)
     private String correo;
 
