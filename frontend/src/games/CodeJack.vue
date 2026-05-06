@@ -542,6 +542,7 @@ color: #00E5FF;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  width: 100%;
 }
 
 .icono-dato {
@@ -552,12 +553,13 @@ color: #00E5FF;
 .texto-carta {
   font-family: 'Consolas', monospace;
   font-weight: bold;
-  font-size: 0.9rem;
-  max-width: fit-content;
+  font-size: 0.8rem; 
   color: #F8FAFC;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: center; 
+  padding: 0 5px;
+  box-sizing: border-box; 
+  overflow-wrap: break-word;
+  line-height: 1.2; 
 }
 
 .mini .texto-carta { 
