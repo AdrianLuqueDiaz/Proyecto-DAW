@@ -17,6 +17,7 @@ const cerrarSesion = () => {
       <div class="logo">
         <span class="logo-bit">BIT</span><span class="logo-hub">HUB</span>
       </div>
+      
 
       <nav class="navegacion">
         <span class="enlace" @click="router.push('/home')">INICIO</span>
@@ -35,6 +36,7 @@ const cerrarSesion = () => {
     </header>
 
     <main class="contenido">
+      
       <section class="contenido-header texto-centrado">
         <p class="subtitulo">HERRAMIENTAS DE ADMINISTRADOR</p>
         <h1 class="titulo-principal">Selecciona un Módulo</h1>
@@ -111,6 +113,8 @@ border-bottom: 2px solid transparent;
 .enlace:hover { 
 color: #E2E8F0; 
 }
+
+
 
 .enlace.activo { 
 color: #00E5FF; 

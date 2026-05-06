@@ -40,7 +40,7 @@ const cerrarSesion = () => {
 
 const cargarCartas = async () => {
   try {
-    const respuesta = await fetch('http://localhost:8080/api/codejack/cartas')
+    const respuesta = await fetch('http://localhost:8080/api/cartas-codejack')
     if (respuesta.ok) {
       cartasPosibles.value = await respuesta.json()
     } else {
@@ -553,7 +553,11 @@ color: #00E5FF;
   font-family: 'Consolas', monospace;
   font-weight: bold;
   font-size: 0.9rem;
+  max-width: fit-content;
   color: #F8FAFC;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mini .texto-carta { 

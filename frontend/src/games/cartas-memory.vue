@@ -185,7 +185,7 @@ onMounted(() => {
       
       <div class="encabezado-juego">
         <div class="boton-volver" @click="router.push('/home')">
-          ← Volver al Módulo Principal
+          ← Volver al Home
         </div>
         <h1 class="titulo">Logic Slots</h1>
         <p class="subtitulo">Empareja los conceptos y valida la lógica.</p>

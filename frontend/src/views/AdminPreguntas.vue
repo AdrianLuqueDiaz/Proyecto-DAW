@@ -131,7 +131,9 @@ const borrarPregunta = async (id: number) => {
     </header>
 
     <main class="contenido">
-      
+      <div class="boton-volver" @click="router.push('/home')">
+          ← Volver al Home
+        </div>
       <section class="contenido-header">
         <p class="subtitulo">HERRAMIENTAS DE ADMINISTRADOR</p>
         <h1 class="titulo-principal">Gestión de Datos</h1>
@@ -340,6 +342,20 @@ const borrarPregunta = async (id: number) => {
 
 .contenido-header {
   margin-bottom: 30px;
+}
+
+.boton-volver {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: color 0.2s;
+}
+
+.boton-volver:hover {
+color: #E2E8F0;
 }
 
 .subtitulo {

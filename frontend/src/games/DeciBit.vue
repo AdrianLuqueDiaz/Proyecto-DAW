@@ -88,7 +88,7 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) })
       <nav class="navegacion">
         <span class="enlace activo" @click="router.push('/home')">INICIO</span>
         <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
-        <span v-if="auth.rol === 'ADMIN'" class="enlace" @click="router.push('/preguntas')">PREGUNTAS</span>
+        <span v-if="auth.rol === 'ADMIN'" class="enlace" @click="router.push('/admin')">ADMINISTRACIÓN</span>
       </nav>
       <div class="info-usuario">
         <div class="bloque-bytes"> 
@@ -101,6 +101,9 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) })
     </header>
 
     <main class="contenido">
+      <div class="boton-volver" @click="router.push('/home')">
+          ← Volver al Home
+        </div>
       <section class="header-contenido">
         <p class="subtitulo">MÓDULO DE ENTRENAMIENTO</p>
         <h1 class="titulo-principal">DeciBit</h1>
@@ -166,6 +169,20 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) })
   height: 80px; 
   background-color: #11151D;
   border-bottom: 2px solid #1E2532;
+}
+
+.boton-volver {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: color 0.2s;
+}
+
+.boton-volver:hover {
+color: #E2E8F0;
 }
 
 .logo { 
