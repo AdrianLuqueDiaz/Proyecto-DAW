@@ -166,8 +166,9 @@ onMounted(() => {
           <h4 class="info-titulo">Guía de Conversión</h4>
           <ul class="info-lista">
             <li><span class="valor-base">1024 MB</span> <span class="separador">→</span> <span class="valor-final">1 GB</span></li>
-            <li><span class="valor-base">2048 MB</span> <span class="separador">→</span> <span class="valor-final">2 GB</span></li>
             <li><span class="valor-base">512 MB</span> <span class="separador">→</span> <span class="valor-final">0.5 GB</span></li>
+            <li><span class="valor-base">1.048.576 KB</span> <span class="separador">→</span> <span class="valor-final">1 GB</span></li>
+
           </ul>
         </div>
       </aside>
