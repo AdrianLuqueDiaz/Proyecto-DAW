@@ -111,12 +111,21 @@ onMounted(cargarClasificacion)
   background-color: #0B0E14; 
   color: #E2E8F0; 
   font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .cabecera {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 40px; height: 80px; background-color: #11151D;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 80px;
+  background-color: #11151D;
   border-bottom: 2px solid #1E2532;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .logo { 
@@ -134,20 +143,22 @@ onMounted(cargarClasificacion)
   color: #00E5FF; 
 }
 
-.navegacion { display: flex; 
+.navegacion { 
+  display: flex; 
   height: 100%; 
 }
 
-.enlace { display: flex;
-   align-items: center; 
-   padding: 0 20px; 
-   font-size: 0.85rem; 
-   font-weight: 600; 
-   letter-spacing: 1px; 
-   color: #64748B; 
-   cursor: pointer; 
-   transition: all 0.2s ease; 
-   border-bottom: 2px solid transparent; 
+.enlace { 
+  display: flex;
+  align-items: center; 
+  padding: 0 20px; 
+  font-size: 0.85rem; 
+  font-weight: 600; 
+  letter-spacing: 1px; 
+  color: #64748B; 
+  cursor: pointer; 
+  transition: all 0.2s ease; 
+  border-bottom: 2px solid transparent; 
 }
 
 .enlace:hover { 
@@ -159,12 +170,14 @@ onMounted(cargarClasificacion)
   border-bottom: 2px solid #00E5FF; 
 }
 
-.info-usuario { display: flex; 
+.info-usuario { 
+  display: flex; 
   align-items: center; 
   gap: 25px; 
 }
 
-.bloque-bytes { display: flex; 
+.bloque-bytes { 
+  display: flex; 
   align-items: baseline; 
   gap: 8px; 
   background: #1E2532; 
@@ -192,7 +205,7 @@ onMounted(cargarClasificacion)
 }
 
 .boton-salir { 
-   background: transparent;
+  background: transparent;
   border: 1px solid #334155;
   color: #94A3B8;
   padding: 8px 16px;
@@ -210,9 +223,12 @@ onMounted(cargarClasificacion)
   color: #fff; 
 }
 
-.contenido { max-width: 1000px; 
+.contenido { 
+  width: 100%;
+  max-width: 1000px; 
   margin: 0 auto; 
   padding: 60px 20px; 
+  box-sizing: border-box;
 }
 
 .header-contenido { 
@@ -238,53 +254,65 @@ onMounted(cargarClasificacion)
   display: flex; 
   flex-direction: column; 
   gap: 10px; 
+  width: 100%;
 }
 
 .tabla-header {
-  display: flex;
-  align-items: center;
-  padding: 0 30px; 
-  margin-bottom: 10px;
-  font-family: 'Consolas', monospace;
-  font-size: 0.75rem;
-  color: #64748B;
-  letter-spacing: 1px;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .tabla-header {
+    display: flex;
+    align-items: center;
+    padding: 0 30px; 
+    margin-bottom: 10px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.75rem;
+    color: #64748B;
+    letter-spacing: 1px;
+  }
 }
 
 .tarjeta-ranking {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background-color: #11151D;
   border: 1px solid #1E2532;
   border-radius: 6px;
   padding: 20px 30px; 
   transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .tarjeta-ranking:hover {
   border-color: #334155;
 }
 
-
 .col-pos { 
-  width: 60px; 
-  flex-shrink: 0; 
+  width: 50px; 
+  flex-shrink: 0;
 }
 
 .col-info { 
-  flex: 1; 
+  flex: 2;
+  min-width: 120px;
 }
 
 .col-partidas { 
-  width: 200px; 
-  text-align: center; 
-  flex-shrink: 0;
+  flex: 1;
+  text-align: right;
+  min-width: 80px;
 }
 
 .col-puntos { 
-  width: 200px; 
-  text-align: right; 
-  flex-shrink: 0;
+  flex: 1;
+  text-align: right;
+  min-width: 100px;
 }
 
 .num-pos { 
@@ -297,10 +325,12 @@ onMounted(cargarClasificacion)
   color: #00E5FF; 
 }
 
-.categoria { font-size: 0.65rem; 
+.categoria { 
+  font-size: 0.65rem; 
   font-weight: 800; 
   color: #FACC15; 
   letter-spacing: 1px; 
+  display: block;
 }
 
 .nombre-jugador-ranking { 
@@ -316,14 +346,51 @@ onMounted(cargarClasificacion)
   font-weight: bold;
 }
 
-.valor-ranking { font-family: 'Consolas', monospace; 
-font-size: 1.2rem; 
-font-weight: bold; 
-color: #FACC15; 
+.valor-ranking { 
+  font-family: 'Consolas', monospace; 
+  font-size: 1.2rem; 
+  font-weight: bold; 
+  color: #FACC15; 
 }
 
 .text-right { 
   text-align: right; 
 }
 
+@media (max-width: 768px) {
+  .cabecera {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+  }
+  .navegacion {
+    width: 100%;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  .info-usuario {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+  .titulo-principal {
+    font-size: 2.2rem;
+    text-align: center;
+  }
+  .header-contenido {
+    text-align: center;
+  }
+  .tarjeta-ranking {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 12px;
+  }
+  .col-pos, .col-info, .col-partidas, .col-puntos {
+    width: 100%;
+    text-align: left;
+    min-width: unset;
+  }
+  
+}
 </style>
