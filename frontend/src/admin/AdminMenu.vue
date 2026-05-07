@@ -55,6 +55,15 @@ const cerrarSesion = () => {
           <span class="boton-modulo">GESTIONAR CARTAS &rarr;</span>
         </div>
       </div>
+
+      <div class="contenedor-inferior">
+        <div class="tarjeta-modulo tarjeta-ancha" @click="router.push('/estadisticas')">
+          <h3 class="titulo-modulo">Estadísticas</h3>
+          <p class="desc-modulo">Visualiza las estadísticas de cada juego.</p>
+          <span class="boton-modulo">MOSTRAR ESTADÍSTICAS &rarr;</span>
+        </div>
+      </div>
+
     </main>
   </div>
 </template>
@@ -244,5 +253,17 @@ font-weight: 700;
 font-size: 0.85rem; 
 letter-spacing: 1px; 
 }
+
+.contenedor-inferior {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.tarjeta-ancha {
+  width: 100%; 
+  max-width: 100%; 
+}
+
 
 </style>
