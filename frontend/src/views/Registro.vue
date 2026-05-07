@@ -98,33 +98,35 @@ const registrarUsuario = async () => {
 
 <style scoped>
 
-/* fondo y borde de la tarjeta */
 .contenedor {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #0B0E14;
   font-family: 'Inter', system-ui, sans-serif;
   color: #E2E8F0;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .tarjeta {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   background-color: #11151D;
   border: 1px solid #1E2532;
   border-radius: 6px;
   overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* "header" tarjeta */
 .cabecera-tarjeta {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 20px 30px;
+  padding: 25px;
   background-color: #11151D;
-
+  border-bottom: 1px solid #1E2532;
 }
 
 .logo {
@@ -137,26 +139,32 @@ const registrarUsuario = async () => {
 .logo-bit { color: #E2E8F0; }
 .logo-hub { color: #00E5FF; }
 
-
-/* contenido de la tarjeta */
 .contenido-tarjeta {
-  padding: 40px 30px;
+  padding: 30px 20px;
+}
+
+@media (min-width: 480px) {
+  .contenido-tarjeta {
+    padding: 40px 30px;
+  }
 }
 
 .titulo-principal {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  margin: 0 0 5px 0;
+  margin: 0 0 8px 0;
   color: #F8FAFC;
+  text-align: center;
 }
 
 .subtitulo {
   font-size: 0.85rem;
   color: #64748B;
   margin: 0 0 30px 0;
+  text-align: center;
+  line-height: 1.4;
 }
 
-/* El cuadradito de las credenciales */
 .credenciales {
   margin-bottom: 20px;
   display: flex;
@@ -178,18 +186,18 @@ input {
   border-radius: 4px;
   padding: 12px 15px;
   color: #E2E8F0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-family: 'Inter', sans-serif;
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
 input:focus {
   border-color: #00E5FF;
+  background-color: #11151D;
 }
 
-/* botones */
 .btn-conectar {
   width: 100%;
   background-color: #E2E8F0;
@@ -202,27 +210,33 @@ input:focus {
   letter-spacing: 1px;
   cursor: pointer;
   margin-top: 10px;
-  transition: transform 0.1s ease, background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-.btn-conectar:hover {
-  background-color: #00E5FF;
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .btn-conectar:hover {
+    background-color: #00E5FF;
+    transform: translateY(-2px);
+  }
+}
+
+.btn-conectar:active {
+  transform: scale(0.98);
 }
 
 .enlace-volver {
   text-align: center;
   margin-top: 25px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #64748B;
   cursor: pointer;
   transition: color 0.2s ease;
+  padding: 10px;
 }
 
 .enlace-volver:hover {
   color: #E2E8F0;
 }
-
 
 .mensaje-estado {
   margin-top: 20px;

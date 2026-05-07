@@ -140,44 +140,66 @@ const cerrarSesion = () => {
   background-color: #0B0E14; 
   color: #E2E8F0; 
   font-family: 'Inter', system-ui, sans-serif;
+  width: 100%;
+  overflow-x: hidden;
 }
-
 
 .cabecera {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
-  height: 80px;
+  padding: 0 20px;
+  min-height: 80px;
   background-color: #11151D;
   border-bottom: 2px solid #1E2532;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .cabecera {
+    padding: 0 40px;
+    height: 80px;
+    flex-wrap: nowrap;
+  }
 }
 
 .logo {
   font-family: 'Consolas', monospace;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 900;
   letter-spacing: 2px;
+  padding: 15px 0;
 }
 
-.logo-bit {
-  color: #E2E8F0;
+@media (min-width: 768px) {
+  .logo { font-size: 1.5rem; }
 }
 
-.logo-hub {
-  color: #00E5FF;
-}
+.logo-bit { color: #E2E8F0; }
+.logo-hub { color: #00E5FF; }
 
 .navegacion {
   display: flex;
-  height: 100%;
+  order: 3;
+  width: 100%;
+  justify-content: center;
+  border-top: 1px solid #1E2532;
+}
+
+@media (min-width: 768px) {
+  .navegacion {
+    order: 2;
+    width: auto;
+    height: 100%;
+    border-top: none;
+  }
 }
 
 .enlace {
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  font-size: 0.85rem;
+  padding: 15px 10px;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 1px;
   color: #64748B;
@@ -186,10 +208,14 @@ const cerrarSesion = () => {
   border-bottom: 2px solid transparent;
 }
 
-.enlace:hover {
-  color: #E2E8F0;
+@media (min-width: 768px) {
+  .enlace {
+    padding: 0 20px;
+    font-size: 0.85rem;
+  }
 }
 
+.enlace:hover { color: #E2E8F0; }
 .enlace.activo {
   color: #00E5FF;
   border-bottom: 2px solid #00E5FF;
@@ -198,20 +224,29 @@ const cerrarSesion = () => {
 .info-usuario {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 15px;
+  order: 2;
+  padding: 10px 0;
+}
+
+@media (min-width: 768px) {
+  .info-usuario {
+    order: 3;
+    gap: 25px;
+  }
 }
 
 .bloque-bytes {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 5px;
   background: #1E2532;
-  padding: 6px 12px;
+  padding: 4px 8px;
   border-radius: 4px;
 }
 
 .etiqueta-bytes {
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-weight: 700;
   color: #64748B;
   letter-spacing: 1px;
@@ -221,25 +256,31 @@ const cerrarSesion = () => {
   font-family: 'Consolas', monospace;
   font-weight: bold;
   color: #FACC15; 
+  font-size: 0.9rem;
 }
 
 .nombre-jugador {
-  font-family: 'Consolas', monospace;
-  font-size: 0.9rem;
-  color: #E2E8F0;
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .nombre-jugador {
+    display: inline;
+    font-family: 'Consolas', monospace;
+    font-size: 0.8rem;
+    color: #E2E8F0;
+  }
 }
 
 .boton-salir {
   background: transparent;
   border: 1px solid #334155;
   color: #94A3B8;
-  padding: 8px 16px;
-  font-size: 0.75rem;
+  padding: 6px 12px;
+  font-size: 0.7rem;
   font-weight: bold;
-  letter-spacing: 1px;
   border-radius: 4px; 
   cursor: pointer;
-  transition: all 0.2s;
 }
 
 .boton-salir:hover {
@@ -248,33 +289,43 @@ const cerrarSesion = () => {
   color: #fff;
 }
 
-
 .contenido {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 30px 20px;
+}
+
+@media (min-width: 768px) {
+  .contenido { padding: 60px 20px; }
 }
 
 .header-contenido {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .header-contenido { text-align: left; }
 }
 
 .subtitulo {
   font-family: 'Consolas', monospace;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #00E5FF;
   letter-spacing: 2px;
   margin: 0 0 10px 0;
 }
 
 .titulo-principal {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 800;
   margin: 0;
   color: #F8FAFC;
-  letter-spacing: -1px;
 }
 
+@media (min-width: 768px) {
+  .titulo-principal { font-size: 3rem; }
+}
 
 .lista-juegos {
   display: flex;
@@ -284,25 +335,26 @@ const cerrarSesion = () => {
 
 .tarjeta-juego {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   background-color: #11151D;
   border: 1px solid #1E2532;
   border-radius: 6px;
-  padding: 25px 30px;
-  transition: border-color 0.2s ease;
+  padding: 20px;
+  gap: 20px;
 }
 
-.tarjeta-juego:hover {
-  border-color: #334155;
+@media (min-width: 768px) {
+  .tarjeta-juego {
+    flex-direction: row;
+    align-items: center;
+    padding: 25px 30px;
+  }
 }
 
-
-.columna-info {
-  flex: 1;
-}
+.columna-info { flex: 1; }
 
 .categoria {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 2px;
   color: #00E5FF;
@@ -311,67 +363,88 @@ const cerrarSesion = () => {
 }
 
 .nombre-juego {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
   margin: 0 0 8px 0;
   color: #F8FAFC;
 }
 
 .descripcion {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #94A3B8;
   margin: 0;
 }
 
 .columna-estadisticas {
   display: flex;
-  gap: 40px;
-  margin-right: 40px;
-  padding-left: 40px;
-  
+  gap: 30px;
+  padding: 15px 0;
+  border-top: 1px solid #1E2532;
+  border-bottom: 1px solid #1E2532;
+}
+
+@media (min-width: 768px) {
+  .columna-estadisticas {
+    border: none;
+    padding: 0 40px;
+    margin: 0;
+  }
 }
 
 .estadistica {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 3px;
 }
 
 .coste {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 700;
   color: #64748B;
-  letter-spacing: 1px;
 }
 
 .valor {
   font-family: 'Consolas', monospace;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #E2E8F0;
 }
 
-
 .columna-iniciar {
-  width: 120px;
-  text-align: right;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .columna-iniciar {
+    width: 120px;
+    text-align: right;
+  }
 }
 
 .boton-jugar {
+  width: 100%;
   background: #E2E8F0;
   color: #0B0E14;
   border: none;
   border-radius: 4px;
-  padding: 12px 24px;
+  padding: 12px;
   font-weight: 800;
   font-size: 0.85rem;
-  letter-spacing: 1px;
   cursor: pointer;
-  transition: transform 0.1s ease, background 0.2s ease;
 }
 
-.boton-jugar:hover {
-  background: #00E5FF;
-  transform: translateY(-2px);
+@media (min-width: 768px) {
+  .boton-jugar {
+    width: auto;
+    padding: 12px 24px;
+  }
+}
+
+.boton-jugar:active { transform: scale(0.98); }
+@media (hover: hover) {
+  .boton-jugar:hover {
+    background: #00E5FF;
+    transform: translateY(-2px);
+  }
 }
 </style>
