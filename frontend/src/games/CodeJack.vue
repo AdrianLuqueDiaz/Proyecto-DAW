@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { registrarPartida } from '@/services/statsService';
 
+const API_URL = import.meta.env.VITE_API_BASE_URL
+
 const router = useRouter()
 const auth = useAuthStore()
 
@@ -41,7 +43,7 @@ const cerrarSesion = () => {
 
 const cargarCartas = async () => {
   try {
-    const respuesta = await fetch('http://localhost:8080/api/cartas-codejack')
+    const respuesta = await fetch(`${API_URL}/cartas-codejack`)
     if (respuesta.ok) {
       cartasPosibles.value = await respuesta.json()
     } else {
@@ -56,7 +58,7 @@ const actualizarBytes = async (cantidad: number) => {
   if (!auth.jugador) return;
 
   try {
-    const respuesta = await fetch(`http://localhost:8080/api/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`, {
+    const respuesta = await fetch(`${API_URL}/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`, {
       method: 'PUT'
     });
 

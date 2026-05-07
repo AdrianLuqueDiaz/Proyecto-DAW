@@ -3,6 +3,9 @@ import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 
+const API_URL = import.meta.env.VITE_API_BASE_URL
+
+
 const auth = useAuthStore()
 const router = useRouter()
 const usuarios = ref<any[]>([])
@@ -14,7 +17,7 @@ const cerrarSesion = () => {
 
 const cargarClasificacion = async () => {
   try {
-    const response = await fetch('http://localhost:8080/api/usuarios/clasificacion')
+    const response = await fetch(`${API_URL}/usuarios/clasificacion`)
     if (response.ok) {
       usuarios.value = await response.json()
     }

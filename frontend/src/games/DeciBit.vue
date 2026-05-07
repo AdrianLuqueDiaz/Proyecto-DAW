@@ -4,6 +4,8 @@ import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 import { registrarPartida } from '@/services/statsService';
 
+const API_URL = import.meta.env.VITE_API_BASE_URL
+
 const auth = useAuthStore()
 const router = useRouter()
 
@@ -58,7 +60,7 @@ const comprobarRespuesta = async () => {
   juegoTerminado.value = true
 
   try {
-    const url = `http://localhost:8080/api/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`
+    const url = `${API_URL}/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`
     const response = await fetch(url, { method: 'PUT' })
     if (response.ok) {
       const usuario = await response.json()

@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth' 
 
+const API_URL = import.meta.env.VITE_API_BASE_URL
+
 const router = useRouter()
 const auth = useAuthStore()
 
@@ -24,7 +26,7 @@ const cerrarSesion = () => {
 // Cargar todas las preguntas al entrar en la página
 const cargarCartas = async () => {
   try {
-    const respuesta = await fetch('http://localhost:8080/api/cartas-codejack')
+    const respuesta = await fetch(`${API_URL}/cartas-codejack`)
     if (respuesta.ok) {
       listaCartas.value = await respuesta.json()
     }
@@ -39,7 +41,7 @@ onMounted(() => {
 
 const guardarCarta = async () => {
   try {
-    const respuesta = await fetch('http://localhost:8080/api/cartas-codejack/add', {
+    const respuesta = await fetch(`${API_URL}/cartas-codejack/add`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json'
@@ -76,7 +78,7 @@ const borrarCarta = async (id: number) => {
     return
 
   try {
-    const respuesta = await fetch(`http://localhost:8080/api/cartas-codejack/${id}`, {
+    const respuesta = await fetch(`${API_URL}/cartas-codejack/${id}`, {
       method: 'DELETE', 
     })
 

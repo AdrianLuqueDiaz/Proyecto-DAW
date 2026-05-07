@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 
+const API_URL = import.meta.env.VITE_API_BASE_URL
+
 const auth = useAuthStore()
 const router = useRouter()
 
@@ -16,7 +18,7 @@ const entrar = async () => {
   }
 
   try {
-    const respuesta = await fetch('http://localhost:8080/api/usuarios/login', {
+    const respuesta = await fetch(`${API_URL}/usuarios/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

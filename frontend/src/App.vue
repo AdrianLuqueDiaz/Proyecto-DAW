@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Aquí no hace falta nada de momento
+
 </script>
 
 <template>
@@ -7,7 +7,7 @@
 </template>
 
 <style>
-/* Tus estilos globales base, si los tienes */
+
 body {
   margin: 0;
   background-color: #020808;

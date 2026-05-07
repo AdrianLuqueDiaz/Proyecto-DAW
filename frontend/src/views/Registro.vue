@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
+const API_URL = import.meta.env.VITE_API_BASE_URL
+
 const nuevoUsuario = ref({
   alias: '',
   correo: '',
@@ -21,7 +23,7 @@ const registrarUsuario = async () => {
   }
 
   try {
-    const respuesta = await fetch('http://localhost:8080/api/usuarios/registro', {
+    const respuesta = await fetch(`${API_URL}/usuarios/registro`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json'

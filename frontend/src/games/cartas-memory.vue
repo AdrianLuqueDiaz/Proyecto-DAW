@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { registrarPartida } from '@/services/statsService';
 
+const API_URL = import.meta.env.VITE_API_BASE_URL
+
 const router = useRouter()
 const auth = useAuthStore()
 
@@ -24,7 +26,7 @@ const juegoTerminado = computed(() => {
 const actualizarBytes = async (cantidad: number) => {
   if (!auth.jugador) return;
   try {
-    const res = await fetch(`http://localhost:8080/api/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`, {
+    const res = await fetch(`${API_URL}/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`, {
       method: 'PUT'
     });
     if (res.ok) {
@@ -46,7 +48,7 @@ const cerrarSesion = () => {
 
 const cargarPreguntas = async () => {
   try {
-    const res = await fetch(`http://localhost:8080/api/preguntas`)
+    const res = await fetch(`${API_URL}/preguntas`)
     let todasLasPreguntas = await res.json()
     
     bancoDePreguntas.value = todasLasPreguntas.map((p: any) => {
@@ -63,7 +65,7 @@ const cargarPreguntas = async () => {
 
 const cargarCartas = async () => {
   try {
-    const res = await fetch('http://localhost:8080/api/cartas')
+    const res = await fetch(`${API_URL}/cartas`)
     const datos = await res.json()
     cartas.value = datos.map((c: any) => ({ 
       ...c, 

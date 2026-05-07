@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth' 
 
+const API_URL = import.meta.env.VITE_API_BASE_URL
+
 const router = useRouter()
 const auth = useAuthStore()
 
@@ -28,7 +30,7 @@ const cerrarSesion = () => {
 // Cargar todas las preguntas al entrar en la página
 const cargarPreguntas = async () => {
   try {
-    const respuesta = await fetch('http://localhost:8080/api/preguntas')
+    const respuesta = await fetch(`${API_URL}/preguntas`)
     if (respuesta.ok) {
       listaPreguntas.value = await respuesta.json()
     }
@@ -43,7 +45,7 @@ onMounted(() => {
 
 const guardarPregunta = async () => {
   try {
-    const respuesta = await fetch('http://localhost:8080/api/preguntas/add', {
+    const respuesta = await fetch(`${API_URL}/preguntas/add`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json'
@@ -82,7 +84,7 @@ const borrarPregunta = async (id: number) => {
     return
 
   try {
-    const respuesta = await fetch(`http://localhost:8080/api/preguntas/${id}`, {
+    const respuesta = await fetch(`${API_URL}/preguntas/${id}`, {
       method: 'DELETE', 
     })
 
