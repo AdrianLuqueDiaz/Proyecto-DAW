@@ -240,14 +240,14 @@ const cerrarSesion = () => {
 .bloque-bytes {
   display: flex;
   align-items: baseline;
-  gap: 5px;
+  gap: 8px;
   background: #1E2532;
-  padding: 4px 8px;
+  padding: 6px 12px; 
   border-radius: 4px;
 }
 
 .etiqueta-bytes {
-  font-size: 0.6rem;
+  font-size: 0.7rem; 
   font-weight: 700;
   color: #64748B;
   letter-spacing: 1px;
@@ -256,8 +256,7 @@ const cerrarSesion = () => {
 .valor-bytes {
   font-family: 'Consolas', monospace;
   font-weight: bold;
-  color: #FACC15; 
-  font-size: 0.9rem;
+  color: #FACC15;
 }
 
 .nombre-jugador {
@@ -268,26 +267,28 @@ const cerrarSesion = () => {
   .nombre-jugador {
     display: inline;
     font-family: 'Consolas', monospace;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: #E2E8F0;
   }
 }
 
-.boton-salir {
+.boton-salir { 
   background: transparent;
   border: 1px solid #334155;
   color: #94A3B8;
-  padding: 6px 12px;
-  font-size: 0.7rem;
+  padding: 8px 16px;
+  font-size: 0.75rem;
   font-weight: bold;
+  letter-spacing: 1px;
   border-radius: 4px; 
   cursor: pointer;
+  transition: all 0.2s;
 }
 
-.boton-salir:hover {
+.boton-salir:hover { 
   background: #EF4444; 
-  border-color: #EF4444;
-  color: #fff;
+  border-color: #EF4444; 
+  color: #fff; 
 }
 
 .contenido {
