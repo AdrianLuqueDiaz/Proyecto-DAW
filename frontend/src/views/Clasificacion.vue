@@ -106,22 +106,24 @@ onMounted(cargarClasificacion)
 </template>
 
 <style scoped>
+
+
 .contenedor-principal {
   min-height: 100vh;
+  width: 100%;
   background-color: #0B0E14; 
   color: #E2E8F0; 
   font-family: 'Inter', system-ui, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 .cabecera {
-  display: flex;
-  justify-content: space-between;
+  display: flex; 
+  justify-content: space-between; 
   align-items: center;
-  padding: 0 40px;
-  height: 80px;
+  padding: 0 40px; 
+  height: 80px; 
   background-color: #11151D;
   border-bottom: 2px solid #1E2532;
   width: 100%;
@@ -224,7 +226,6 @@ onMounted(cargarClasificacion)
 }
 
 .contenido { 
-  width: 100%;
   max-width: 1000px; 
   margin: 0 auto; 
   padding: 60px 20px; 
@@ -254,7 +255,6 @@ onMounted(cargarClasificacion)
   display: flex; 
   flex-direction: column; 
   gap: 10px; 
-  width: 100%;
 }
 
 .tabla-header {
@@ -277,16 +277,12 @@ onMounted(cargarClasificacion)
 .tarjeta-ranking {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   background-color: #11151D;
   border: 1px solid #1E2532;
   border-radius: 6px;
   padding: 20px 30px; 
   transition: border-color 0.2s;
-  width: 100%;
   box-sizing: border-box;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 .tarjeta-ranking:hover {
@@ -294,25 +290,24 @@ onMounted(cargarClasificacion)
 }
 
 .col-pos { 
-  width: 50px; 
-  flex-shrink: 0;
+  width: 60px; 
+  flex-shrink: 0; 
 }
 
 .col-info { 
-  flex: 2;
-  min-width: 120px;
+  flex: 1; 
 }
 
 .col-partidas { 
-  flex: 1;
-  text-align: right;
-  min-width: 80px;
+  width: 200px; 
+  text-align: center; 
+  flex-shrink: 0;
 }
 
 .col-puntos { 
-  flex: 1;
-  text-align: right;
-  min-width: 100px;
+  width: 200px; 
+  text-align: right; 
+  flex-shrink: 0;
 }
 
 .num-pos { 
@@ -357,21 +352,28 @@ onMounted(cargarClasificacion)
   text-align: right; 
 }
 
+@media (max-width: 1024px) {
+  .cabecera { padding: 0 20px; }
+  .contenido { padding: 40px 20px; }
+}
+
 @media (max-width: 768px) {
   .cabecera {
     flex-direction: column;
     height: auto;
-    padding: 15px;
+    padding: 20px;
+    gap: 10px;
   }
   .navegacion {
-    width: 100%;
-    justify-content: center;
+    height: auto;
     margin: 10px 0;
+  }
+  .enlace {
+    padding: 10px;
   }
   .info-usuario {
     width: 100%;
     justify-content: center;
-    gap: 15px;
   }
   .titulo-principal {
     font-size: 2.2rem;
@@ -382,15 +384,13 @@ onMounted(cargarClasificacion)
   }
   .tarjeta-ranking {
     flex-direction: column;
-    align-items: flex-start;
+    text-align: center;
+    gap: 10px;
     padding: 20px;
-    gap: 12px;
   }
   .col-pos, .col-info, .col-partidas, .col-puntos {
     width: 100%;
-    text-align: left;
-    min-width: unset;
+    text-align: center;
   }
-  
 }
 </style>
