@@ -388,6 +388,8 @@ const cerrarSesion = () => {
     border: none;
     padding: 0 40px;
     margin: 0;
+    
+    
   }
 }
 
