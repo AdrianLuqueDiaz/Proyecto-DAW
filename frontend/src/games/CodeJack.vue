@@ -98,6 +98,7 @@ const robarCarta = () => {
 const plantarse = () => {
   estado.value = 'evaluando' 
 
+  // La banca roba cartas hasta llegar al menos a 17
   while (totalBanca.value < 17) {
     const azar = Math.floor(Math.random() * cartasPosibles.value.length)
     const cartaRobada = cartasPosibles.value[azar]
@@ -106,10 +107,12 @@ const plantarse = () => {
     }
   }
 
+
   if (totalBanca.value > 21) {
     estado.value = 'ganado' 
     actualizarBytes(75) 
-    registrarPartida('Code-Jack 21', 75)
+    registrarPartida('Code-Jack 21', 75) 
+  } else if (totalGB.value > totalBanca.value) {
     estado.value = 'ganado' 
     actualizarBytes(75) 
     registrarPartida('Code-Jack 21', 75) 
