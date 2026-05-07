@@ -109,107 +109,105 @@ onMounted(cargarClasificacion)
 </template>
 
 <style scoped>
-
-
 .contenedor-principal {
   min-height: 100vh;
   width: 100%;
-  background-color: #0B0E14; 
-  color: #E2E8F0; 
+  background-color: #0B0E14;
+  color: #E2E8F0;
   font-family: 'Inter', system-ui, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 .cabecera {
-  display: flex; 
-  justify-content: space-between; 
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 40px; 
-  height: 80px; 
+  padding: 0 40px;
+  height: 80px;
   background-color: #11151D;
   border-bottom: 2px solid #1E2532;
   width: 100%;
   box-sizing: border-box;
 }
 
-.logo { 
-  font-family: 'Consolas', monospace; 
-  font-size: 1.5rem; 
-  font-weight: 900; 
-  letter-spacing: 2px; 
+.logo {
+  font-family: 'Consolas', monospace;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
 }
 
-.logo-bit { 
-  color: #E2E8F0; 
+.logo-bit {
+  color: #E2E8F0;
 }
 
-.logo-hub { 
-  color: #00E5FF; 
+.logo-hub {
+  color: #00E5FF;
 }
 
-.navegacion { 
-  display: flex; 
-  height: 100%; 
-}
-
-.enlace { 
+.navegacion {
   display: flex;
-  align-items: center; 
-  padding: 0 20px; 
-  font-size: 0.85rem; 
-  font-weight: 600; 
-  letter-spacing: 1px; 
-  color: #64748B; 
-  cursor: pointer; 
-  transition: all 0.2s ease; 
-  border-bottom: 2px solid transparent; 
+  height: 100%;
 }
 
-.enlace:hover { 
-  color: #E2E8F0; 
+.enlace {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
 }
 
-.enlace.activo { 
-  color: #00E5FF; 
-  border-bottom: 2px solid #00E5FF; 
+.enlace:hover {
+  color: #E2E8F0;
 }
 
-.info-usuario { 
-  display: flex; 
-  align-items: center; 
-  gap: 25px; 
+.enlace.activo {
+  color: #00E5FF;
+  border-bottom: 2px solid #00E5FF;
 }
 
-.bloque-bytes { 
-  display: flex; 
-  align-items: baseline; 
-  gap: 8px; 
-  background: #1E2532; 
-  padding: 6px 12px; 
-  border-radius: 4px; 
+.info-usuario {
+  display: flex;
+  align-items: center;
+  gap: 25px;
 }
 
-.etiqueta-bytes { 
-  font-size: 0.7rem; 
-  font-weight: 700; 
-  color: #64748B; 
-  letter-spacing: 1px; 
+.bloque-bytes {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  background: #1E2532;
+  padding: 6px 12px;
+  border-radius: 4px;
 }
 
-.valor-bytes { 
-  font-family: 'Consolas', monospace; 
-  font-weight: bold; 
-  color: #FACC15; 
+.etiqueta-bytes {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748B;
+  letter-spacing: 1px;
 }
 
-.nombre-jugador { 
-  font-family: 'Consolas', monospace; 
-  font-size: 0.9rem; 
-  color: #E2E8F0; 
+.valor-bytes {
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+  color: #FACC15;
 }
 
-.boton-salir { 
+.nombre-jugador {
+  font-family: 'Consolas', monospace;
+  font-size: 0.9rem;
+  color: #E2E8F0;
+}
+
+.boton-salir {
   background: transparent;
   border: 1px solid #334155;
   color: #94A3B8;
@@ -217,47 +215,48 @@ onMounted(cargarClasificacion)
   font-size: 0.75rem;
   font-weight: bold;
   letter-spacing: 1px;
-  border-radius: 4px; 
+  border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.boton-salir:hover { 
-  background: #EF4444; 
-  border-color: #EF4444; 
-  color: #fff; 
+.boton-salir:hover {
+  background: #EF4444;
+  border-color: #EF4444;
+  color: #fff;
 }
 
-.contenido { 
-  max-width: 1000px; 
-  margin: 0 auto; 
-  padding: 60px 20px; 
+.contenido {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 20px;
   box-sizing: border-box;
 }
 
-.header-contenido { 
-  margin-bottom: 40px; 
+.header-contenido {
+  margin-bottom: 40px;
 }
 
-.subtitulo { 
-  font-family: 'Consolas', monospace; 
-  font-size: 0.8rem; 
-  color: #00E5FF; 
-  letter-spacing: 2px; 
-  margin-bottom: 10px; 
+.subtitulo {
+  font-family: 'Consolas', monospace;
+  font-size: 0.8rem;
+  color: #00E5FF;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
 }
 
-.titulo-principal { 
-  font-size: 3rem; 
-  font-weight: 800; 
-  color: #F8FAFC; 
-  letter-spacing: -1px; 
+.titulo-principal {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #F8FAFC;
+  letter-spacing: -1px;
 }
 
-.lista-ranking { 
-  display: flex; 
-  flex-direction: column; 
-  gap: 10px; 
+.lista-ranking {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .tabla-header {
@@ -268,7 +267,7 @@ onMounted(cargarClasificacion)
   .tabla-header {
     display: flex;
     align-items: center;
-    padding: 0 30px; 
+    padding: 0 30px;
     margin-bottom: 10px;
     font-family: 'Consolas', monospace;
     font-size: 0.75rem;
@@ -283,7 +282,7 @@ onMounted(cargarClasificacion)
   background-color: #11151D;
   border: 1px solid #1E2532;
   border-radius: 6px;
-  padding: 20px 30px; 
+  padding: 20px 30px;
   transition: border-color 0.2s;
   box-sizing: border-box;
 }
@@ -292,72 +291,63 @@ onMounted(cargarClasificacion)
   border-color: #334155;
 }
 
-.col-pos { 
-  width: 60px; 
-  flex-shrink: 0; 
-}
-
-.col-info { 
-  flex: 1; 
-}
-
-.col-partidas { 
-  width: 200px; 
-  text-align: center; 
+.col-pos {
+  width: 60px;
   flex-shrink: 0;
 }
 
-.col-puntos { 
-  width: 200px; 
-  text-align: right; 
+.col-info {
+  flex: 1;
+}
+
+.col-partidas {
+  width: 150px;
+  text-align: center;
   flex-shrink: 0;
 }
 
-.num-pos { 
-  font-family: 'Consolas', monospace; 
-  font-weight: bold; 
-  color: #64748B; 
+.col-puntos {
+  width: 150px;
+  text-align: right;
+  flex-shrink: 0;
 }
 
-.num-pos.top-3 { 
-  color: #00E5FF; 
+.num-pos {
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+  color: #64748B;
 }
 
-.categoria { 
-  font-size: 0.65rem; 
-  font-weight: 800; 
-  color: #FACC15; 
-  letter-spacing: 1px; 
+.num-pos.top-3 {
+  color: #00E5FF;
+}
+
+.categoria {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #FACC15;
+  letter-spacing: 1px;
   display: block;
 }
 
-.nombre-jugador-ranking { 
-  font-size: 1.2rem; 
-  font-weight: 700; 
-  color: #F8FAFC; 
-  margin: 0; 
+.nombre-jugador-ranking {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin: 0;
 }
 
-.valor-partidas { 
-  font-family: 'Consolas', monospace; 
-  color: #94A3B8; 
+.valor-partidas {
+  font-family: 'Consolas', monospace;
+  color: #94A3B8;
   font-weight: bold;
 }
 
-.valor-ranking { 
-  font-family: 'Consolas', monospace; 
-  font-size: 1.2rem; 
-  font-weight: bold; 
-  color: #FACC15; 
-}
-
-.text-right { 
-  text-align: right; 
-}
-
-@media (max-width: 1024px) {
-  .cabecera { padding: 0 20px; }
-  .contenido { padding: 40px 20px; }
+.valor-ranking {
+  font-family: 'Consolas', monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FACC15;
 }
 
 @media (max-width: 768px) {
@@ -365,11 +355,10 @@ onMounted(cargarClasificacion)
     flex-direction: column;
     height: auto;
     padding: 20px;
-    gap: 10px;
+    gap: 15px;
   }
   .navegacion {
     height: auto;
-    margin: 10px 0;
   }
   .enlace {
     padding: 10px;
@@ -377,6 +366,7 @@ onMounted(cargarClasificacion)
   .info-usuario {
     width: 100%;
     justify-content: center;
+    gap: 15px;
   }
   .titulo-principal {
     font-size: 2.2rem;
@@ -386,14 +376,37 @@ onMounted(cargarClasificacion)
     text-align: center;
   }
   .tarjeta-ranking {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
     padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
-  .col-pos, .col-info, .col-partidas, .col-puntos {
+  .col-pos {
+    width: auto;
+    margin-bottom: 5px;
+  }
+  .col-partidas,
+  .col-puntos {
     width: 100%;
-    text-align: center;
+    text-align: left;
+    display: flex; 
+    align-items: center;
+    gap: 8px; 
+    font-family: 'Consolas', monospace;
+    font-size: 0.85rem;
+  }
+  .col-partidas::before {
+    content: "PARTIDAS JUGADAS:";
+    color: #64748B;
+    font-weight: bold;
+  }
+  .col-puntos::before {
+    content: "BYTES TOTALES:";
+    color: #64748B;
+    font-weight: bold;
+  }
+  .valor-ranking {
+    font-size: 0.85rem;
   }
 }
 </style>
