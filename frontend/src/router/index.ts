@@ -4,13 +4,14 @@ import { useAuthStore } from '../stores/auth'
 import Login from '../views/Login.vue'
 import Home from '../views/HomeView.vue'
 import Memory from '../games/cartas-memory.vue'
-import Preguntas from '../views/AdminPreguntas.vue'
+import Preguntas from '../admin/AdminPreguntas.vue'
 import Registro from '../views/Registro.vue'
 import Codejack from '../games/CodeJack.vue'
 import Clasificacion from '../views/Clasificacion.vue'
 import DeciBit from '../games/DeciBit.vue'
-import Admin from '../views/AdminMenu.vue'
-import Cartas from '../views/AdminCartas.vue'
+import Admin from '../admin/AdminMenu.vue'
+import Cartas from '../admin/AdminCartas.vue'
+import Estadisticas from '../admin/AdminEstadisticas.vue'
 
 
 
@@ -53,6 +54,12 @@ const router = createRouter({
       path: '/admin',
       name: 'Admin',
       component: Admin,
+      meta: { requiereAutenticacion: true, requiereAdmin: true }
+    },
+    {
+      path: '/estadisticas',
+      name: 'Estadisticas',
+      component: Estadisticas,
       meta: { requiereAutenticacion: true, requiereAdmin: true }
 
     },

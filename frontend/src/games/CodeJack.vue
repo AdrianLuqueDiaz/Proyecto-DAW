@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { registrarPartida } from '@/services/statsService';
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -87,6 +88,8 @@ const robarCarta = () => {
   if (totalGB.value > 21) {
     estado.value = 'perdido'
     actualizarBytes(-50) 
+
+    registrarPartida('Code-Jack 21', -50) 
   }
 }
 
@@ -104,15 +107,18 @@ const plantarse = () => {
   if (totalBanca.value > 21) {
     estado.value = 'ganado' 
     actualizarBytes(75) 
-  } else if (totalGB.value > totalBanca.value) {
+    registrarPartida('Code-Jack 21', 75)
     estado.value = 'ganado' 
     actualizarBytes(75) 
+    registrarPartida('Code-Jack 21', 75) 
   } else if (totalGB.value < totalBanca.value) {
     estado.value = 'perdido' 
     actualizarBytes(-50) 
+    registrarPartida('Code-Jack 21', -50) 
   } else {
     estado.value = 'empate' 
     actualizarBytes(0) 
+    registrarPartida('Code-Jack 21', 0)
   }
 }
 

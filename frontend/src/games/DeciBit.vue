@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
+import { registrarPartida } from '@/services/statsService';
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -66,6 +67,7 @@ const comprobarRespuesta = async () => {
   } catch (error) {
     console.error("Error de red")
   }
+  registrarPartida('Decibit', cantidad);
 }
 
 const cerrarSesion = () => {
