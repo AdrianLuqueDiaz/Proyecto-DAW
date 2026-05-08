@@ -205,9 +205,12 @@ const borrarCarta = async (id: number) => {
 <style scoped>
 .contenedor-principal {
   min-height: 100vh;
+  width: 100%;
   background-color: #0B0E14;
   color: #E2E8F0;
   font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .cabecera {
@@ -218,6 +221,7 @@ const borrarCarta = async (id: number) => {
   height: 80px;
   background-color: #11151D;
   border-bottom: 2px solid #1E2532;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -227,8 +231,13 @@ const borrarCarta = async (id: number) => {
   letter-spacing: 2px;
 }
 
-.logo-bit { color: #E2E8F0; }
-.logo-hub { color: #00E5FF; }
+.logo-bit { 
+  color: #E2E8F0; 
+}
+
+.logo-hub { 
+  color: #00E5FF; 
+}
 
 .navegacion {
   display: flex;
@@ -248,7 +257,9 @@ const borrarCarta = async (id: number) => {
   border-bottom: 2px solid transparent;
 }
 
-.enlace:hover { color: #E2E8F0; }
+.enlace:hover { 
+  color: #E2E8F0; 
+}
 .enlace.activo {
   color: #00E5FF;
   border-bottom: 2px solid #00E5FF;
@@ -311,6 +322,7 @@ const borrarCarta = async (id: number) => {
   max-width: 1000px; 
   margin: 0 auto;
   padding: 60px 20px;
+  box-sizing: border-box;
 }
 
 .contenido-header {
@@ -327,8 +339,8 @@ const borrarCarta = async (id: number) => {
   transition: color 0.2s;
 }
 
-.boton-volver:hover {
-color: #E2E8F0;
+.boton-volver:hover { 
+  color: #E2E8F0; 
 }
 
 .subtitulo {
@@ -347,14 +359,6 @@ color: #E2E8F0;
   letter-spacing: -1px;
 }
 
-.titulo-seccion {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-top: 0;
-  margin-bottom: 25px;
-  color: #F8FAFC;
-}
-
 .panel-formulario {
   background-color: #11151D;
   border: 1px solid #1E2532;
@@ -363,13 +367,8 @@ color: #E2E8F0;
   margin-top: 30px;
 }
 
-
-.panel-margen {
-  margin-top: 30px;
-}
-
-.alerta-global {
-  margin-bottom: 30px;
+.panel-margen { 
+  margin-top: 30px; 
 }
 
 .grupo-cajitas {
@@ -386,9 +385,6 @@ label {
   color: #94A3B8;
 }
 
-.etiqueta-correcta { color: #10B981; }
-.etiqueta-falsa { color: #EF4444; }
-
 .cajitas-texto {
   width: 100%;
   background-color: #0B0E14;
@@ -403,18 +399,13 @@ label {
   box-sizing: border-box;
 }
 
-.cajitas-texto:focus { border-color: #00E5FF; }
+.cajitas-texto:focus { 
+  border-color: #00E5FF; 
+}
 
 .area-texto {
   height: 100px;
   resize: vertical;
-}
-
-.cuadricula-opciones {
-  display: grid;
-  grid-template-columns: repeat(1, 2fr);
-  gap: 20px;
-  margin-bottom: 20px;
 }
 
 .boton-guardar {
@@ -429,7 +420,7 @@ label {
   letter-spacing: 1px;
   cursor: pointer;
   margin-top: 10px;
-  transition: transform 0.1s ease, background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .boton-guardar:hover {
@@ -437,48 +428,17 @@ label {
   transform: translateY(-2px);
 }
 
-.mensaje-estado {
-  padding: 15px;
-  text-align: center;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.success {
-  color: #10B981;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid #10B981;
-}
-
-.error {
-  color: #EF4444;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid #EF4444;
-}
-
-
-
-
-.mensaje-vacio {
-  text-align: center;
-  color: #64748B;
-  font-style: italic;
-  padding: 20px 0;
-}
-
 .contenedor-tabla {
-  overflow-x: auto;
   border: 1px solid #1E2532;
   border-radius: 6px;
   background-color: #0B0E14;
+  overflow: hidden;
 }
 
 .tabla-preguntas {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.9rem;
 }
 
 .tabla-preguntas th {
@@ -497,31 +457,6 @@ label {
   color: #E2E8F0;
 }
 
-.tabla-preguntas tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.tabla-preguntas tbody tr:hover {
-  background-color: #131823;
-}
-
-.celda-id {
-  font-family: 'Consolas', monospace;
-  color: #00E5FF;
-  font-weight: bold;
-}
-
-.celda-enunciado {
-  max-width: 400px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.celda-accion {
-  text-align: right;
-}
-
 .boton-borrar-fila {
   background-color: transparent;
   color: #EF4444;
@@ -537,5 +472,84 @@ label {
 .boton-borrar-fila:hover {
   background-color: #EF4444;
   color: #fff;
+}
+
+
+@media (max-width: 768px) {
+  .cabecera {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    gap: 15px;
+  }
+  
+  .navegacion {
+    height: auto;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .enlace { padding: 10px; }
+
+  .info-usuario {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .titulo-principal {
+    font-size: 2.2rem;
+    text-align: center;
+  }
+
+  .header-contenido { 
+    text-align: center; 
+  }
+
+  .tabla-preguntas thead { 
+    display: none; 
+  }
+  
+  .tabla-preguntas tbody tr {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 2px solid #1E2532;
+    gap: 10px;
+  }
+
+  .tabla-preguntas td {
+    padding: 0;
+    border: none;
+    display: flex;
+    align-items: center;
+    font-family: 'Consolas', monospace;
+    font-size: 0.85rem;
+  }
+
+  .tabla-preguntas td:nth-child(1)::before {
+    content: "TEXTO CARTA: ";
+    color: #64748B;
+    font-weight: bold;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  .tabla-preguntas td:nth-child(2)::before {
+    content: "VALOR GB: ";
+    color: #64748B;
+    font-weight: bold;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  .celda-accion {
+    padding-top: 10px !important;
+  }
+
+  .boton-borrar-fila {
+    width: 100%;
+    text-align: center;
+  }
 }
 </style>
