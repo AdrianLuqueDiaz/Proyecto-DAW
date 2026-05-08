@@ -257,8 +257,8 @@ onMounted(() => {
   min-height: 100vh;
   background-color: #0B0E14;
   color: #E2E8F0;
-  font-family: 'Inter', system-ui,
-  sans-serif; display: flex;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
   flex-direction: column;
 }
 
@@ -284,26 +284,29 @@ onMounted(() => {
 }
 
 .boton-volver:hover { 
-color: #E2E8F0; 
+  color: #E2E8F0; 
 }
 
 .logo {
- font-family: 'Consolas', monospace; 
- font-size: 1.5rem; 
- font-weight: 900; 
- letter-spacing: 2px; 
- }
-.logo-bit { 
-color: #E2E8F0;
+  font-family: 'Consolas', monospace; 
+  font-size: 1.5rem; 
+  font-weight: 900; 
+  letter-spacing: 2px; 
 }
+
+.logo-bit { 
+  color: #E2E8F0;
+}
+
 .logo-hub { 
-color: #00E5FF;
+  color: #00E5FF;
 }
 
 .navegacion { 
   display: flex; 
   height: 100%; 
 }
+
 .enlace { 
   display: flex; 
   align-items: center; 
@@ -320,6 +323,7 @@ color: #00E5FF;
 .enlace:hover { 
   color: #E2E8F0; 
 }
+
 .enlace.activo { 
   color: #00E5FF; 
   border-bottom: 2px solid #00E5FF; 
@@ -327,8 +331,7 @@ color: #00E5FF;
 
 .info-usuario { 
   display: flex; 
-  align-items: 
-  center; 
+  align-items: center; 
   gap: 25px; 
 }
 
@@ -338,8 +341,7 @@ color: #00E5FF;
   gap: 8px; 
   background: #1E2532; 
   padding: 6px 12px; 
-  border-radius: 
-  4px; 
+  border-radius: 4px; 
 }
 
 .etiqueta-bytes { 
@@ -390,7 +392,6 @@ color: #00E5FF;
   position: relative;
 }
 
-
 .panel-lateral {
   width: 250px;
   flex-shrink: 0;
@@ -431,17 +432,9 @@ color: #00E5FF;
   border-radius: 4px;
 }
 
-.valor-base { 
-  color: #94A3B8; 
-}
-.separador { 
-  color: #334155; 
-}
-.valor-final { 
-  color: #00E5FF; 
-  font-weight: bold; 
-}
-
+.valor-base { color: #94A3B8; }
+.separador { color: #334155; }
+.valor-final { color: #00E5FF; font-weight: bold; }
 
 .mesa-central {
   width: 100%;
@@ -484,6 +477,10 @@ color: #00E5FF;
   border-radius: 4px;
   border: 1px solid #1E2532;
   margin-bottom: 20px;
+  font-family: 'Consolas', monospace;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #E2E8F0;
 }
 
 .etiqueta-estado .nombre {
@@ -491,13 +488,6 @@ color: #00E5FF;
   font-weight: 700;
   letter-spacing: 1px;
   color: #64748B;
-}
-
-.etiqueta-estado {
-  font-family: 'Consolas', monospace;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #E2E8F0;
 }
 
 .tu-turno {
@@ -579,7 +569,6 @@ color: #00E5FF;
   color: #94A3B8; 
 }
 
-
 .resultados {
   margin-bottom: 30px;
 }
@@ -600,20 +589,9 @@ color: #00E5FF;
   font-size: 0.9rem; 
 }
 
-.exito { 
-  background: rgba(16, 185, 129, 0.1); 
-  border: 1px solid #10B981; 
-  color: #10B981; 
-}
-.error { background: rgba(239, 68, 68, 0.1); 
-  border: 1px solid #EF4444; 
-  color: #EF4444; 
-}
-.neutral { background: rgba(250, 204, 21, 0.1); 
-  border: 1px solid #FACC15;
-  color: #FACC15; 
-}
-
+.exito { background: rgba(16, 185, 129, 0.1); border: 1px solid #10B981; color: #10B981; }
+.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #EF4444; color: #EF4444; }
+.neutral { background: rgba(250, 204, 21, 0.1); border: 1px solid #FACC15; color: #FACC15; }
 
 .controles {
   display: flex;
@@ -655,5 +633,59 @@ color: #00E5FF;
 .boton-secundario:hover {
   border-color: #E2E8F0; 
   color: #E2E8F0; 
+}
+
+
+@media (max-width: 1024px) {
+  .contenido-juego {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  .panel-lateral {
+    width: 100%;
+    max-width: 700px;
+    order: 1; 
+  }
+  .mesa-central {
+    width: 100%;
+    max-width: 700px;
+    order: 2; 
+  }
+  .cabecera {
+    height: auto;
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
+  .navegacion {
+    width: 100%;
+    justify-content: center;
+  }
+  .info-usuario {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .titulo-juego {
+    font-size: 1.8rem;
+  }
+  .tablero-juego {
+    padding: 20px 15px;
+  }
+  .zona-cartas {
+    justify-content: center;
+  }
+  .carta-dato {
+    width: 70px;
+    height: 100px;
+  }
+  .texto-carta {
+    font-size: 0.7rem;
+  }
 }
 </style>
