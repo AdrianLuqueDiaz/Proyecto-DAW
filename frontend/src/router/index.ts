@@ -12,6 +12,8 @@ import DeciBit from '../games/DeciBit.vue'
 import Admin from '../admin/AdminMenu.vue'
 import Cartas from '../admin/AdminCartas.vue'
 import Estadisticas from '../admin/AdminEstadisticas.vue'
+import LogicLink from '../games/LogicLink.vue'
+
 
 
 
@@ -48,6 +50,12 @@ const router = createRouter({
       path: '/codejack',
       name: 'Codejack',
       component: Codejack,
+      meta: { requiereAutenticacion: true }
+    },
+    {
+      path: '/logiclink',
+      name: 'LogicLink',
+      component: LogicLink,
       meta: { requiereAutenticacion: true }
     },
     {

@@ -128,6 +128,30 @@ const cerrarSesion = () => {
 
         </article>
 
+        <article class="tarjeta-juego">
+          
+          
+
+          <div class="columna-info">
+            <span class="categoria">CHAINING</span>
+            <h2 class="nombre-juego">CodeLink</h2>
+            <p class="descripcion">Enlaca los bloques de codigo en sus respectivos sitios.</p>
+          </div>
+
+          <div class="columna-estadisticas">
+            <div class="estadistica">
+              <span class="coste">COSTE</span>
+              <span class="valor">75 B</span>
+            </div>
+            
+          </div>
+
+          <div class="columna-iniciar">
+            <button class="boton-jugar" @click="router.push('/logiclink')">INICIAR</button>
+          </div>
+
+        </article>
+
       </section>
 
     </main>
