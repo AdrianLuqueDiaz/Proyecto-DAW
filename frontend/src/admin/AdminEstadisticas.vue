@@ -305,7 +305,6 @@ onMounted(() => {
   padding: 20px 0;
 }
 
-/* --- RESPONSIVE SISTEMA ANTERIOR --- */
 
 @media (max-width: 768px) {
   .cabecera {
@@ -334,7 +333,6 @@ onMounted(() => {
     text-align: center;
   }
 
-  /* Transformación de la tabla en tarjetas con etiquetas */
   .tabla-preguntas thead { display: none; }
   
   .tabla-preguntas tbody tr {
@@ -355,7 +353,6 @@ onMounted(() => {
     gap: 8px;
   }
 
-  /* Inyección de etiquetas igual que en AdminPreguntas */
   .tabla-preguntas td:nth-child(1)::before {
     content: "JUEGO: ";
     color: #64748B;
