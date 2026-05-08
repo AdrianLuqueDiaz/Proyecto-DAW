@@ -112,9 +112,12 @@ onMounted(() => {
 <style scoped>
 .contenedor-principal {
   min-height: 100vh;
+  width: 100%;
   background-color: #0B0E14;
   color: #E2E8F0;
   font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .cabecera {
@@ -125,6 +128,7 @@ onMounted(() => {
   height: 80px;
   background-color: #11151D;
   border-bottom: 2px solid #1E2532;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -218,10 +222,7 @@ onMounted(() => {
   max-width: 1000px; 
   margin: 0 auto;
   padding: 60px 20px;
-}
-
-.contenido-header {
-  margin-bottom: 30px;
+  box-sizing: border-box;
 }
 
 .boton-volver {
@@ -234,9 +235,7 @@ onMounted(() => {
   transition: color 0.2s;
 }
 
-.boton-volver:hover {
-color: #E2E8F0;
-}
+.boton-volver:hover { color: #E2E8F0; }
 
 .subtitulo {
   font-family: 'Consolas', monospace;
@@ -254,14 +253,6 @@ color: #E2E8F0;
   letter-spacing: -1px;
 }
 
-.titulo-seccion {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-top: 0;
-  margin-bottom: 25px;
-  color: #F8FAFC;
-}
-
 .panel-formulario {
   background-color: #11151D;
   border: 1px solid #1E2532;
@@ -270,122 +261,19 @@ color: #E2E8F0;
   margin-top: 30px;
 }
 
-
-.panel-margen {
-  margin-top: 30px;
-}
-
-.alerta-global {
-  margin-bottom: 30px;
-}
-
-.grupo-cajitas {
-  margin-bottom: 25px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #94A3B8;
-}
-
-.etiqueta-correcta { color: #10B981; }
-.etiqueta-falsa { color: #EF4444; }
-
-.cajitas-texto {
-  width: 100%;
-  background-color: #0B0E14;
-  border: 1px solid #1E2532;
-  border-radius: 4px;
-  padding: 14px 16px;
-  color: #E2E8F0;
-  font-size: 0.95rem;
-  font-family: 'Consolas', monospace;
-  outline: none;
-  transition: border-color 0.2s ease;
-  box-sizing: border-box;
-}
-
-.cajitas-texto:focus { border-color: #00E5FF; }
-
-.area-texto {
-  height: 100px;
-  resize: vertical;
-}
-
-.cuadricula-opciones {
-  display: grid;
-  grid-template-columns: repeat(1, 2fr);
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.boton-guardar {
-  width: 100%;
-  background-color: #E2E8F0;
-  color: #0B0E14;
-  border: none;
-  border-radius: 4px;
-  padding: 16px;
-  font-weight: 800;
-  font-size: 0.95rem;
-  letter-spacing: 1px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: transform 0.1s ease, background 0.2s ease;
-}
-
-.boton-guardar:hover {
-  background-color: #00E5FF;
-  transform: translateY(-2px);
-}
-
-.mensaje-estado {
-  padding: 15px;
-  text-align: center;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.success {
-  color: #10B981;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid #10B981;
-}
-
-.error {
-  color: #EF4444;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid #EF4444;
-}
-
-
-
-
-.mensaje-vacio {
-  text-align: center;
-  color: #64748B;
-  font-style: italic;
-  padding: 20px 0;
-}
+.panel-margen { margin-top: 30px; }
 
 .contenedor-tabla {
-  overflow-x: auto;
   border: 1px solid #1E2532;
   border-radius: 6px;
   background-color: #0B0E14;
+  overflow: hidden;
 }
 
 .tabla-preguntas {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.9rem;
 }
 
 .tabla-preguntas th {
@@ -404,45 +292,89 @@ label {
   color: #E2E8F0;
 }
 
-.tabla-preguntas tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.tabla-preguntas tbody tr:hover {
-  background-color: #131823;
-}
-
 .celda-id {
   font-family: 'Consolas', monospace;
   color: #00E5FF;
   font-weight: bold;
 }
 
-.celda-enunciado {
-  max-width: 400px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.mensaje-vacio {
+  text-align: center;
+  color: #64748B;
+  font-style: italic;
+  padding: 20px 0;
 }
 
-.celda-accion {
-  text-align: right;
-}
+/* --- RESPONSIVE SISTEMA ANTERIOR --- */
 
-.boton-borrar-fila {
-  background-color: transparent;
-  color: #EF4444;
-  border: 1px solid #EF4444;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+@media (max-width: 768px) {
+  .cabecera {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    gap: 15px;
+  }
+  
+  .navegacion {
+    height: auto;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .enlace { padding: 10px; }
 
-.boton-borrar-fila:hover {
-  background-color: #EF4444;
-  color: #fff;
+  .info-usuario {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .titulo-principal {
+    font-size: 2.2rem;
+    text-align: center;
+  }
+
+  /* Transformación de la tabla en tarjetas con etiquetas */
+  .tabla-preguntas thead { display: none; }
+  
+  .tabla-preguntas tbody tr {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 2px solid #1E2532;
+    gap: 10px;
+  }
+
+  .tabla-preguntas td {
+    padding: 0;
+    border: none;
+    display: flex;
+    align-items: center;
+    font-family: 'Consolas', monospace;
+    font-size: 0.85rem;
+    gap: 8px;
+  }
+
+  /* Inyección de etiquetas igual que en AdminPreguntas */
+  .tabla-preguntas td:nth-child(1)::before {
+    content: "JUEGO: ";
+    color: #64748B;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .tabla-preguntas td:nth-child(2)::before {
+    content: "PARTIDAS: ";
+    color: #64748B;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .tabla-preguntas td:nth-child(3)::before {
+    content: "BYTES REPARTIDOS: ";
+    color: #64748B;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
 }
 </style>
