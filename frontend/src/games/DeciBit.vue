@@ -145,24 +145,17 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) })
 </template>
 
 <style scoped>
-
-.simple-timer {
-  font-family: 'Consolas', monospace;
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  color: #E2E8F0;
-}
-
-.tiempo-rojo {
-  color: #EF4444; 
+* {
+  box-sizing: border-box;
 }
 
 .contenedor-principal {
   min-height: 100vh;
+  width: 100%;
   background-color: #0B0E14; 
   color: #E2E8F0; 
   font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
 .cabecera {
@@ -173,20 +166,7 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) })
   height: 80px; 
   background-color: #11151D;
   border-bottom: 2px solid #1E2532;
-}
-
-.boton-volver {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #64748B;
-  cursor: pointer;
-  margin-bottom: 15px;
-  transition: color 0.2s;
-}
-
-.boton-volver:hover {
-color: #E2E8F0;
+  width: 100%;
 }
 
 .logo { 
@@ -196,8 +176,13 @@ color: #E2E8F0;
   letter-spacing: 2px; 
 }
 
-.logo-bit { color: #E2E8F0; }
-.logo-hub { color: #00E5FF; }
+.logo-bit { 
+  color: #E2E8F0; 
+}
+
+.logo-hub { 
+  color: #00E5FF; 
+}
 
 .navegacion { 
   display: flex; 
@@ -210,14 +195,10 @@ color: #E2E8F0;
   padding: 0 20px; 
   font-size: 0.85rem; 
   font-weight: 600; 
-  letter-spacing: 1px; 
   color: #64748B; 
   cursor: pointer; 
-  transition: all 0.2s ease; 
-  border-bottom: 2px solid transparent; 
+  transition: 0.2s; 
 }
-
-.enlace:hover { color: #E2E8F0; }
 
 .enlace.activo { 
   color: #00E5FF; 
@@ -227,7 +208,7 @@ color: #E2E8F0;
 .info-usuario { 
   display: flex; 
   align-items: center; 
-  gap: 25px; 
+  gap: 20px; 
 }
 
 .bloque-bytes { 
@@ -243,7 +224,6 @@ color: #E2E8F0;
   font-size: 0.7rem; 
   font-weight: 700; 
   color: #64748B; 
-  letter-spacing: 1px; 
 }
 
 .valor-bytes { 
@@ -255,7 +235,6 @@ color: #E2E8F0;
 .nombre-jugador { 
   font-family: 'Consolas', monospace; 
   font-size: 0.9rem; 
-  color: #E2E8F0; 
 }
 
 .boton-salir { 
@@ -265,83 +244,92 @@ color: #E2E8F0;
   padding: 8px 16px; 
   border-radius: 4px; 
   cursor: pointer; 
-  transition: all 0.2s; 
-}
-
-.boton-salir:hover { 
-  background: #EF4444; 
-  border-color: #EF4444; 
-  color: #fff; 
 }
 
 .contenido { 
   max-width: 1000px; 
   margin: 0 auto; 
-  padding: 60px 20px; 
+  padding: 40px 20px; 
+}
+
+.boton-volver {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  margin-bottom: 30px;
+  display: inline-block;
 }
 
 .header-contenido { 
-  margin-bottom: 40px; 
   text-align: center; 
+  margin-bottom: 40px; 
 }
 
 .subtitulo { 
   font-family: 'Consolas', monospace; 
   font-size: 0.8rem; 
-  color: #00E5FF; 
+  color: #00E5FF; margin-bottom: 10px; 
   letter-spacing: 2px; 
-  margin-bottom: 10px; 
 }
 
-.titulo-principal { 
-  font-size: 3rem; 
+.titulo-principal { font-size: 3rem; 
   font-weight: 800; 
   color: #F8FAFC; 
-  letter-spacing: -1px; 
+  margin: 0; 
 }
 
 .panel-juego { 
   display: flex; 
   justify-content: center; 
+  width: 100%; 
 }
 
 .tarjeta-central {
   background-color: #11151D;
   border: 1px solid #1E2532;
   border-radius: 12px;
-  padding: 60px;
+  padding: 50px 20px;
   width: 100%;
   max-width: 600px;
   text-align: center;
 }
 
-.instruccion {
-  font-family: 'Consolas', monospace;
-  font-size: 0.85rem;
-  color: #64748B;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
+.timer-text { 
+  font-family: 'Consolas', monospace; 
+  font-weight: bold; 
+  margin-bottom: 20px; 
 }
 
-.numero-target {
-  font-family: 'Consolas', monospace;
-  font-size: 7rem;
-  font-weight: 900;
-  color: #FACC15;
-  margin-bottom: 40px;
-  text-shadow: 0 0 20px rgba(250, 204, 21, 0.2);
+.tiempo-valor { 
+  color: #EF4444; 
+}
+
+.instruccion { 
+  font-family: 'Consolas', monospace; 
+  font-size: 0.85rem; 
+  color: #64748B; 
+  letter-spacing: 1px; 
+  margin-bottom: 20px; 
+}
+
+.numero-target { font-family: 'Consolas', monospace; 
+font-size: 6rem; 
+font-weight: 900; 
+color: #FACC15; 
+margin-bottom: 30px; 
 }
 
 .contenedor-bits {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .caja-bit {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   background-color: #1E2532;
   border: 2px solid #334155;
   border-radius: 8px;
@@ -349,23 +337,17 @@ color: #E2E8F0;
   align-items: center;
   justify-content: center;
   font-family: 'Consolas', monospace;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #64748B;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.caja-bit:hover {
-  border-color: #475569;
-  transform: translateY(-2px);
+  transition: 0.2s;
 }
 
 .caja-bit.activo {
-  background-color: rgba(0, 229, 255, 0.05);
   border-color: #00E5FF;
   color: #00E5FF;
-  box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
 }
 
 .btn-accion {
@@ -374,16 +356,8 @@ color: #E2E8F0;
   border: none;
   padding: 16px 40px;
   font-weight: 800;
-  font-size: 0.9rem;
   border-radius: 4px;
   cursor: pointer;
-  letter-spacing: 1px;
-  transition: all 0.2s;
-}
-
-.btn-accion:hover {
-  background-color: #00B8D4;
-  transform: scale(1.05);
 }
 
 .btn-siguiente {
@@ -396,15 +370,60 @@ color: #E2E8F0;
   cursor: pointer;
 }
 
-.mensaje-sistema {
-  margin-top: 40px;
-  font-family: 'Consolas', monospace;
-  font-weight: bold;
-  font-size: 1rem;
+.mensaje-sistema { 
+  margin-top: 30px; 
+  font-family: 'Consolas', monospace; 
+  font-weight: bold; 
   color: #10B981; 
 }
 
-.mensaje-sistema.error {
+.mensaje-sistema.error { 
   color: #EF4444; 
+}
+
+@media (max-width: 1024px) {
+  .cabecera { 
+    height: auto; 
+    flex-direction: column; 
+    padding: 20px; 
+    gap: 15px; 
+  }
+
+  .navegacion { 
+    gap: 10px; 
+  }
+
+  .enlace { 
+    padding: 5px 10px; 
+  }
+
+  .info-usuario { 
+    flex-wrap: wrap; 
+    justify-content: center; 
+  }
+}
+
+@media (max-width: 600px) {
+  .titulo-principal { 
+    font-size: 2.2rem; 
+  }
+
+  .numero-target { 
+    font-size: 4.5rem; 
+  }
+
+  .contenedor-bits {
+     gap: 8px; 
+    }
+
+  .caja-bit { 
+    width: 60px; 
+    height: 60px; 
+    font-size: 1.5rem; 
+  }
+
+  .tarjeta-central { 
+    padding: 30px 15px; 
+  }
 }
 </style>
