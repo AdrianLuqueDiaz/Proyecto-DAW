@@ -72,7 +72,7 @@ const agarrarPieza = (evento: DragEvent, textoDeLaPieza: string) => {
 const soltarPieza = async (evento: DragEvent) => {
   if (estado.value !== 'jugando') return
 
-  const textoSoltado = evento.dataTransfer?.getData('texto') //leemos el tecto de la memoria del navegador
+  const textoSoltado = evento.dataTransfer?.getData('texto')//leemos el tecto de la memoria del navegador
   if (!textoSoltado) return
 
   piezaSoltada.value = textoSoltado //pieza visualmente
@@ -92,7 +92,7 @@ const soltarPieza = async (evento: DragEvent) => {
       } else {
         estado.value = 'terminado' 
       }
-    }, 1500)
+    }, 1000)
 
   } else {
   
@@ -103,7 +103,7 @@ const soltarPieza = async (evento: DragEvent) => {
     setTimeout(() => {
       piezaSoltada.value = null
       estado.value = 'jugando'
-    }, 1500)
+    }, 1000)
   }
 }
 
@@ -144,8 +144,8 @@ onMounted(() => {
           <h4 class="info-titulo">Instrucciones</h4>
           <p class="instruccion-texto">Arrastra el bloque de código correcto al hueco para completar la sintaxis.</p>
           <ul class="info-lista">
-            <li><span class="valor-base">Acierto</span> <span class="separador">→</span> <span class="valor-final">+50 Bytes</span></li>
-            <li><span class="valor-base">Fallo</span> <span class="separador">→</span> <span class="valor-error">-10 Bytes</span></li>
+            <li><span class="valor-base">Acierto</span> <span class="separador">→</span> <span class="valor-final">+75 Bytes</span></li>
+            <li><span class="valor-base">Fallo</span> <span class="separador">→</span> <span class="valor-error">-100 Bytes</span></li>
           </ul>
         </div>
       </aside>
@@ -157,7 +157,55 @@ onMounted(() => {
           <p class="subtitulo-juego">Reconstruye los fragmentos de código dañados.</p>
         </div>
 
-       
+        <div v-if="retos.length > 0 && estado !== 'terminado'" class="tablero-juego">
+          
+          <div class="zona-codigo">
+            <span class="texto-codigo">{{ retos[retoActualId].codigoAnterior }}</span>
+            
+            <div 
+              class="hueco-drop" 
+              :class="{ 
+                'con-pieza': piezaSoltada, 
+                'acierto': estado === 'correcto', 
+                'fallo': estado === 'error' 
+              }"
+              @dragover.prevent 
+              @drop="soltarPieza"
+            >
+              {{ piezaSoltada ? piezaSoltada : 'suelta aqui' }}
+            </div>
+            
+            <span class="texto-codigo">{{ retos[retoActualId].codigoPosterior }}</span>
+          </div>
+
+          <div class="resultados">
+            <div v-if="estado === 'correcto'" class="mensaje exito">¡SINTAXIS CORRECTA! +75 BYTES</div>
+            <div v-if="estado === 'error'" class="mensaje error">ERROR -100 BYTES</div>
+          </div>
+
+          <hr class="divisor">
+
+          <div class="zona-opciones" v-if="estado === 'jugando'">
+            <div 
+              v-for="(opcion, index) in opciones" 
+              :key="index"
+              class="pieza-draggable"
+              draggable="true"
+              @dragstart="agarrarPieza($event, opcion)"
+            >
+              {{ opcion }}
+            </div>
+          </div>
+          
+        </div>
+
+        <div v-else-if="estado === 'terminado'" class="tablero-juego centrado">
+          <div class="mensaje exito espaciado-inferior">
+            <h3>Sistemas Restaurados</h3>
+            <p>Has unido todos los bloques de código disponibles.</p>
+          </div>
+          <button @click="cargarRetos" class="boton-primario">JUGAR OTRA VEZ</button>
+        </div>
 
       </div>
     </main>
@@ -192,18 +240,10 @@ onMounted(() => {
   letter-spacing: 2px;
 }
 
-.logo-bit {
-  color: #E2E8F0;
-}
+.logo-bit { color: #E2E8F0; }
+.logo-hub { color: #00E5FF; }
 
-.logo-hub {
-  color: #00E5FF;
-}
-
-.navegacion {
-  display: flex;
-  height: 100%;
-}
+.navegacion { display: flex; height: 100%; }
 
 .enlace {
   display: flex;
@@ -214,14 +254,10 @@ onMounted(() => {
   letter-spacing: 1px;
   color: #64748B;
   cursor: pointer;
-  transition: all 0.2s ease;
   border-bottom: 2px solid transparent;
 }
 
-.enlace:hover {
-  color: #E2E8F0;
-}
-
+.enlace:hover { color: #E2E8F0; }
 .enlace.activo {
   color: #00E5FF;
   border-bottom: 2px solid #00E5FF;
@@ -268,10 +304,8 @@ onMounted(() => {
   padding: 8px 16px;
   font-size: 0.75rem;
   font-weight: bold;
-  letter-spacing: 1px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
 .boton-salir:hover {
@@ -295,18 +329,14 @@ onMounted(() => {
 }
 
 .boton-volver {
-  display: inline-block;
   font-size: 0.8rem;
   font-weight: 600;
   color: #64748B;
   cursor: pointer;
   margin-bottom: 15px;
-  transition: color 0.2s;
 }
 
-.boton-volver:hover {
-  color: #E2E8F0;
-}
+.boton-volver:hover { color: #E2E8F0; }
 
 .tarjeta-info {
   background-color: #11151D;
@@ -318,9 +348,8 @@ onMounted(() => {
 .info-titulo {
   font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 1px;
   color: #64748B;
-  margin: 0 0 15px 0;
+  margin-bottom: 15px;
   text-transform: uppercase;
 }
 
@@ -334,7 +363,6 @@ onMounted(() => {
 .info-lista {
   list-style: none;
   padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -343,7 +371,6 @@ onMounted(() => {
 .info-lista li {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   font-family: 'Consolas', monospace;
   font-size: 0.85rem;
   background: #0B0E14;
@@ -351,23 +378,9 @@ onMounted(() => {
   border-radius: 4px;
 }
 
-.valor-base {
-  color: #94A3B8;
-}
-
-.separador {
-  color: #334155;
-}
-
-.valor-final {
-  color: #00E5FF;
-  font-weight: bold;
-}
-
-.valor-error {
-  color: #EF4444;
-  font-weight: bold;
-}
+.valor-base { color: #94A3B8; }
+.valor-final { color: #00E5FF; font-weight: bold; }
+.valor-error { color: #EF4444; font-weight: bold; }
 
 .mesa-central {
   width: 100%;
@@ -382,15 +395,112 @@ onMounted(() => {
 .titulo-juego {
   font-size: 2.5rem;
   font-weight: 800;
-  margin: 0 0 5px 0;
   color: #F8FAFC;
-  letter-spacing: -1px;
 }
 
-.subtitulo-juego {
-  font-size: 0.95rem;
+.tablero-juego {
+  background-color: #11151D;
+  border: 1px solid #1E2532;
+  border-radius: 6px;
+  padding: 40px;
+}
+
+.zona-codigo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #0B0E14;
+  padding: 30px;
+  border-radius: 6px;
+  border: 1px solid #1E2532;
+  font-family: 'Consolas', monospace;
+  font-size: 1.2rem;
+  line-height: 2;
+  margin-bottom: 20px;
+}
+
+.hueco-drop {
+  min-width: 120px;
+  height: 40px;
+  border: 2px dashed #334155;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #64748B;
-  margin: 0;
+  font-size: 0.85rem;
+  background: rgba(11, 14, 20, 0.5);
 }
 
+.hueco-drop.con-pieza {
+  border: 2px solid #00E5FF;
+  background: rgba(0, 229, 255, 0.1);
+  color: #00E5FF;
+  font-size: 1.1rem;
+}
+
+.hueco-drop.acierto { border-color: #10B981; color: #10B981; }
+.hueco-drop.fallo { border-color: #EF4444; color: #EF4444; }
+
+.divisor {
+  border: 0;
+  height: 1px;
+  background-color: #1E2532;
+  margin: 30px 0;
+}
+
+.zona-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.pieza-draggable {
+  padding: 12px 24px;
+  background-color: #1E2532;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  color: #F8FAFC;
+  font-family: 'Consolas', monospace;
+  cursor: grab;
+}
+
+.pieza-draggable:hover { border-color: #00E5FF; }
+
+.mensaje {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.mensaje h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+}
+
+.espaciado-inferior {
+  margin-bottom: 20px;
+}
+
+.exito { background: rgba(16, 185, 129, 0.1); border: 1px solid #10B981; color: #10B981; }
+.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #EF4444; color: #EF4444; }
+
+.centrado {
+  text-align: center;
+}
+
+.boton-primario {
+  background-color: #E2E8F0;
+  color: #0B0E14;
+  border: none;
+  border-radius: 4px;
+  padding: 14px 28px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.boton-primario:hover { background-color: #00E5FF; }
 </style>
