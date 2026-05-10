@@ -24,7 +24,6 @@ const cargarRetos = async () => {
     const res = await fetch(`${API_URL}/logiclink`)
     if (res.ok) {
       let datos = await res.json()
-
       retos.value = datos.sort(() => Math.random() - 0.5)
       prepararReto()
     }
@@ -65,16 +64,51 @@ const actualizarBytes = async (cantidad: number) => {
 }
 
 // JUEGO
+
 const agarrarPieza = (evento: DragEvent, textoDeLaPieza: string) => {
   evento.dataTransfer?.setData('texto', textoDeLaPieza) //memoria del navegador
-
 }
 
+const soltarPieza = async (evento: DragEvent) => {
+  if (estado.value !== 'jugando') return
+
+  const textoSoltado = evento.dataTransfer?.getData('texto') //leemos el tecto de la memoria del navegador
+  if (!textoSoltado) return
+
+  piezaSoltada.value = textoSoltado //pieza visualmente
+  
+  const retoActual = retos.value[retoActualId.value]
+
+  if (textoSoltado === retoActual.respuestaCorrecta) {
+   
+    estado.value = 'correcto'
+    await actualizarBytes(75)
+    await registrarPartida('Logic Link', 75)
+
+    setTimeout(() => {
+      if (retoActualId.value < retos.value.length - 1) {
+        retoActualId.value++ 
+        prepararReto()
+      } else {
+        estado.value = 'terminado' 
+      }
+    }, 1500)
+
+  } else {
+  
+    estado.value = 'error'
+    await actualizarBytes(-100)
+    await registrarPartida('Logic Link', -100)
+
+    setTimeout(() => {
+      piezaSoltada.value = null
+      estado.value = 'jugando'
+    }, 1500)
+  }
+}
 
 onMounted(() => {
-
   cargarRetos()
-
 })
 </script>
 
