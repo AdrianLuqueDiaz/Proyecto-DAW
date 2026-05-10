@@ -64,7 +64,18 @@ const actualizarBytes = async (cantidad: number) => {
   }
 }
 
+// JUEGO
+const agarrarPieza = (evento: DragEvent, textoDeLaPieza: string) => {
+  evento.dataTransfer?.setData('texto', textoDeLaPieza) //memoria del navegador
 
+}
+
+
+onMounted(() => {
+
+  cargarRetos()
+
+})
 </script>
 
 <template>
