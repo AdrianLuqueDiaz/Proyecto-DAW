@@ -353,13 +353,13 @@ onMounted(() => {
 
   .enlace { 
     padding: 10px 12px; 
-    border-bottom: none !important;
+    
   }
 
   .info-usuario { 
     width: 100%;
     justify-content: center;
-    gap: 15px; 
+    
   }
 }
 
