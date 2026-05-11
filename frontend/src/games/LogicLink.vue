@@ -258,16 +258,15 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
 .contenedor-principal {
   min-height: 100vh;
   background-color: #0B0E14;
   color: #E2E8F0;
   font-family: 'Inter', system-ui, sans-serif;
-  width: 100%;
-  overflow-x: hidden; 
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .cabecera {
@@ -330,7 +329,6 @@ onMounted(() => {
   letter-spacing: 1px;
   color: #64748B;
   cursor: pointer;
-  transition: all 0.2s ease;
   border-bottom: 2px solid transparent;
 }
 
@@ -338,7 +336,6 @@ onMounted(() => {
   .enlace { padding: 0 20px; font-size: 0.85rem; }
 }
 
-.enlace:hover { color: #E2E8F0; }
 .enlace.activo {
   color: #00E5FF;
   border-bottom: 2px solid #00E5FF;
@@ -349,11 +346,6 @@ onMounted(() => {
   align-items: center;
   gap: 15px;
   order: 2;
-  padding: 10px 0;
-}
-
-@media (min-width: 768px) {
-  .info-usuario { order: 3; gap: 25px; }
 }
 
 .bloque-bytes {
@@ -363,13 +355,6 @@ onMounted(() => {
   background: #1E2532;
   padding: 6px 12px;
   border-radius: 4px;
-}
-
-.etiqueta-bytes {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #64748B;
-  letter-spacing: 1px;
 }
 
 .valor-bytes {
@@ -387,7 +372,6 @@ onMounted(() => {
     display: inline;
     font-family: 'Consolas', monospace;
     font-size: 0.9rem;
-    color: #E2E8F0;
   }
 }
 
@@ -402,7 +386,6 @@ onMounted(() => {
   cursor: pointer;
 }
 
-
 .contenido-juego {
   flex: 1;
   display: flex;
@@ -413,10 +396,7 @@ onMounted(() => {
 }
 
 @media (min-width: 900px) {
-  .contenido-juego {
-    padding: 40px;
-    gap: 40px;
-  }
+  .contenido-juego { padding: 40px; gap: 40px; }
 }
 
 .panel-lateral {
@@ -436,7 +416,7 @@ onMounted(() => {
   background-color: #11151D;
   border: 1px solid #1E2532;
   border-radius: 6px;
-  padding: 20px;
+  padding: 25px;
 }
 
 @media (min-width: 768px) {
@@ -446,12 +426,12 @@ onMounted(() => {
 .zona-codigo {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
   background: #0B0E14;
   padding: 20px;
   border-radius: 6px;
+  border: 1px solid #1E2532;
   font-family: 'Consolas', monospace;
   font-size: 1rem;
 }
@@ -461,21 +441,26 @@ onMounted(() => {
 }
 
 .hueco-drop {
-  min-width: 100px;
+  min-width: 120px;
   height: 40px;
   border: 2px dashed #334155;
   border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #64748B;
   background: rgba(11, 14, 20, 0.5);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .hueco-drop.esperando-pieza-movil {
   border-color: #00E5FF;
-  background: rgba(0, 229, 255, 0.1);
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+  background: rgba(0, 229, 255, 0.05);
+}
+
+.hueco-drop.con-pieza {
+  border: 2px solid #00E5FF;
+  color: #00E5FF;
 }
 
 .zona-opciones {
@@ -483,26 +468,23 @@ onMounted(() => {
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
-  margin-top: 20px;
 }
 
 .pieza-draggable {
-  padding: 10px 20px;
+  padding: 12px 24px;
   background-color: #1E2532;
   border: 1px solid #334155;
   border-radius: 4px;
   color: #F8FAFC;
   font-family: 'Consolas', monospace;
-  cursor: pointer; 
-  user-select: none;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .pieza-draggable.seleccionada-movil {
   border-color: #00E5FF;
-  background-color: #00E5FF;
-  color: #0B0E14;
-  transform: scale(1.05);
+  background-color: rgba(0, 229, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 900px) {
