@@ -298,6 +298,7 @@ onMounted(() => {
   padding: 0;
 }
 
+
 .barra-superior {
   display: flex;
   justify-content: space-between;
@@ -396,6 +397,7 @@ onMounted(() => {
   border-color: #EF4444;
   color: #fff;
 }
+
 
 .zona-juego {
   flex: 1;
@@ -598,6 +600,7 @@ onMounted(() => {
   cursor: pointer;
 }
 
+/* --- MEDIA QUERIES CORREGIDAS (RESPONSIVE IGUAL A CLASIFICACIÓN) --- */
 @media (max-width: 768px) {
   .barra-superior {
     flex-direction: column;
@@ -605,9 +608,20 @@ onMounted(() => {
     padding: 20px;
     gap: 15px;
   }
-  .menu-navegacion { height: auto; width: 100%; justify-content: center; }
-  .enlace { padding: 10px; font-size: 0.75rem; }
-  .zona-usuario { width: 100%; justify-content: center; gap: 15px; border-top: 1px solid #1E2532; padding-top: 15px; }
+  .menu-navegacion { 
+    height: auto; 
+    width: 100%; 
+    justify-content: center; 
+  }
+  .enlace { 
+    padding: 10px; 
+    font-size: 0.75rem; 
+  }
+  .zona-usuario { 
+    width: 100%; 
+    justify-content: center; 
+    gap: 15px; 
+  }
   .titulo { font-size: 2.2rem; text-align: center; }
   .subtitulo { text-align: center; }
   .encabezado-juego { text-align: center; }

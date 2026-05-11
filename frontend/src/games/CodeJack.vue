@@ -355,6 +355,38 @@ onMounted(() => {
   font-size: 0.75rem;
   border-radius: 4px;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+.boton-salir:hover {
+  background: #EF4444;
+  border-color: #EF4444;
+  color: #fff;
+}
+
+@media (max-width: 1024px) {
+  .cabecera { 
+    height: auto; 
+    flex-direction: column; 
+    padding: 20px; 
+    gap: 15px; 
+  }
+
+  .navegacion { 
+    height: auto;
+    gap: 5px; 
+  }
+
+  .enlace { 
+    padding: 10px 12px; 
+    border-bottom: none !important;
+  }
+
+  .info-usuario { 
+    width: 100%;
+    justify-content: center;
+    gap: 15px; 
+  }
 }
 
 .contenido-juego {
@@ -600,21 +632,6 @@ onMounted(() => {
 }
 
 @media (max-width: 1024px) {
-  .cabecera { 
-    height: auto; 
-    flex-direction: column; 
-    padding: 20px; 
-    gap: 15px; 
-  }
-
-  .navegacion { 
-    gap: 5px; 
-  }
-
-  .enlace { 
-    padding: 5px 12px; 
-  }
-
   .contenido-juego { 
     flex-direction: column; 
     align-items: center; 
@@ -631,7 +648,6 @@ onMounted(() => {
     order: 2; 
     width: 100%; 
   }
-
 }
 
 @media (max-width: 600px) {

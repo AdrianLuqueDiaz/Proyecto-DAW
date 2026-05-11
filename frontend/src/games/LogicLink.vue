@@ -258,83 +258,42 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
-.contenedor-principal {
-  min-height: 100vh;
-  background-color: #0B0E14;
-  color: #E2E8F0;
-  font-family: 'Inter', system-ui, sans-serif;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow-x: hidden;
-}
-
 .cabecera {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  min-height: 80px;
-  background-color: #11151D;
+  padding: 0 40px; 
+  height: 80px; 
+  background-color: #11151D; 
   border-bottom: 2px solid #1E2532;
-  flex-wrap: wrap;
-}
-
-@media (min-width: 768px) {
-  .cabecera {
-    padding: 0 40px;
-    height: 80px;
-    flex-wrap: nowrap;
-  }
+  width: 100%;
+  flex-shrink: 0;
 }
 
 .logo {
   font-family: 'Consolas', monospace;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: 2px;
-  padding: 15px 0;
-}
-
-@media (min-width: 768px) {
-  .logo { font-size: 1.5rem; }
 }
 
 .logo-bit { color: #E2E8F0; }
 .logo-hub { color: #00E5FF; }
 
-.navegacion {
-  display: flex;
-  order: 3;
-  width: 100%;
-  justify-content: center;
-  border-top: 1px solid #1E2532;
+.navegacion { 
+  display: flex; 
+  height: 100%; 
 }
 
-@media (min-width: 768px) {
-  .navegacion {
-    order: 2;
-    width: auto;
-    height: 100%;
-    border-top: none;
-  }
-}
-
-.enlace {
+.enlace { 
   display: flex;
   align-items: center;
-  padding: 15px 10px;
-  font-size: 0.7rem;
+  padding: 0 20px;
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 1px;
   color: #64748B;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-}
-
-@media (min-width: 768px) {
-  .enlace { padding: 0 20px; font-size: 0.85rem; }
+  transition: 0.2s;
 }
 
 .enlace.activo {
@@ -342,11 +301,10 @@ onMounted(() => {
   border-bottom: 2px solid #00E5FF;
 }
 
-.info-usuario {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  order: 2;
+.info-usuario { 
+  display: flex; 
+  align-items: center; 
+  gap: 20px; 
 }
 
 .bloque-bytes {
@@ -360,8 +318,8 @@ onMounted(() => {
 
 .valor-bytes {
   font-family: 'Consolas', monospace;
-  font-weight: bold;
   color: #FACC15;
+  font-weight: bold;
 }
 
 .nombre-jugador {
@@ -369,13 +327,17 @@ onMounted(() => {
   font-size: 0.9rem;
   color: #E2E8F0;
 }
-@media (min-width: 480px) {
-  .nombre-jugador {
-    display: inline;
-    font-family: 'Consolas', monospace;
-    font-size: 0.9rem;
-  }
+
+.boton-salir { 
+  background: transparent;
+  border: 1px solid #334155;
+  color: #94A3B8;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
 }
+
 @media (max-width: 1024px) {
   .cabecera { 
     height: auto; 
@@ -385,35 +347,31 @@ onMounted(() => {
   }
 
   .navegacion { 
-    gap: 10px; 
+    height: auto;
+    gap: 5px; 
   }
 
   .enlace { 
-    padding: 5px 10px; 
+    padding: 10px 12px; 
+    border-bottom: none !important;
   }
 
   .info-usuario { 
-    flex-wrap: wrap; 
-    justify-content: center; 
+    width: 100%;
+    justify-content: center;
+    gap: 15px; 
   }
 }
 
-.boton-salir {
-  background: transparent;
-  border: 1px solid #334155;
-  color: #94A3B8;
-  padding: 8px 16px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.boton-salir:hover {
-  background: rgba(239, 68, 68, 0.1);
-  color: #EF4444;
-  border-color: #EF4444;
+.contenedor-principal {
+  min-height: 100vh;
+  background-color: #0B0E14;
+  color: #E2E8F0;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .contenido-juego {
@@ -435,7 +393,6 @@ onMounted(() => {
     align-items: center;
   }
 }
-
 
 .panel-lateral {
   width: 100%;
@@ -499,7 +456,6 @@ onMounted(() => {
 .valor-exito { color: #10B981; font-weight: bold; }
 .valor-error { color: #EF4444; font-weight: bold; }
 
-
 .mesa-central {
   width: 100%;
   max-width: 800px;
@@ -556,7 +512,6 @@ onMounted(() => {
   color: #38BDF8;
 }
 
-
 .hueco-drop {
   min-width: 120px;
   height: 40px;
@@ -576,8 +531,6 @@ onMounted(() => {
   background: rgba(0, 229, 255, 0.1);
   color: #00E5FF;
 }
-
-
 
 .hueco-drop.con-pieza {
   border: 2px solid #00E5FF;
@@ -665,7 +618,6 @@ onMounted(() => {
   background-color: rgba(0, 229, 255, 0.15);
 }
 
-
 .centrado {
   display: flex;
   flex-direction: column;
@@ -697,7 +649,6 @@ onMounted(() => {
   background: #00B8CC;
   transform: scale(1.05);
 }
-
 
 .solo-pc { display: inline; }
 .solo-movil { display: none; }

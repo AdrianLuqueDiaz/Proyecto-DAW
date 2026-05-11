@@ -180,31 +180,28 @@ const jugar = (ruta: string, coste: number) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  min-height: 80px;
+  padding: 0 40px;
+  height: 80px;
   background-color: #11151D;
   border-bottom: 2px solid #1E2532;
-  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .cabecera {
-    padding: 0 40px;
-    height: 80px;
-    flex-wrap: nowrap;
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    gap: 15px;
   }
 }
 
 .logo {
   font-family: 'Consolas', monospace;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: 2px;
-  padding: 15px 0;
-}
-
-@media (min-width: 768px) {
-  .logo { font-size: 1.5rem; }
 }
 
 .logo-bit { color: #E2E8F0; }
@@ -212,26 +209,22 @@ const jugar = (ruta: string, coste: number) => {
 
 .navegacion {
   display: flex;
-  order: 3;
-  width: 100%;
-  justify-content: center;
-  border-top: 1px solid #1E2532;
+  height: 100%;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .navegacion {
-    order: 2;
-    width: auto;
-    height: 100%;
-    border-top: none;
+    height: auto;
+    width: 100%;
+    justify-content: center;
   }
 }
 
 .enlace {
   display: flex;
   align-items: center;
-  padding: 15px 10px;
-  font-size: 0.7rem;
+  padding: 0 20px;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 1px;
   color: #64748B;
@@ -240,10 +233,9 @@ const jugar = (ruta: string, coste: number) => {
   border-bottom: 2px solid transparent;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .enlace {
-    padding: 0 20px;
-    font-size: 0.85rem;
+    padding: 10px;
   }
 }
 
@@ -256,15 +248,14 @@ const jugar = (ruta: string, coste: number) => {
 .info-usuario {
   display: flex;
   align-items: center;
-  gap: 15px;
-  order: 2;
-  padding: 10px 0;
+  gap: 25px;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .info-usuario {
-    order: 3;
-    gap: 25px;
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
   }
 }
 
@@ -294,15 +285,6 @@ const jugar = (ruta: string, coste: number) => {
   font-family: 'Consolas', monospace;
   font-size: 0.9rem;
   color: #E2E8F0;
-}
-
-@media (min-width: 480px) {
-  .nombre-jugador {
-    display: inline;
-    font-family: 'Consolas', monospace;
-    font-size: 0.9rem;
-    color: #E2E8F0;
-  }
 }
 
 .boton-salir { 
