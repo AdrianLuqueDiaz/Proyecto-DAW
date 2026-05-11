@@ -17,7 +17,7 @@ import com.arcade.backend.repositorios.CartaCodejackRepositorio;
 
 @RestController
 @RequestMapping("/api/cartas-codejack")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://bithub-arcade.vercel.app"})
 public class CodejackControlador {
 
     private final CartaCodejackRepositorio cartaRepositorio;

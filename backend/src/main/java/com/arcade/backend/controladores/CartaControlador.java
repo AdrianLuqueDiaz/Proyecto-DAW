@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cartas")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:5173", "https://bithub-arcade.vercel.app"})
 public class CartaControlador {
 
     private final CartaRepositorio cartaRepositorio;

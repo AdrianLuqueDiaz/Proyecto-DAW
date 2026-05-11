@@ -21,7 +21,7 @@ import com.arcade.backend.repositorios.UsuarioRepositorio;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://bithub-arcade.vercel.app"})
 @RequestMapping("/api/usuarios")
 public class UsuarioControlador {
 

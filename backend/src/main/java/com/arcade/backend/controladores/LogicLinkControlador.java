@@ -12,7 +12,7 @@ import com.arcade.backend.repositorios.LogicLinkRepositorio;
 
 @RestController
 @RequestMapping("/api/logiclink")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://bithub-arcade.vercel.app"})
 public class LogicLinkControlador {
 
     private final LogicLinkRepositorio logicLinkRepositorio;
