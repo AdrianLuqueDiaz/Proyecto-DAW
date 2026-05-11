@@ -57,7 +57,7 @@ public class UsuarioControlador {
         int nuevoSaldo = usuario.getSaldoBytes() + cantidad;
         
         // si se queda a menos de 50 puntos se le suma 100 automaticamente
-        if (nuevoSaldo < 50) {
+        if (nuevoSaldo < 10) {
             nuevoSaldo = 100;
         }
         
