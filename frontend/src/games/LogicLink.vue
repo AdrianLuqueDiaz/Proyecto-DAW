@@ -258,7 +258,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* --- ESTILOS BASE --- */
+
 * {
   box-sizing: border-box;
 }
@@ -274,7 +274,7 @@ onMounted(() => {
   overflow-x: hidden;
 }
 
-/* --- CABECERA (ESTILO UNIFICADO) --- */
+
 .cabecera {
   display: flex;
   justify-content: space-between;
@@ -363,7 +363,7 @@ onMounted(() => {
   border-color: #EF4444;
 }
 
-/* --- RESPONSIVE HEADER (Corte a 1024px) --- */
+
 @media (max-width: 1024px) {
   .cabecera { 
     height: auto; 
@@ -391,16 +391,13 @@ onMounted(() => {
   }
 }
 
-/* --- CONTENIDO DEL JUEGO (SIN TOCAR) --- */
-.contenido-juego {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
-  gap: 20px;
-}
 
+.contenido-juego { 
+    flex-direction: column; 
+    align-items: center; 
+    padding: 10px 10px; 
+    gap: 20px;
+  }
 @media (min-width: 900px) {
   .contenido-juego { padding: 40px; gap: 40px; }
 }
@@ -668,7 +665,7 @@ onMounted(() => {
   transform: scale(1.05);
 }
 
-/* --- ELEMENTOS MÓVILES --- */
+
 .solo-pc { display: inline; }
 .solo-movil { display: none; }
 
