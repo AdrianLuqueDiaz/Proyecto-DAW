@@ -99,17 +99,24 @@ const soltarPieza = async (evento: DragEvent) => {
   } else {
   
     estado.value = 'error'
-    await actualizarBytes(-100)
-    await registrarPartida('Logic Link', -100)
+    await actualizarBytes(-75)
+    await registrarPartida('Logic Link', -75)
 
     setTimeout(() => {
-      piezaSoltada.value = null
-      estado.value = 'jugando'
+      const bytesActuales = Number(auth.bytes) || 0;
+      if (bytesActuales < COSTE_JUEGO) {
+        alert("Te has quedado sin saldo suficiente. Necesitas ${COSTE_JUEGO} Bytes para seguir jugando.");
+        router.push('/home'); 
+      } else {
+        piezaSoltada.value = null
+        estado.value = 'jugando'
+      }
     }, 1000)
   }
 }
 
 onMounted(() => {
+    const bytesActuales = Number(auth.bytes) || 0;
   if (auth.bytes < COSTE_JUEGO) {
     alert(`ACCESO DENEGADO. Necesitas al menos ${COSTE_JUEGO} Bytes para jugar a CodeLink.`);
     router.push('/home');
