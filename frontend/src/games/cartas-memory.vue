@@ -21,26 +21,38 @@ const preguntaActual = ref<any>(null)
 const mostrarPregunta = ref(false)
 const opcionesRespuestas = ref<string[]>([])
 
+const balancePartida = ref(0)
+
 const juegoTerminado = computed(() => {
   return cartas.value.length > 0 && cartas.value.every(c => c.resuelta)
 })
 
-const actualizarBytes = async (cantidad: number) => {
+const finalizarPartidaEnBD = async (cantidadTotal: number) => {
   if (!auth.jugador) return;
   try {
-    const res = await fetch(`${API_URL}/usuarios/${auth.jugador}/bytes?cantidad=${cantidad}`, {
+    const res = await fetch(`${API_URL}/usuarios/${auth.jugador}/bytes?cantidad=${cantidadTotal}`, {
       method: 'PUT'
     });
     if (res.ok) {
       const usuarioActualizado = await res.json();
+
       auth.bytes = usuarioActualizado.saldoBytes;
       auth.partidasJugadas = usuarioActualizado.partidasJugadas;
       auth.guardarEnLocal();
       console.log("Progreso guardado en Logic Slots");
+      
+
+      registrarPartida('Logic Slots', cantidadTotal);
     }
   } catch (error) {
     console.error("Error al guardar progreso:", error);
   }
+}
+
+const actualizarMarcadorLocal = (cantidad: number) => {
+  balancePartida.value += cantidad;
+  auth.bytes += cantidad;
+  auth.guardarEnLocal();
 }
 
 const cerrarSesion = () => {
@@ -97,6 +109,8 @@ const comprobarPareja = () => {
     cartasEnJuego.value = [carta1, carta2]
     lanzarPregunta(carta1.idPareja)
   } else {
+    actualizarMarcadorLocal(-50);
+
     setTimeout(() => {
       carta1.girada = false
       carta2.girada = false
@@ -130,16 +144,21 @@ const resolverCartasEnJuego = (exito: boolean) => {
     carta1.resuelta = true
     carta2.resuelta = true
     
+    actualizarMarcadorLocal(100);
+    
     setTimeout(() => {
       if (juegoTerminado.value) {
-        actualizarBytes(100); 
-        registrarPartida('Logic Slots', 100);
+
+        finalizarPartidaEnBD(balancePartida.value);
       }
     }, 500);
 
   } else {
     carta1.girada = false
     carta2.girada = false
+    
+    // RESTAMOS 50 POR FALLAR LA PREGUNTA
+    actualizarMarcadorLocal(-50);
   }
   
   cartasEnJuego.value = []
@@ -153,6 +172,7 @@ const soltarTurno = () => {
 
 const reiniciarJuego = () => {
   cartas.value = []
+  balancePartida.value = 0 
   cargarCartas() 
   cargarPreguntas()
 }
@@ -163,6 +183,8 @@ onMounted(() => {
     router.push('/home');
     return;
   }
+
+  actualizarMarcadorLocal(-COSTE_JUEGO);
 
   cargarCartas()
   cargarPreguntas()
