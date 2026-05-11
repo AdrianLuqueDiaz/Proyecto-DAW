@@ -354,7 +354,7 @@ onMounted(cargarClasificacion)
   .cabecera {
     flex-direction: column;
     height: auto;
-    padding: 20px;
+    padding: 20px 0 0 0;
     gap: 15px;
   }
   .navegacion {
@@ -367,6 +367,7 @@ onMounted(cargarClasificacion)
     width: 100%;
     justify-content: center;
     gap: 15px;
+    padding-bottom: 20px;
   }
   .titulo-principal {
     font-size: 2.2rem;
