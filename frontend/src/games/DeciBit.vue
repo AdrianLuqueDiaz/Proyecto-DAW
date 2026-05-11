@@ -9,6 +9,9 @@ const API_URL = import.meta.env.VITE_API_BASE_URL
 const auth = useAuthStore()
 const router = useRouter()
 
+const COSTE_JUEGO = 10;
+
+
 const numeroObjetivo = ref(0)
 const bits = ref([0, 0, 0, 0]) 
 const mensaje = ref('')
@@ -78,8 +81,16 @@ const cerrarSesion = () => {
   router.push('/login')
 }
 
-onMounted(generarNumero)
-onUnmounted(() => { if (intervalo) clearInterval(intervalo) })
+onMounted(() => {
+  if (auth.bytes < COSTE_JUEGO) {
+    alert(`ACCESO DENEGADO. Necesitas al menos ${COSTE_JUEGO} Bytes para jugar a DeciBit.`);
+    router.push('/home'); 
+    return;
+  }
+  generarNumero();
+})
+
+onUnmounted(() => { if (intervalo) clearInterval(intervalo) }) //hace que se resetee el temporizador
 </script>
 
 <template>

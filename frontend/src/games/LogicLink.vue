@@ -8,6 +8,8 @@ const router = useRouter()
 const auth = useAuthStore()
 const API_URL = import.meta.env.VITE_API_BASE_URL
 
+const COSTE_JUEGO = 75;
+
 const retos = ref<any[]>([])
 const retoActualId = ref(0)
 const opciones = ref<string[]>([])
@@ -108,6 +110,11 @@ const soltarPieza = async (evento: DragEvent) => {
 }
 
 onMounted(() => {
+  if (auth.bytes < COSTE_JUEGO) {
+    alert(`ACCESO DENEGADO. Necesitas al menos ${COSTE_JUEGO} Bytes para jugar a CodeLink.`);
+    router.push('/home');
+    return;
+  }
   cargarRetos()
 })
 </script>
