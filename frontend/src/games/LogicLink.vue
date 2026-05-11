@@ -551,14 +551,9 @@ onMounted(() => {
   border: 2px dashed #00E5FF;
   background: rgba(0, 229, 255, 0.1);
   color: #00E5FF;
-  animation: pulso 1.5s infinite;
 }
 
-@keyframes pulso {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
+
 
 .hueco-drop.con-pieza {
   border: 2px solid #00E5FF;
@@ -644,8 +639,6 @@ onMounted(() => {
 .pieza-draggable.seleccionada-movil {
   border-color: #00E5FF;
   background-color: rgba(0, 229, 255, 0.15);
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
 }
 
 
