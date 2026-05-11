@@ -210,7 +210,7 @@ onMounted(() => {
           <span class="etiqueta-bytes">BYTES</span>
           <span class="numero-bytes">{{ auth.bytes }}</span>
         </div>
-        <span class="nombre-usuario">{{ auth.jugador || 'INVITADO' }}</span>
+        <span class="nombre-jugador">{{ auth.jugador || 'INVITADO' }}</span>
         <button class="boton-salir" @click="cerrarSesion">SALIR</button>
       </div>
     </header>
@@ -372,7 +372,7 @@ onMounted(() => {
   color: #FACC15;
 }
 
-.nombre-usuario {
+.nombre-jugador {
   font-family: 'Consolas', monospace;
   font-size: 0.9rem;
   color: #E2E8F0;

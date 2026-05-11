@@ -291,7 +291,9 @@ const jugar = (ruta: string, coste: number) => {
 }
 
 .nombre-jugador {
-  display: none;
+  font-family: 'Consolas', monospace;
+  font-size: 0.9rem;
+  color: #E2E8F0;
 }
 
 @media (min-width: 480px) {

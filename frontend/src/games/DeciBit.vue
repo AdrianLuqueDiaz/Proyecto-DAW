@@ -247,9 +247,10 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) }) //hace que se res
   color: #FACC15; 
 }
 
-.nombre-jugador { 
-  font-family: 'Consolas', monospace; 
-  font-size: 0.9rem; 
+.nombre-jugador {
+  font-family: 'Consolas', monospace;
+  font-size: 0.9rem;
+  color: #E2E8F0;
 }
 
 .boton-salir { 

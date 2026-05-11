@@ -341,9 +341,10 @@ onMounted(() => {
   font-weight: bold;
 }
 
-.nombre-jugador { 
-  font-family: 'Consolas', monospace; 
-  font-size: 0.9rem; 
+.nombre-jugador {
+  font-family: 'Consolas', monospace;
+  font-size: 0.9rem;
+  color: #E2E8F0;
 }
 
 .boton-salir { 
