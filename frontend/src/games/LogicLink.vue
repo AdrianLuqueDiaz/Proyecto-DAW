@@ -105,7 +105,7 @@ const soltarPieza = async (evento: DragEvent) => {
     setTimeout(() => {
       const bytesActuales = Number(auth.bytes) || 0;
       if (bytesActuales < COSTE_JUEGO) {
-        alert("Te has quedado sin saldo suficiente. Necesitas ${COSTE_JUEGO} Bytes para seguir jugando.");
+        alert("Te has quedado sin saldo suficiente. Necesitas los Bytes de entrada minimos para seguir jugando.");
         router.push('/home'); 
       } else {
         piezaSoltada.value = null
@@ -118,7 +118,7 @@ const soltarPieza = async (evento: DragEvent) => {
 onMounted(() => {
     const bytesActuales = Number(auth.bytes) || 0;
   if (auth.bytes < COSTE_JUEGO) {
-    alert(`ACCESO DENEGADO. Necesitas al menos ${COSTE_JUEGO} Bytes para jugar a CodeLink.`);
+    alert(`ACCESO DENEGADO. Necesitas al menos los Bytes de entrada minimos para jugar a CodeLink.`);
     router.push('/home');
     return;
   }
@@ -159,7 +159,7 @@ onMounted(() => {
           <p class="instruccion-texto">Arrastra el bloque de código correcto al hueco para completar la sintaxis.</p>
           <ul class="info-lista">
             <li><span class="valor-base">Acierto</span> <span class="separador">→</span> <span class="valor-final">+75 Bytes</span></li>
-            <li><span class="valor-base">Fallo</span> <span class="separador">→</span> <span class="valor-error">-100 Bytes</span></li>
+            <li><span class="valor-base">Fallo</span> <span class="separador">→</span> <span class="valor-error">-75 Bytes</span></li>
           </ul>
         </div>
       </aside>
@@ -194,7 +194,7 @@ onMounted(() => {
 
           <div class="resultados">
             <div v-if="estado === 'correcto'" class="mensaje exito">¡SINTAXIS CORRECTA! +75 BYTES</div>
-            <div v-if="estado === 'error'" class="mensaje error">ERROR -100 BYTES</div>
+            <div v-if="estado === 'error'" class="mensaje error">ERROR -75 BYTES</div>
           </div>
 
           <hr class="divisor">

@@ -68,6 +68,10 @@ const comprobarRespuesta = async () => {
     if (response.ok) {
       const usuario = await response.json()
       auth.bytes = usuario.saldoBytes
+
+      if (typeof auth.guardarEnLocal === 'function') {
+        auth.guardarEnLocal()
+      }
     }
   } catch (error) {
     console.error("Error de red")
@@ -82,12 +86,12 @@ const cerrarSesion = () => {
 }
 
 onMounted(() => {
+    const bytesActuales = Number(auth.bytes) || 0;
   if (auth.bytes < COSTE_JUEGO) {
-    alert(`ACCESO DENEGADO. Necesitas al menos ${COSTE_JUEGO} Bytes para jugar a DeciBit.`);
-    router.push('/home'); 
+    alert(`ACCESO DENEGADO. Necesitas al menos los Bytes de entrada minimos para jugar a DeciBit.`);
+    router.push('/home');
     return;
   }
-  generarNumero();
 })
 
 onUnmounted(() => { if (intervalo) clearInterval(intervalo) }) //hace que se resetee el temporizador
