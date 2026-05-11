@@ -342,7 +342,7 @@ onMounted(() => {
   .cabecera { 
     height: auto; 
     flex-direction: column; 
-    padding: 20px; 
+    padding: 20px 0 0 0; 
     gap: 15px; 
   }
 
