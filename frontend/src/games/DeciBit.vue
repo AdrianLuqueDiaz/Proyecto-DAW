@@ -267,13 +267,19 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) }) //hace que se res
   padding: 40px 20px; 
 }
 
-.boton-volver {
-  font-size: 0.8rem;
-  font-weight: 600;
+.boton-volver { 
+  font-size: 0.85rem;
   color: #64748B;
   cursor: pointer;
-  margin-bottom: 30px;
-  display: inline-block;
+  margin-bottom: 20px;
+  font-weight: 600;
+  transition: color 0.2s;
+  text-align: center;
+  display: block;
+}
+
+.boton-volver:hover { 
+  color: #E2E8F0; 
 }
 
 .header-contenido { 

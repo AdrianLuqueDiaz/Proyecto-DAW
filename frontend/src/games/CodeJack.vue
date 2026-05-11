@@ -179,7 +179,7 @@ onMounted(() => {
       <aside class="panel-lateral">
         
         <div class="boton-volver" @click="router.push('/home')">
-          ← Volver al Módulo Principal
+          ← Volver al Home
         </div>
 
         <div class="tarjeta-info">
