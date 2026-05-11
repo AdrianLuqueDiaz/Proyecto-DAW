@@ -222,8 +222,8 @@ onMounted(() => {
           </div>
 
           <div class="resultados">
-            <div v-if="estado === 'correcto'" class="mensaje exito">¡SINTAXIS CORRECTA! +75 BYTES</div>
-            <div v-if="estado === 'error'" class="mensaje error">ERROR -75 BYTES</div>
+            <div v-if="estado === 'correcto'" class="mensaje valor-exito">¡SINTAXIS CORRECTA! +75 BYTES</div>
+            <div v-if="estado === 'error'" class="mensaje valor-error">ERROR -75 BYTES</div>
           </div>
 
 
