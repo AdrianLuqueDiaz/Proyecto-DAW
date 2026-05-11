@@ -342,7 +342,7 @@ onMounted(() => {
   .cabecera { 
     height: auto; 
     flex-direction: column; 
-    padding: 20px 0 0 0; 
+    padding: 20px 0 20px 0; 
     gap: 15px; 
   }
 
@@ -361,6 +361,7 @@ onMounted(() => {
     justify-content: center;
     
   }
+  
 }
 
 .contenedor-principal {
@@ -377,7 +378,6 @@ onMounted(() => {
 .contenido-juego {
   flex: 1;
   display: flex;
-  justify-content: center;
   align-items: flex-start;
   padding: 20px;
   gap: 20px;
