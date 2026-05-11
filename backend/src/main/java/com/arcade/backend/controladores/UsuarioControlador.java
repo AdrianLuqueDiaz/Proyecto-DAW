@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid; // Importación necesaria para la validación
-
-import com.arcade.backend.entidades.Usuario;
+import com.arcade.backend.entidades.Usuario; // Importación necesaria para la validación
 import com.arcade.backend.repositorios.UsuarioRepositorio;
+
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -53,7 +53,16 @@ public class UsuarioControlador {
             return ResponseEntity.notFound().build();
         }
         
-        usuario.setSaldoBytes(usuario.getSaldoBytes() + cantidad);
+        // calculo del saldo
+        int nuevoSaldo = usuario.getSaldoBytes() + cantidad;
+        
+        // si se queda a menos de 50 puntos se le suma 100 automaticamente
+        if (nuevoSaldo < 50) {
+            nuevoSaldo = 100;
+        }
+        
+        //  saldo final al usuario
+        usuario.setSaldoBytes(nuevoSaldo);
         
         // Suma 1 cada partida jugada
         usuario.setPartidasJugadas(usuario.getPartidasJugadas() + 1);
