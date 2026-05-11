@@ -258,6 +258,23 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* --- ESTILOS BASE --- */
+* {
+  box-sizing: border-box;
+}
+
+.contenedor-principal {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #0B0E14;
+  color: #E2E8F0;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* --- CABECERA (ESTILO UNIFICADO) --- */
 .cabecera {
   display: flex;
   justify-content: space-between;
@@ -334,50 +351,51 @@ onMounted(() => {
   color: #94A3B8;
   padding: 8px 16px;
   font-size: 0.75rem;
+  font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
+.boton-salir:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border-color: #EF4444;
+}
+
+/* --- RESPONSIVE HEADER (Corte a 1024px) --- */
 @media (max-width: 1024px) {
   .cabecera { 
     height: auto; 
     flex-direction: column; 
-    padding: 20px 0 20px 0; 
+    padding: 20px; 
     gap: 15px; 
   }
 
   .navegacion { 
     height: auto;
     gap: 5px; 
+    width: 100%;
+    justify-content: center;
   }
 
   .enlace { 
     padding: 10px 12px; 
-    
+    border-bottom: none !important;
   }
 
   .info-usuario { 
     width: 100%;
     justify-content: center;
-    
+    gap: 15px; 
   }
-  
 }
 
-.contenedor-principal {
-  min-height: 100vh;
-  background-color: #0B0E14;
-  color: #E2E8F0;
-  font-family: 'Inter', system-ui, sans-serif;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow-x: hidden;
-}
-
+/* --- CONTENIDO DEL JUEGO (SIN TOCAR) --- */
 .contenido-juego {
   flex: 1;
   display: flex;
+  justify-content: center;
   align-items: flex-start;
   padding: 20px;
   gap: 20px;
@@ -650,6 +668,7 @@ onMounted(() => {
   transform: scale(1.05);
 }
 
+/* --- ELEMENTOS MÓVILES --- */
 .solo-pc { display: inline; }
 .solo-movil { display: none; }
 
