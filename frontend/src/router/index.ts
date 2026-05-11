@@ -91,6 +91,10 @@ const router = createRouter({
       component: Clasificacion,
       meta: { requiereAutenticacion: true}
     },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/login'
+    },
     
     {
       path: '/preguntas',
