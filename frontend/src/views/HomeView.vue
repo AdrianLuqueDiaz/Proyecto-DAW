@@ -23,14 +23,13 @@ const jugar = (ruta: string, coste: number) => {
   <div class="contenedor-principal">
     
     <header class="cabecera">
-      
       <div class="logo">
         <span class="logo-bit">BIT</span>
         <span class="logo-hub">HUB</span>
       </div>
 
       <nav class="navegacion">
-        <span class="enlace activo">INICIO</span>
+        <span class="enlace activo" @click="router.push('/home')">INICIO</span>
         <span class="enlace" @click="router.push('/clasificacion')">CLASIFICACIÓN</span>
         <span 
           v-if="auth.rol === 'ADMIN'" 
@@ -46,12 +45,9 @@ const jugar = (ruta: string, coste: number) => {
           <span class="etiqueta-bytes">BYTES</span>
           <span class="valor-bytes">{{ auth.bytes }}</span>
         </div>
-        
         <span class="nombre-jugador">{{ auth.jugador || 'INVITADO' }}</span>
-        
         <button class="boton-salir" @click="cerrarSesion">SALIR</button>
       </div>
-
     </header>
 
     <main class="contenido">
