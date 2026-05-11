@@ -226,7 +226,6 @@ onMounted(() => {
             <div v-if="estado === 'error'" class="mensaje error">ERROR -75 BYTES</div>
           </div>
 
-          <hr class="divisor">
 
           <div class="zona-opciones" v-if="estado === 'jugando'">
             <div 
