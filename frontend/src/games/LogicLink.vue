@@ -174,7 +174,7 @@ onMounted(() => {
       
       <aside class="panel-lateral">
         <div class="boton-volver" @click="router.push('/home')">
-          ← Volver al Módulo Principal
+          ← Volver al Home
         </div>
         <div class="tarjeta-info">
           <h4 class="info-titulo">Instrucciones</h4>
@@ -423,17 +423,19 @@ onMounted(() => {
   .panel-lateral { width: 250px; flex-shrink: 0; }
 }
 
-.boton-volver {
-  color: #94A3B8;
+.boton-volver { 
+  font-size: 0.85rem;
+  color: #64748B;
   cursor: pointer;
   margin-bottom: 20px;
-  font-size: 0.9rem;
+  font-weight: 600;
   transition: color 0.2s;
-  display: inline-block;
+  text-align: center;
+  display: block;
 }
 
-.boton-volver:hover {
-  color: #00E5FF;
+.boton-volver:hover { 
+  color: #E2E8F0; 
 }
 
 .tarjeta-info {
