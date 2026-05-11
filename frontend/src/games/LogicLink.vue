@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { registrarPartida } from '@/services/statsService'
@@ -15,6 +15,25 @@ const retoActualId = ref(0)
 const opciones = ref<string[]>([])
 const estado = ref('jugando') // jugando, correcto, error, terminado
 const piezaSoltada = ref<string | null>(null)
+
+const piezaSeleccionadaMovil = ref<string | null>(null)
+
+const seleccionarPiezaMovil = (textoPieza: string) => {
+  if (estado.value !== 'jugando') return
+  
+  if (piezaSeleccionadaMovil.value === textoPieza) {
+    piezaSeleccionadaMovil.value = null
+  } else {
+    piezaSeleccionadaMovil.value = textoPieza
+  }
+}
+
+const colocarPiezaMovil = () => {
+  if (piezaSeleccionadaMovil.value && estado.value === 'jugando') {
+    validarRespuesta(piezaSeleccionadaMovil.value)
+    piezaSeleccionadaMovil.value = null 
+  }
+}
 
 const cerrarSesion = () => {
   auth.logout()
@@ -39,6 +58,7 @@ const prepararReto = () => {
   
   estado.value = 'jugando'
   piezaSoltada.value = null
+  piezaSeleccionadaMovil.value = null 
   
   const retoActual = retos.value[retoActualId.value]
   const arrayOpciones = [
@@ -65,24 +85,27 @@ const actualizarBytes = async (cantidad: number) => {
   }
 }
 
-// JUEGO
 
 const agarrarPieza = (evento: DragEvent, textoDeLaPieza: string) => {
-  evento.dataTransfer?.setData('texto', textoDeLaPieza) //memoria del navegador
+  evento.dataTransfer?.setData('texto', textoDeLaPieza)
 }
 
-const soltarPieza = async (evento: DragEvent) => {
+const soltarPieza = (evento: DragEvent) => {
   if (estado.value !== 'jugando') return
 
-  const textoSoltado = evento.dataTransfer?.getData('texto')//leemos el tecto de la memoria del navegador
+  const textoSoltado = evento.dataTransfer?.getData('texto')
   if (!textoSoltado) return
 
-  piezaSoltada.value = textoSoltado //pieza visualmente
+  validarRespuesta(textoSoltado)
+}
+
+// LÓGICA DE VALIDACIÓN UNIFICADA
+const validarRespuesta = async (textoRespuesta: string) => {
+  piezaSoltada.value = textoRespuesta 
   
   const retoActual = retos.value[retoActualId.value]
 
-  if (textoSoltado === retoActual.respuestaCorrecta) {
-   
+  if (textoRespuesta === retoActual.respuestaCorrecta) {
     estado.value = 'correcto'
     await actualizarBytes(75)
     await registrarPartida('Logic Link', 75)
@@ -97,7 +120,6 @@ const soltarPieza = async (evento: DragEvent) => {
     }, 1000)
 
   } else {
-  
     estado.value = 'error'
     await actualizarBytes(-75)
     await registrarPartida('Logic Link', -75)
@@ -116,7 +138,7 @@ const soltarPieza = async (evento: DragEvent) => {
 }
 
 onMounted(() => {
-    const bytesActuales = Number(auth.bytes) || 0;
+  const bytesActuales = Number(auth.bytes) || 0;
   if (auth.bytes < COSTE_JUEGO) {
     alert(`ACCESO DENEGADO. Necesitas al menos los Bytes de entrada minimos para jugar a CodeLink.`);
     router.push('/home');
@@ -156,7 +178,12 @@ onMounted(() => {
         </div>
         <div class="tarjeta-info">
           <h4 class="info-titulo">Instrucciones</h4>
-          <p class="instruccion-texto">Arrastra el bloque de código correcto al hueco para completar la sintaxis.</p>
+          <p class="instruccion-texto">
+            <span class="solo-pc">Arrastra</span>
+            <span class="solo-movil">Toca</span>
+            el bloque de código correcto al hueco para completar la sintaxis.
+            <span class="solo-movil"> Luego toca el hueco.</span>
+          </p>
           <ul class="info-lista">
             <li><span class="valor-base">Acierto</span> <span class="separador">→</span> <span class="valor-final">+75 Bytes</span></li>
             <li><span class="valor-base">Fallo</span> <span class="separador">→</span> <span class="valor-error">-75 Bytes</span></li>
@@ -181,10 +208,12 @@ onMounted(() => {
               :class="{ 
                 'con-pieza': piezaSoltada, 
                 'acierto': estado === 'correcto', 
-                'fallo': estado === 'error' 
+                'fallo': estado === 'error',
+                'esperando-pieza-movil': piezaSeleccionadaMovil 
               }"
               @dragover.prevent 
               @drop="soltarPieza"
+              @click="colocarPiezaMovil" 
             >
               {{ piezaSoltada ? piezaSoltada : 'suelta aqui' }}
             </div>
@@ -204,8 +233,10 @@ onMounted(() => {
               v-for="(opcion, index) in opciones" 
               :key="index"
               class="pieza-draggable"
+              :class="{ 'seleccionada-movil': piezaSeleccionadaMovil === opcion }" 
               draggable="true"
               @dragstart="agarrarPieza($event, opcion)"
+              @click="seleccionarPiezaMovil(opcion)" 
             >
               {{ opcion }}
             </div>
@@ -445,6 +476,19 @@ onMounted(() => {
   color: #64748B;
   font-size: 0.85rem;
   background: rgba(11, 14, 20, 0.5);
+  transition: all 0.2s ease; 
+}
+
+.hueco-drop.esperando-pieza-movil {
+  border: 2px dashed #00E5FF; 
+  background: rgba(0, 229, 255, 0.05);
+  cursor: pointer; 
+}
+
+.pieza-draggable.seleccionada-movil {
+  border-color: #00E5FF; 
+  background-color: rgba(0, 229, 255, 0.1);
+  transform: translateY(-2px); 
 }
 
 .hueco-drop.con-pieza {
@@ -479,6 +523,7 @@ onMounted(() => {
   color: #F8FAFC;
   font-family: 'Consolas', monospace;
   cursor: grab;
+  transition: all 0.2s ease;
 }
 
 .pieza-draggable:hover { border-color: #00E5FF; }
@@ -518,52 +563,11 @@ onMounted(() => {
 
 .boton-primario:hover { background-color: #00E5FF; }
 
-@media (max-width: 900px) {
-  .cabecera {
-    flex-direction: column;
-    height: auto;
-    padding: 20px 0 0 0;
-    gap: 20px;
-  }
+.solo-pc { display: inline; }
+.solo-movil { display: none; }
 
-  .logo { order: 1; margin-bottom: 0; }
-  .info-usuario { 
-    order: 2; 
-    width: 80%; 
-    justify-content: center; 
-    padding: 0 20px;
-    gap: 15px;
-  }
-
-  .navegacion { 
-    order: 3; 
-    width: 100%; 
-    justify-content: center; 
-    border-top: 1px solid #1E2532;
-  }
-  .enlace { padding: 15px 15px; font-size: 0.75rem; }
-
-  .contenido-juego {
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-
-  .panel-lateral { width: 100%; }
-  .mesa-central { width: 100%; }
-  
-  .zona-codigo { 
-    padding: 20px; 
-    font-size: 1rem; 
-    justify-content: center;
-  }
-  
-  .hueco-drop { min-width: 100px; }
-}
-
-@media (max-width: 480px) {
-  .nombre-jugador { display: none; } 
-  .titulo-juego { font-size: 1.8rem; }
-  .tablero-juego { padding: 20px 15px; }
+@media (max-width: 768px) {
+  .solo-pc { display: none; }
+  .solo-movil { display: inline; }
 }
 </style>
