@@ -22,9 +22,9 @@ const seleccionarPiezaMovil = (textoPieza: string) => {
   if (estado.value !== 'jugando') return
   
   if (piezaSeleccionadaMovil.value === textoPieza) {
-    piezaSeleccionadaMovil.value = null
+    piezaSeleccionadaMovil.value = null // Desmarcar si toca la misma
   } else {
-    piezaSeleccionadaMovil.value = textoPieza
+    piezaSeleccionadaMovil.value = textoPieza // Marcar para colocar
   }
 }
 
@@ -99,7 +99,7 @@ const soltarPieza = (evento: DragEvent) => {
   validarRespuesta(textoSoltado)
 }
 
-// LÓGICA DE VALIDACIÓN UNIFICADA
+
 const validarRespuesta = async (textoRespuesta: string) => {
   piezaSoltada.value = textoRespuesta 
   
@@ -127,7 +127,7 @@ const validarRespuesta = async (textoRespuesta: string) => {
     setTimeout(() => {
       const bytesActuales = Number(auth.bytes) || 0;
       if (bytesActuales < COSTE_JUEGO) {
-        alert("Te has quedado sin saldo suficiente. Necesitas los Bytes de entrada minimos para seguir jugando.");
+        alert("Te has quedado sin saldo suficiente. Necesitas los Bytes de entrada mínimos para seguir jugando.");
         router.push('/home'); 
       } else {
         piezaSoltada.value = null
@@ -140,7 +140,7 @@ const validarRespuesta = async (textoRespuesta: string) => {
 onMounted(() => {
   const bytesActuales = Number(auth.bytes) || 0;
   if (auth.bytes < COSTE_JUEGO) {
-    alert(`ACCESO DENEGADO. Necesitas al menos los Bytes de entrada minimos para jugar a CodeLink.`);
+    alert(`ACCESO DENEGADO. Necesitas al menos ${COSTE_JUEGO} Bytes para jugar a Logic Link.`);
     router.push('/home');
     return;
   }
@@ -182,10 +182,10 @@ onMounted(() => {
             <span class="solo-pc">Arrastra</span>
             <span class="solo-movil">Toca</span>
             el bloque de código correcto al hueco para completar la sintaxis.
-            <span class="solo-movil"> Luego toca el hueco.</span>
+            <span class="solo-movil"> Luego toca el hueco para colocarlo.</span>
           </p>
           <ul class="info-lista">
-            <li><span class="valor-base">Acierto</span> <span class="separador">→</span> <span class="valor-final">+75 Bytes</span></li>
+            <li><span class="valor-base">Acierto</span> <span class="separador">→</span> <span class="valor-exito">+75 Bytes</span></li>
             <li><span class="valor-base">Fallo</span> <span class="separador">→</span> <span class="valor-error">-75 Bytes</span></li>
           </ul>
         </div>
@@ -215,7 +215,7 @@ onMounted(() => {
               @drop="soltarPieza"
               @click="colocarPiezaMovil" 
             >
-              {{ piezaSoltada ? piezaSoltada : 'suelta aqui' }}
+              {{ piezaSoltada ? piezaSoltada : (piezaSeleccionadaMovil ? 'toca aquí' : 'suelta aquí') }}
             </div>
             
             <span class="texto-codigo">{{ retos[retoActualId].codigoPosterior }}</span>
@@ -258,6 +258,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
 .contenedor-principal {
   min-height: 100vh;
   background-color: #0B0E14;
@@ -384,6 +385,13 @@ onMounted(() => {
   font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.boton-salir:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border-color: #EF4444;
 }
 
 .contenido-juego {
@@ -399,6 +407,14 @@ onMounted(() => {
   .contenido-juego { padding: 40px; gap: 40px; }
 }
 
+@media (max-width: 900px) {
+  .contenido-juego {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
 .panel-lateral {
   width: 100%;
 }
@@ -407,9 +423,80 @@ onMounted(() => {
   .panel-lateral { width: 250px; flex-shrink: 0; }
 }
 
+.boton-volver {
+  color: #94A3B8;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+  display: inline-block;
+}
+
+.boton-volver:hover {
+  color: #00E5FF;
+}
+
+.tarjeta-info {
+  background: #11151D;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #1E2532;
+}
+
+.info-titulo {
+  margin-top: 0;
+  color: #00E5FF;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.instruccion-texto {
+  color: #94A3B8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.info-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-lista li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.valor-base { color: #E2E8F0; }
+.separador { color: #64748B; }
+.valor-exito { color: #10B981; font-weight: bold; }
+.valor-error { color: #EF4444; font-weight: bold; }
+
+
 .mesa-central {
   width: 100%;
   max-width: 800px;
+}
+
+.cabecera-juego {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.titulo-juego {
+  font-size: 2.5rem;
+  margin: 0 0 10px 0;
+  color: #E2E8F0;
+  letter-spacing: 1px;
+}
+
+.subtitulo-juego {
+  color: #94A3B8;
+  margin: 0;
+  font-size: 1rem;
 }
 
 .tablero-juego {
@@ -426,8 +513,9 @@ onMounted(() => {
 .zona-codigo {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
   background: #0B0E14;
   padding: 20px;
   border-radius: 6px;
@@ -440,6 +528,11 @@ onMounted(() => {
   .zona-codigo { font-size: 1.2rem; padding: 30px; }
 }
 
+.texto-codigo {
+  color: #38BDF8;
+}
+
+
 .hueco-drop {
   min-width: 120px;
   height: 40px;
@@ -451,16 +544,72 @@ onMounted(() => {
   color: #64748B;
   background: rgba(11, 14, 20, 0.5);
   transition: all 0.2s ease;
+  cursor: pointer; 
 }
 
 .hueco-drop.esperando-pieza-movil {
-  border-color: #00E5FF;
-  background: rgba(0, 229, 255, 0.05);
+  border: 2px dashed #00E5FF;
+  background: rgba(0, 229, 255, 0.1);
+  color: #00E5FF;
+  animation: pulso 1.5s infinite;
+}
+
+@keyframes pulso {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .hueco-drop.con-pieza {
   border: 2px solid #00E5FF;
   color: #00E5FF;
+  background: rgba(0, 229, 255, 0.05);
+}
+
+.hueco-drop.acierto {
+  border: 2px solid #10B981;
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.hueco-drop.fallo {
+  border: 2px solid #EF4444;
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.resultados {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.mensaje {
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-align: center;
+  width: 100%;
+}
+
+.exito {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+  border: 1px solid #10B981;
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border: 1px solid #EF4444;
+}
+
+.divisor {
+  border: 0;
+  border-top: 1px solid #1E2532;
+  margin: 30px 0;
 }
 
 .zona-opciones {
@@ -477,20 +626,71 @@ onMounted(() => {
   border-radius: 4px;
   color: #F8FAFC;
   font-family: 'Consolas', monospace;
-  cursor: pointer;
+  cursor: grab;
   transition: all 0.2s ease;
+  user-select: none; 
+  -webkit-user-select: none;
+}
+
+.pieza-draggable:active {
+  cursor: grabbing;
+}
+
+.pieza-draggable:hover {
+  border-color: #64748B;
+  transform: translateY(-2px);
 }
 
 .pieza-draggable.seleccionada-movil {
   border-color: #00E5FF;
-  background-color: rgba(0, 229, 255, 0.1);
-  transform: translateY(-2px);
+  background-color: rgba(0, 229, 255, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
 }
 
-@media (max-width: 900px) {
-  .contenido-juego {
-    flex-direction: column;
-    align-items: center;
+
+.centrado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.espaciado-inferior {
+  margin-bottom: 30px;
+}
+
+.boton-primario {
+  background: #00E5FF;
+  color: #0B0E14;
+  border: none;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 900;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.boton-primario:hover {
+  background: #00B8CC;
+  transform: scale(1.05);
+}
+
+
+.solo-pc { display: inline; }
+.solo-movil { display: none; }
+
+@media (max-width: 768px) {
+  .solo-pc { display: none; }
+  .solo-movil { display: inline; }
+  
+  .pieza-draggable {
+    cursor: pointer;
   }
 }
 </style>

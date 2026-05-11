@@ -144,7 +144,7 @@ const resolverCartasEnJuego = (exito: boolean) => {
     carta1.resuelta = true
     carta2.resuelta = true
     
-    actualizarMarcadorLocal(100);
+    actualizarMarcadorLocal(500);
     
     setTimeout(() => {
       if (juegoTerminado.value) {

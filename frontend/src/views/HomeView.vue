@@ -73,7 +73,7 @@ const jugar = (ruta: string, coste: number) => {
           <div class="columna-estadisticas">
             <div class="estadistica">
               <span class="coste">COSTE</span>
-              <span class="valor">50 B</span>
+              <span class="valor">100 B</span>
             </div>
           </div>
 
