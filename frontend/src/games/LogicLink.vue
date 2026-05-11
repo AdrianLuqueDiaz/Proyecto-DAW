@@ -517,4 +517,53 @@ onMounted(() => {
 }
 
 .boton-primario:hover { background-color: #00E5FF; }
+
+@media (max-width: 900px) {
+  .cabecera {
+    flex-direction: column;
+    height: auto;
+    padding: 20px 0 0 0;
+    gap: 20px;
+  }
+
+  .logo { order: 1; margin-bottom: 0; }
+  .info-usuario { 
+    order: 2; 
+    width: 80%; 
+    justify-content: center; 
+    padding: 0 20px;
+    gap: 15px;
+  }
+
+  .navegacion { 
+    order: 3; 
+    width: 100%; 
+    justify-content: center; 
+    border-top: 1px solid #1E2532;
+  }
+  .enlace { padding: 15px 15px; font-size: 0.75rem; }
+
+  .contenido-juego {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .panel-lateral { width: 100%; }
+  .mesa-central { width: 100%; }
+  
+  .zona-codigo { 
+    padding: 20px; 
+    font-size: 1rem; 
+    justify-content: center;
+  }
+  
+  .hueco-drop { min-width: 100px; }
+}
+
+@media (max-width: 480px) {
+  .nombre-jugador { display: none; } 
+  .titulo-juego { font-size: 1.8rem; }
+  .tablero-juego { padding: 20px 15px; }
+}
 </style>
