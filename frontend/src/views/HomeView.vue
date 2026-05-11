@@ -2,13 +2,20 @@
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 
-
 const auth = useAuthStore()
 const router = useRouter()
 
 const cerrarSesion = () => {
   auth.logout()
   router.push('/login')
+}
+
+const jugar = (ruta: string, coste: number) => {
+  if (auth.bytes >= coste) {
+    router.push(ruta)
+  } else {
+    alert(`¡No tienes suficientes bytes! Necesitas ${coste} B para jugar.`)
+  }
 }
 </script>
 
@@ -57,9 +64,6 @@ const cerrarSesion = () => {
       <section class="lista-juegos">
         
         <article class="tarjeta-juego">
-          
-          
-
           <div class="columna-info">
             <span class="categoria">LOGIC GATE</span>
             <h2 class="nombre-juego">Logic Slots</h2>
@@ -71,19 +75,20 @@ const cerrarSesion = () => {
               <span class="coste">COSTE</span>
               <span class="valor">50 B</span>
             </div>
-            
           </div>
 
           <div class="columna-iniciar">
-            <button class="boton-jugar" @click="router.push('/memory')">INICIAR</button>
+            <button 
+              class="boton-jugar" 
+              :disabled="auth.bytes < 50"
+              @click="jugar('/memory', 50)"
+            >
+              INICIAR
+            </button>
           </div>
-
         </article>
 
         <article class="tarjeta-juego">
-          
-          
-
           <div class="columna-info">
             <span class="categoria">ANALYSIS</span>
             <h2 class="nombre-juego">Code-Jack 21</h2>
@@ -95,19 +100,20 @@ const cerrarSesion = () => {
               <span class="coste">COSTE</span>
               <span class="valor">50 B</span>
             </div>
-            
           </div>
 
           <div class="columna-iniciar">
-            <button class="boton-jugar" @click="router.push('/Codejack')">INICIAR</button>
+            <button 
+              class="boton-jugar" 
+              :disabled="auth.bytes < 50"
+              @click="jugar('/Codejack', 50)"
+            >
+              INICIAR
+            </button>
           </div>
-
         </article>
 
         <article class="tarjeta-juego">
-          
-          
-
           <div class="columna-info">
             <span class="categoria">THINKING</span>
             <h2 class="nombre-juego">DeciBit</h2>
@@ -119,23 +125,24 @@ const cerrarSesion = () => {
               <span class="coste">COSTE</span>
               <span class="valor">10 B</span>
             </div>
-            
           </div>
 
           <div class="columna-iniciar">
-            <button class="boton-jugar" @click="router.push('/decibit')">INICIAR</button>
+            <button 
+              class="boton-jugar" 
+              :disabled="auth.bytes < 10"
+              @click="jugar('/decibit', 10)"
+            >
+              INICIAR
+            </button>
           </div>
-
         </article>
 
         <article class="tarjeta-juego">
-          
-          
-
           <div class="columna-info">
             <span class="categoria">CHAINING</span>
             <h2 class="nombre-juego">CodeLink</h2>
-            <p class="descripcion">Enlaca los bloques de codigo en sus respectivos sitios.</p>
+            <p class="descripcion">Enlaza los bloques de codigo en sus respectivos sitios.</p>
           </div>
 
           <div class="columna-estadisticas">
@@ -143,13 +150,17 @@ const cerrarSesion = () => {
               <span class="coste">COSTE</span>
               <span class="valor">75 B</span>
             </div>
-            
           </div>
 
           <div class="columna-iniciar">
-            <button class="boton-jugar" @click="router.push('/logiclink')">INICIAR</button>
+            <button 
+              class="boton-jugar" 
+              :disabled="auth.bytes < 75"
+              @click="jugar('/logiclink', 75)"
+            >
+              INICIAR
+            </button>
           </div>
-
         </article>
 
       </section>
@@ -414,8 +425,6 @@ const cerrarSesion = () => {
     border: none;
     padding: 0 40px;
     margin: 0;
-    
-    
   }
 }
 
@@ -470,9 +479,16 @@ const cerrarSesion = () => {
 
 .boton-jugar:active { transform: scale(0.98); }
 @media (hover: hover) {
-  .boton-jugar:hover {
+  .boton-jugar:not(:disabled):hover {
     background: #00E5FF;
     transform: translateY(-2px);
   }
+}
+
+.boton-jugar:disabled {
+  background: #1E2532;
+  color: #64748B;
+  cursor: not-allowed;
+  transform: none;
 }
 </style>
