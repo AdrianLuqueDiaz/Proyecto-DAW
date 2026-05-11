@@ -376,6 +376,27 @@ onMounted(() => {
     font-size: 0.9rem;
   }
 }
+@media (max-width: 1024px) {
+  .cabecera { 
+    height: auto; 
+    flex-direction: column; 
+    padding: 20px; 
+    gap: 15px; 
+  }
+
+  .navegacion { 
+    gap: 10px; 
+  }
+
+  .enlace { 
+    padding: 5px 10px; 
+  }
+
+  .info-usuario { 
+    flex-wrap: wrap; 
+    justify-content: center; 
+  }
+}
 
 .boton-salir {
   background: transparent;
