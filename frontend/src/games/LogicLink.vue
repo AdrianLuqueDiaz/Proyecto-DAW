@@ -185,8 +185,8 @@ onMounted(() => {
             <span class="solo-movil"> Luego toca el hueco para colocarlo.</span>
           </p>
           <ul class="info-lista">
-            <li><span class="valor-base">Acierto</span> <span class="separador">→</span> <span class="valor-exito">+75 Bytes</span></li>
-            <li><span class="valor-base">Fallo</span> <span class="separador">→</span> <span class="valor-error">-75 Bytes</span></li>
+            <li><span class="valor-base">Acierto</span> <span class="separador">→</span> <span class="exito">+75 Bytes</span></li>
+            <li><span class="valor-base">Fallo</span> <span class="separador">→</span> <span class="error">-75 Bytes</span></li>
           </ul>
         </div>
       </aside>
@@ -222,8 +222,8 @@ onMounted(() => {
           </div>
 
           <div class="resultados">
-            <div v-if="estado === 'correcto'" class="mensaje valor-exito">¡SINTAXIS CORRECTA! +75 BYTES</div>
-            <div v-if="estado === 'error'" class="mensaje valor-error">ERROR -75 BYTES</div>
+            <div v-if="estado === 'correcto'" class="mensaje exito">¡SINTAXIS CORRECTA! +75 BYTES</div>
+            <div v-if="estado === 'error'" class="mensaje error">ERROR -75 BYTES</div>
           </div>
 
 
@@ -372,8 +372,8 @@ onMounted(() => {
   display: flex; justify-content: space-between; font-size: 0.85rem; 
   background: #0B0E14; padding: 10px; border-radius: 4px; border: 1px solid #1E2532;
 }
-.valor-exito { color: #10B981; font-weight: bold; }
-.valor-error { color: #EF4444; font-weight: bold; }
+.exito { color: #10B981; font-weight: bold; padding-top: 10px; padding-bottom: 10px; position: center; }
+.error { color: #EF4444; font-weight: bold; position: center; }
 
 .cabecera-juego { text-align: center; margin-bottom: 30px; }
 .titulo-juego { font-size: 2.8rem; font-weight: 900; color: #F8FAFC; margin: 0; letter-spacing: -1px; }
