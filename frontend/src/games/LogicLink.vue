@@ -257,8 +257,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 .contenedor-principal {
   min-height: 100vh;
@@ -271,14 +272,13 @@ onMounted(() => {
   overflow-x: hidden;
 }
 
-
 .cabecera {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px; 
-  height: 80px; 
-  background-color: #11151D; 
+  padding: 0 40px;
+  height: 80px;
+  background-color: #11151D;
   border-bottom: 2px solid #1E2532;
   width: 100%;
   flex-shrink: 0;
@@ -290,12 +290,21 @@ onMounted(() => {
   font-weight: 900;
   letter-spacing: 2px;
 }
-.logo-bit { color: #E2E8F0; }
-.logo-hub { color: #00E5FF; }
 
-.navegacion { display: flex; height: 100%; }
+.logo-bit {
+  color: #E2E8F0;
+}
 
-.enlace { 
+.logo-hub {
+  color: #00E5FF;
+}
+
+.navegacion {
+  display: flex;
+  height: 100%;
+}
+
+.enlace {
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -305,13 +314,21 @@ onMounted(() => {
   cursor: pointer;
   transition: 0.2s;
 }
-.enlace:hover { color: #E2E8F0; }
+
+.enlace:hover {
+  color: #E2E8F0;
+}
+
 .enlace.activo {
   color: #00E5FF;
   border-bottom: 2px solid #00E5FF;
 }
 
-.info-usuario { display: flex; align-items: center; gap: 20px; }
+.info-usuario {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
 .bloque-bytes {
   display: flex;
@@ -321,16 +338,42 @@ onMounted(() => {
   padding: 6px 12px;
   border-radius: 4px;
 }
-.etiqueta-bytes { font-size: 0.7rem; font-weight: 700; color: #64748B; text-transform: uppercase; }
-.valor-bytes { font-family: 'Consolas', monospace; color: #FACC15; font-weight: bold; font-size: 1.1rem; }
-.nombre-jugador { font-family: 'Consolas', monospace; font-size: 0.9rem; color: #E2E8F0; }
 
-.boton-salir { 
-  background: transparent; border: 1px solid #334155; color: #94A3B8;
-  padding: 8px 16px; font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+.etiqueta-bytes {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
 }
-.boton-salir:hover { background: #EF4444; border-color: #EF4444; color: #fff; }
 
+.valor-bytes {
+  font-family: 'Consolas', monospace;
+  color: #FACC15;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.nombre-jugador {
+  font-family: 'Consolas', monospace;
+  font-size: 0.9rem;
+  color: #E2E8F0;
+}
+
+.boton-salir {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #94A3B8;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.boton-salir:hover {
+  background: #EF4444;
+  border-color: #EF4444;
+  color: #fff;
+}
 
 .contenido-juego {
   flex: 1;
@@ -344,7 +387,10 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-.panel-lateral { width: 260px; flex-shrink: 0; }
+.panel-lateral {
+  width: 260px;
+  flex-shrink: 0;
+}
 
 .mesa-central {
   flex: 1;
@@ -354,82 +400,297 @@ onMounted(() => {
   align-items: center;
 }
 
-
-.boton-volver { 
-  font-size: 0.85rem; color: #64748B; cursor: pointer;
-  margin-bottom: 20px; font-weight: 600; transition: color 0.2s;
-  text-align: center; display: block;
+.boton-volver {
+  font-size: 0.85rem;
+  color: #64748B;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-weight: 600;
+  transition: color 0.2s;
+  text-align: center;
+  display: block;
 }
-.boton-volver:hover { color: #00E5FF; }
+
+.boton-volver:hover {
+  color: #00E5FF;
+}
 
 .tarjeta-info {
-  background: #11151D; border: 1px solid #1E2532; border-radius: 6px; padding: 20px;
+  background: #11151D;
+  border: 1px solid #1E2532;
+  border-radius: 6px;
+  padding: 20px;
 }
-.info-titulo { color: #00E5FF; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; text-align: center; }
 
-.info-lista { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.info-lista li { 
-  display: flex; justify-content: space-between; font-size: 0.85rem; 
-  background: #0B0E14; padding: 10px; border-radius: 4px; border: 1px solid #1E2532;
+.info-titulo {
+  color: #00E5FF;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  text-align: center;
 }
-.exito { color: #10B981; font-weight: bold; padding-top: 10px; padding-bottom: 10px; position: center; }
-.error { color: #EF4444; font-weight: bold; position: center; }
 
-.cabecera-juego { text-align: center; margin-bottom: 30px; }
-.titulo-juego { font-size: 2.8rem; font-weight: 900; color: #F8FAFC; margin: 0; letter-spacing: -1px; }
-.subtitulo-juego { color: #64748B; font-size: 1rem; margin-top: 5px; }
+.info-lista {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-lista li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  background: #0B0E14;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #1E2532;
+}
+
+.exito {
+  color: #10B981;
+  font-weight: bold;
+}
+
+.error {
+  color: #EF4444;
+  font-weight: bold;
+}
+
+.cabecera-juego {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.titulo-juego {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #F8FAFC;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.subtitulo-juego {
+  color: #64748B;
+  font-size: 1rem;
+  margin-top: 5px;
+}
 
 .tablero-juego {
-  background: #11151D; border: 1px solid #1E2532; border-radius: 8px; padding: 35px; width: 100%;
+  background: #11151D;
+  border: 1px solid #1E2532;
+  border-radius: 8px;
+  padding: 35px;
+  width: 100%;
 }
 
 .zona-codigo {
-  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
-  gap: 15px; background: #0B0E14; padding: 25px; border-radius: 6px;
-  border: 1px solid #1E2532; font-family: 'Consolas', monospace; font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  background: #0B0E14;
+  padding: 25px;
+  border-radius: 6px;
+  border: 1px solid #1E2532;
+  font-family: 'Consolas', monospace;
+  font-size: 1.2rem;
 }
-.texto-codigo { color: #38BDF8; }
+
+.texto-codigo {
+  color: #38BDF8;
+}
 
 .hueco-drop {
-  min-width: 130px; height: 45px; border: 2px dashed #334155; border-radius: 4px;
-  display: flex; justify-content: center; align-items: center;
-  color: #64748B; background: rgba(11, 14, 20, 0.5); transition: 0.2s;
+  min-width: 130px;
+  height: 45px;
+  border: 2px dashed #334155;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #64748B;
+  background: rgba(11, 14, 20, 0.5);
+  transition: 0.2s;
 }
-.hueco-drop.con-pieza { border: 2px solid #00E5FF; color: #00E5FF; background: rgba(0, 229, 255, 0.05); }
-.hueco-drop.acierto { border: 2px solid #10B981; color: #10B981; background: rgba(16, 185, 129, 0.1); }
-.hueco-drop.fallo { border: 2px solid #EF4444; color: #EF4444; background: rgba(239, 68, 68, 0.1); }
+
+.hueco-drop.con-pieza {
+  border: 2px solid #00E5FF;
+  color: #00E5FF;
+  background: rgba(0, 229, 255, 0.05);
+}
+
+.hueco-drop.acierto {
+  border: 2px solid #10B981;
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.hueco-drop.fallo {
+  border: 2px solid #EF4444;
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.resultados {
+  min-height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.mensaje {
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-align: center;
+  width: 100%;
+  letter-spacing: 1px;
+}
+
+.mensaje.exito {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid #10B981;
+}
+
+.mensaje.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #EF4444;
+}
 
 .zona-opciones {
-  display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 35px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
 }
-.pieza-draggable {
-  padding: 14px 28px; background-color: #1E2532; border: 1px solid #334155;
-  border-radius: 4px; color: #F8FAFC; font-family: 'Consolas', monospace;
-  cursor: grab; transition: 0.2s; font-weight: bold;
-}
-.pieza-draggable:hover { border-color: #00E5FF; transform: translateY(-3px); background: #252D3D; }
 
+.pieza-draggable {
+  padding: 14px 28px;
+  background-color: #1E2532;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  color: #F8FAFC;
+  font-family: 'Consolas', monospace;
+  cursor: grab;
+  transition: 0.2s;
+  font-weight: bold;
+}
+
+.pieza-draggable:hover {
+  border-color: #00E5FF;
+  transform: translateY(-3px);
+  background: #252D3D;
+}
+
+.centrado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.espaciado-inferior {
+  margin-bottom: 25px;
+}
+
+.boton-primario {
+  background: #00E5FF;
+  color: #0B0E14;
+  border: none;
+  padding: 12px 24px;
+  font-weight: 900;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.boton-primario:hover {
+  background: #00B8CC;
+  transform: scale(1.05);
+}
 
 @media (max-width: 1024px) {
-  .cabecera { height: auto; flex-direction: column; padding: 20px; gap: 15px; }
-  .navegacion { height: auto; width: 100%; justify-content: center; gap: 5px; }
-  .enlace { padding: 10px; border-bottom: none !important; font-size: 0.75rem; }
-  .info-usuario { width: 100%; justify-content: center; gap: 15px; }
-
-  .contenido-juego { 
-    flex-direction: column; 
-    align-items: center; 
-    padding: 15px 15px;
-    gap: 20px; 
+  .cabecera {
+    height: auto;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
   }
-  .panel-lateral { width: 100%; max-width: 500px; order: 1; }
-  .mesa-central { width: 100%; order: 2; }
-  
-  .boton-volver { margin-bottom: 10px; }
-  .titulo-juego { font-size: 2rem; text-align: center; }
-  .subtitulo-juego { text-align: center; font-size: 0.9rem; }
-  .tablero-juego { padding: 20px; }
-  .zona-codigo { font-size: 1rem; padding: 15px; gap: 10px; }
-  .hueco-drop { min-width: 100px; height: 35px; font-size: 0.8rem; }
+
+  .navegacion {
+    height: auto;
+    width: 100%;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .enlace {
+    padding: 10px;
+    border-bottom: none !important;
+    font-size: 0.75rem;
+  }
+
+  .info-usuario {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .contenido-juego {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 15px;
+    gap: 20px;
+  }
+
+  .panel-lateral {
+    width: 100%;
+    max-width: 500px;
+    order: 1;
+  }
+
+  .mesa-central {
+    width: 100%;
+    order: 2;
+  }
+
+  .boton-volver {
+    margin-bottom: 10px;
+  }
+
+  .titulo-juego {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .subtitulo-juego {
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .tablero-juego {
+    padding: 20px;
+  }
+
+  .zona-codigo {
+    font-size: 1rem;
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .hueco-drop {
+    min-width: 100px;
+    height: 35px;
+    font-size: 0.8rem;
+  }
 }
 </style>
