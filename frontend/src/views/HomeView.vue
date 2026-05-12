@@ -227,7 +227,7 @@ const jugar = (ruta: string, coste: number) => {
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 1px;
-  color: #64748B;
+  color: #bac8db;
   cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 2px solid transparent;
@@ -271,7 +271,7 @@ const jugar = (ruta: string, coste: number) => {
 .etiqueta-bytes {
   font-size: 0.7rem; 
   font-weight: 700;
-  color: #64748B;
+  color: #bac8db;
   letter-spacing: 1px;
 }
 
@@ -289,7 +289,7 @@ const jugar = (ruta: string, coste: number) => {
 
 .boton-salir { 
   background: transparent;
-  border: 1px solid #334155;
+  border: 1px solid #bac8db;
   color: #94A3B8;
   padding: 8px 16px;
   font-size: 0.75rem;
@@ -388,7 +388,7 @@ const jugar = (ruta: string, coste: number) => {
 
 .descripcion {
   font-size: 0.85rem;
-  color: #94A3B8;
+  color: #bac8db;
   margin: 0;
 }
 
@@ -417,7 +417,7 @@ const jugar = (ruta: string, coste: number) => {
 .coste {
   font-size: 0.6rem;
   font-weight: 700;
-  color: #64748B;
+  color: #bac8db;
 }
 
 .valor {

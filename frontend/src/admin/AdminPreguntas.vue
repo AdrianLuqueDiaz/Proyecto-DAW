@@ -79,7 +79,7 @@ const guardarPregunta = async () => {
 
 const borrarPregunta = async (id: number) => {
   if (
-    !confirm(`¿Estás seguro de que quieres eliminar la pregunta con ID ${id}?`)
+    !confirm(`¿Estás seguro de que quieres eliminar la pregunta?`)
   )
     return
 
@@ -89,7 +89,7 @@ const borrarPregunta = async (id: number) => {
     })
 
     if (respuesta.ok) {
-      mensajeAlerta.value = `Pregunta con ID ${id} eliminada correctamente.`
+      mensajeAlerta.value = `Pregunta eliminada correctamente.`
       colorAlerta.value = 'success'
       
       // Refrescar la tabla para que desaparezca la borrada

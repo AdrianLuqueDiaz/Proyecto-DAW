@@ -16,7 +16,7 @@ const numeroObjetivo = ref(0)
 const bits = ref([0, 0, 0, 0]) 
 const mensaje = ref('')
 const juegoTerminado = ref(false)
-const tiempo = ref(20)
+const tiempo = ref(10)
 let intervalo: any = null
 
 const iniciarTemporizador = () => {
@@ -92,6 +92,7 @@ onMounted(() => {
     router.push('/home');
     return;
   }
+  generarNumero();
 })
 
 onUnmounted(() => { if (intervalo) clearInterval(intervalo) }) //hace que se resetee el temporizador

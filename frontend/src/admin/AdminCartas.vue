@@ -50,7 +50,7 @@ const guardarCarta = async () => {
     })
 
     if (respuesta.ok) {
-      mensajeAlerta.value = 'Pregunta guardada correctamente.'
+      mensajeAlerta.value = 'Carta guardada correctamente.'
       colorAlerta.value = 'success'
       
       cartaNueva.value.texto = ''
@@ -73,7 +73,7 @@ const guardarCarta = async () => {
 
 const borrarCarta = async (id: number) => {
   if (
-    !confirm(`¿Estás seguro de que quieres eliminar la pregunta con ID ${id}?`)
+    !confirm(`¿Estás seguro de que quieres eliminar la carta?`)
   )
     return
 
@@ -83,13 +83,13 @@ const borrarCarta = async (id: number) => {
     })
 
     if (respuesta.ok) {
-      mensajeAlerta.value = `Pregunta con ID ${id} eliminada correctamente.`
+      mensajeAlerta.value = `Carta eliminada correctamente.`
       colorAlerta.value = 'success'
       
       // Refrescar la tabla para que desaparezca la borrada
       await cargarCartas()
     } else {
-      mensajeAlerta.value = 'Error: No se encontró la pregunta o hubo un problema en el servidor.'
+      mensajeAlerta.value = 'Error: No se encontró la carta o hubo un problema en el servidor.'
       colorAlerta.value = 'error'
     }
 
