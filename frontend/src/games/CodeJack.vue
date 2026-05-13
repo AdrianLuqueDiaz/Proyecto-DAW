@@ -277,6 +277,7 @@ onMounted(() => {
   overflow-x: hidden;
 }
 
+
 .cabecera {
   display: flex;
   justify-content: space-between;
@@ -295,14 +296,10 @@ onMounted(() => {
   font-weight: 900;
   letter-spacing: 2px;
 }
-
 .logo-bit { color: #E2E8F0; }
 .logo-hub { color: #00E5FF; }
 
-.navegacion { 
-  display: flex; 
-  height: 100%; 
-}
+.navegacion { display: flex; height: 100%; }
 
 .enlace { 
   display: flex;
@@ -310,21 +307,17 @@ onMounted(() => {
   padding: 0 20px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #64748B;
+  color: #bac8db;
   cursor: pointer;
   transition: 0.2s;
 }
-
+.enlace:hover { color: #E2E8F0; }
 .enlace.activo {
   color: #00E5FF;
   border-bottom: 2px solid #00E5FF;
 }
 
-.info-usuario { 
-  display: flex; 
-  align-items: center; 
-  gap: 20px; 
-}
+.info-usuario { display: flex; align-items: center; gap: 20px; }
 
 .bloque-bytes {
   display: flex;
@@ -334,60 +327,16 @@ onMounted(() => {
   padding: 6px 12px;
   border-radius: 4px;
 }
-
-.valor-bytes {
-  font-family: 'Consolas', monospace;
-  color: #FACC15;
-  font-weight: bold;
-}
-
-.nombre-jugador {
-  font-family: 'Consolas', monospace;
-  font-size: 0.9rem;
-  color: #E2E8F0;
-}
+.etiqueta-bytes { font-size: 0.7rem; font-weight: 700; color: #bac8db; text-transform: uppercase; }
+.valor-bytes { font-family: 'Consolas', monospace; color: #FACC15; font-weight: bold; font-size: 1.1rem; }
+.nombre-jugador { font-family: 'Consolas', monospace; font-size: 0.9rem; color: #E2E8F0; }
 
 .boton-salir { 
-  background: transparent;
-  border: 1px solid #bac8db;
-  color: #bac8db;
-  padding: 8px 16px;
-  font-size: 0.75rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: 0.2s;
+  background: transparent; border: 1px solid #334155; color: #bac8db;
+  padding: 8px 16px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s;
 }
+.boton-salir:hover { background: #EF4444; border-color: #EF4444; color: #fff; }
 
-.boton-salir:hover {
-  background: #EF4444;
-  border-color: #EF4444;
-  color: #fff;
-}
-
-@media (max-width: 1024px) {
-  .cabecera { 
-    height: auto; 
-    flex-direction: column; 
-    padding: 20px; 
-    gap: 15px; 
-  }
-
-  .navegacion { 
-    height: auto;
-    gap: 5px; 
-  }
-
-  .enlace { 
-    padding: 10px 12px; 
-    border-bottom: none !important;
-  }
-
-  .info-usuario { 
-    width: 100%;
-    justify-content: center;
-    gap: 15px; 
-  }
-}
 
 .contenido-juego {
   flex: 1;
@@ -408,7 +357,7 @@ onMounted(() => {
 
 .boton-volver { 
   font-size: 0.85rem;
-  color: #bac8db;
+  color: #64748B;
   cursor: pointer;
   margin-bottom: 20px;
   font-weight: 600;
@@ -416,10 +365,7 @@ onMounted(() => {
   text-align: center;
   display: block;
 }
-
-.boton-volver:hover { 
-  color: #E2E8F0; 
-}
+.boton-volver:hover { color: #E2E8F0; }
 
 .tarjeta-info {
   background: #11151D;
@@ -444,7 +390,6 @@ onMounted(() => {
   flex-direction: column;
   gap: 8px;
 }
-
 .info-lista li { 
   display: flex;
   justify-content: space-between;
@@ -472,14 +417,12 @@ onMounted(() => {
   text-align: center; 
   margin-bottom: 30px; 
 }
-
 .titulo-juego {
   font-size: 2.5rem;
   font-weight: 900;
   color: #F8FAFC;
   margin: 0;
 }
-
 .subtitulo-juego { 
   color: #64748B; 
   font-size: 0.95rem; 
@@ -505,19 +448,9 @@ onMounted(() => {
   border: 1px solid #1E2532;
 }
 
-.tu-turno { 
-  border-color: #334155; 
-}
-
-.tu-turno .nombre { 
-  color: #00E5FF; 
-}
-
-.memoria {
-  color: #EF4444;
-  font-weight: bold;
-  font-size: 1.1rem;
-}
+.tu-turno { border-color: #334155; }
+.tu-turno .nombre { color: #00E5FF; }
+.memoria { color: #EF4444; font-weight: bold; font-size: 1.1rem; }
 
 .divisor { 
   border: 0; 
@@ -533,10 +466,7 @@ onMounted(() => {
   justify-content: center;
   min-height: 120px;
 }
-
-.zona-cartas.mini { 
-  min-height: 80px; 
-}
+.zona-cartas.mini { min-height: 80px; }
 
 .carta-dato { 
   width: 85px;
@@ -549,17 +479,8 @@ onMounted(() => {
   align-items: center;
   transition: 0.2s;
 }
-
-.mini .carta-dato { 
-  width: 60px; 
-  height: 85px; 
-  background: #0B0E14; 
-}
-
-.carta-dato:hover { 
-  transform: translateY(-5px); 
-  border-color: #00E5FF; 
-}
+.mini .carta-dato { width: 60px; height: 85px; background: #0B0E14; }
+.carta-dato:hover { transform: translateY(-5px); border-color: #00E5FF; }
 
 .texto-carta {
   font-family: 'Consolas', monospace;
@@ -580,24 +501,9 @@ onMounted(() => {
   text-align: center;
   border: 1px solid transparent;
 }
-
-.mensaje.ganado { 
-  background: rgba(16, 185, 129, 0.1); 
-  border-color: #10B981; 
-  color: #10B981; 
-}
-
-.mensaje.perdido { 
-  background: rgba(239, 68, 68, 0.1); 
-  border-color: #EF4444; 
-  color: #EF4444; 
-}
-
-.mensaje.empate { 
-  background: rgba(245, 158, 11, 0.1); 
-  border-color: #F59E0B; 
-  color: #F59E0B;
-}
+.mensaje.ganado { background: rgba(16, 185, 129, 0.1); border-color: #10B981; color: #10B981; }
+.mensaje.perdido { background: rgba(239, 68, 68, 0.1); border-color: #EF4444; color: #EF4444; }
+.mensaje.empate { background: rgba(245, 158, 11, 0.1); border-color: #F59E0B; color: #F59E0B; }
 
 .controles { 
   display: flex; 
@@ -616,10 +522,7 @@ onMounted(() => {
   cursor: pointer;
   transition: 0.2s;
 }
-
-.boton-primario:hover { 
-  background: #00E5FF; 
-}
+.boton-primario:hover { background: #00E5FF; }
 
 .boton-secundario {
   background: transparent;
@@ -631,43 +534,28 @@ onMounted(() => {
   cursor: pointer;
 }
 
+
 @media (max-width: 1024px) {
+
+  .cabecera { height: auto; flex-direction: column; padding: 20px; gap: 15px; }
+  .navegacion { height: auto; width: 100%; justify-content: center; gap: 5px; }
+  .enlace { padding: 10px; border-bottom: none !important; font-size: 0.75rem; }
+  .info-usuario { width: 100%; justify-content: center; gap: 15px; }
+
+  
   .contenido-juego { 
     flex-direction: column; 
     align-items: center; 
     padding: 20px 10px; 
   }
-
-  .panel-lateral { 
-    width: 100%; 
-    max-width: 500px; 
-    order: 1; 
-  }
-
-  .mesa-central { 
-    order: 2; 
-    width: 100%; 
-  }
+  .panel-lateral { width: 100%; max-width: 500px; order: 1; }
+  .mesa-central { width: 100%; order: 2; }
 }
 
 @media (max-width: 600px) {
-  .tablero-juego { 
-    padding: 15px; 
-}
-
-  .titulo-juego { 
-    font-size: 1.8rem; 
-  }
-
-  .carta-dato { 
-    width: 70px; 
-    height: 100px; 
-  }
-
-  .etiqueta-estado { 
-    flex-direction: column; 
-    gap: 5px; 
-    text-align: center; 
-  }
+  .tablero-juego { padding: 15px; }
+  .titulo-juego { font-size: 1.8rem; }
+  .carta-dato { width: 70px; height: 100px; }
+  .etiqueta-estado { flex-direction: column; gap: 5px; text-align: center; }
 }
 </style>

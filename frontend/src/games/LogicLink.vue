@@ -310,7 +310,7 @@ onMounted(() => {
   padding: 0 20px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #64748B;
+  color: #bac8db;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -342,7 +342,7 @@ onMounted(() => {
 .etiqueta-bytes {
   font-size: 0.7rem;
   font-weight: 700;
-  color: #64748B;
+  color: #bac8db;
   text-transform: uppercase;
 }
 

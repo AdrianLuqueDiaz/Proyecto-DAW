@@ -251,7 +251,7 @@ const borrarCarta = async (id: number) => {
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 1px;
-  color: #64748B;
+  color: #bac8db;
   cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 2px solid transparent;
@@ -283,7 +283,7 @@ const borrarCarta = async (id: number) => {
 .etiqueta-bytes {
   font-size: 0.7rem;
   font-weight: 700;
-  color: #64748B;
+  color: #bac8db;
   letter-spacing: 1px;
 }
 
