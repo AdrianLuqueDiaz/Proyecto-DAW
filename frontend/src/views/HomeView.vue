@@ -290,7 +290,7 @@ const jugar = (ruta: string, coste: number) => {
 .boton-salir { 
   background: transparent;
   border: 1px solid #bac8db;
-  color: #94A3B8;
+  color: #bac8db;
   padding: 8px 16px;
   font-size: 0.75rem;
   font-weight: bold;

@@ -209,7 +209,7 @@ onMounted(cargarClasificacion)
 
 .boton-salir {
   background: transparent;
-  border: 1px solid #334155;
+  border: 1px solid #bac8db;
   color: #bac8db;
   padding: 8px 16px;
   font-size: 0.75rem;

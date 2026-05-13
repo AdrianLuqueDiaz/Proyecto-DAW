@@ -171,8 +171,8 @@ const cerrarSesion = () => {
 
 .boton-salir {
   background: transparent;
-  border: 1px solid #334155;
-  color: #94A3B8;
+  border: 1px solid #bac8db;
+  color: #bac8db;
   padding: 8px 16px;
   font-size: 0.75rem;
   font-weight: bold;

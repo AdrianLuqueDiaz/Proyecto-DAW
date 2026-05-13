@@ -381,7 +381,7 @@ onMounted(() => {
 
 .boton-salir {
   background: transparent;
-  border: 1px solid #334155;
+  border: 1px solid #bac8db;
   color: #bac8db;
   padding: 8px 16px;
   font-size: 0.75rem;
@@ -418,7 +418,7 @@ onMounted(() => {
   display: inline-block;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #64748B;
+  color: #bac8db;
   cursor: pointer;
   margin-bottom: 15px;
   transition: color 0.2s;

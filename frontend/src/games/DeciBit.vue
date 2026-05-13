@@ -256,7 +256,7 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) }) //hace que se res
 
 .boton-salir { 
   background: transparent; 
-  border: 1px solid #334155; 
+  border: 1px solid #bac8db; 
   color: #bac8db; 
   padding: 8px 16px; 
   border-radius: 4px; 
@@ -271,7 +271,7 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) }) //hace que se res
 
 .boton-volver { 
   font-size: 0.85rem;
-  color: #64748B;
+  color: #bac8db;
   cursor: pointer;
   margin-bottom: 20px;
   font-weight: 600;

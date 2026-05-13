@@ -349,7 +349,7 @@ onMounted(() => {
 
 .boton-salir { 
   background: transparent;
-  border: 1px solid #334155;
+  border: 1px solid #bac8db;
   color: #bac8db;
   padding: 8px 16px;
   font-size: 0.75rem;
@@ -408,7 +408,7 @@ onMounted(() => {
 
 .boton-volver { 
   font-size: 0.85rem;
-  color: #64748B;
+  color: #bac8db;
   cursor: pointer;
   margin-bottom: 20px;
   font-weight: 600;
