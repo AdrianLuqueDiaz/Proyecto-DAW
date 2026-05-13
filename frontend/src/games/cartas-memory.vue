@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_BASE_URL
 const router = useRouter()
 const auth = useAuthStore()
 
-const COSTE_JUEGO = 50;
+const COSTE_JUEGO = 100;
 
 const bancoDePreguntas = ref<any[]>([])
 const cartas = ref<any[]>([])
