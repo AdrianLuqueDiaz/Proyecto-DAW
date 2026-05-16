@@ -211,7 +211,7 @@ onUnmounted(() => { if (intervalo) clearInterval(intervalo) }) //hace que se res
   padding: 0 20px; 
   font-size: 0.85rem; 
   font-weight: 600; 
-  color: #64748B; 
+  color: #bac8db; 
   cursor: pointer; 
   transition: 0.2s; 
 }

@@ -275,6 +275,8 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -282,12 +284,13 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px; 
-  height: 80px; 
-  background-color: #11151D; 
+  padding: 0 40px;
+  height: 80px;
+  background-color: #11151D;
   border-bottom: 2px solid #1E2532;
-  width: 100%;
+  box-sizing: border-box;
   flex-shrink: 0;
+  width: 100%;
 }
 
 .logo {
@@ -299,17 +302,22 @@ onMounted(() => {
 .logo-bit { color: #E2E8F0; }
 .logo-hub { color: #00E5FF; }
 
-.navegacion { display: flex; height: 100%; }
+.navegacion {
+  display: flex;
+  height: 100%;
+}
 
-.enlace { 
+.enlace {
   display: flex;
   align-items: center;
   padding: 0 20px;
   font-size: 0.85rem;
   font-weight: 600;
+  letter-spacing: 1px;
   color: #bac8db;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
 }
 .enlace:hover { color: #E2E8F0; }
 .enlace.activo {
@@ -317,7 +325,11 @@ onMounted(() => {
   border-bottom: 2px solid #00E5FF;
 }
 
-.info-usuario { display: flex; align-items: center; gap: 20px; }
+.info-usuario {
+  display: flex;
+  align-items: center; 
+  gap: 25px;
+}
 
 .bloque-bytes {
   display: flex;
@@ -327,15 +339,42 @@ onMounted(() => {
   padding: 6px 12px;
   border-radius: 4px;
 }
-.etiqueta-bytes { font-size: 0.7rem; font-weight: 700; color: #bac8db; text-transform: uppercase; }
-.valor-bytes { font-family: 'Consolas', monospace; color: #FACC15; font-weight: bold; font-size: 1.1rem; }
-.nombre-jugador { font-family: 'Consolas', monospace; font-size: 0.9rem; color: #E2E8F0; }
-
-.boton-salir { 
-  background: transparent; border: 1px solid #334155; color: #bac8db;
-  padding: 8px 16px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s;
+.etiqueta-bytes {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #bac8db;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
-.boton-salir:hover { background: #EF4444; border-color: #EF4444; color: #fff; }
+.valor-bytes {
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #FACC15;
+}
+.nombre-jugador {
+  font-family: 'Consolas', monospace;
+  font-size: 0.9rem;
+  color: #E2E8F0;
+}
+
+.boton-salir {
+  background: transparent;
+  border: 1px solid #bac8db;
+  color: #bac8db;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.boton-salir:hover {
+  background: #EF4444;
+  border-color: #EF4444;
+  color: #fff;
+}
 
 
 .contenido-juego {
@@ -468,6 +507,7 @@ onMounted(() => {
 }
 .zona-cartas.mini { min-height: 80px; }
 
+
 .carta-dato { 
   width: 85px;
   height: 120px;
@@ -552,12 +592,10 @@ onMounted(() => {
 
 
 @media (max-width: 1024px) {
-
   .cabecera { height: auto; flex-direction: column; padding: 20px; gap: 15px; }
   .navegacion { height: auto; width: 100%; justify-content: center; gap: 5px; }
-  .enlace { padding: 10px; border-bottom: none !important; font-size: 0.75rem; }
+  .enlace { padding: 10px; font-size: 0.75rem; border-bottom: none !important; }
   .info-usuario { width: 100%; justify-content: center; gap: 15px; }
-
   
   .contenido-juego { 
     flex-direction: column; 

@@ -270,7 +270,10 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
+
 
 .cabecera {
   display: flex;
@@ -280,8 +283,9 @@ onMounted(() => {
   height: 80px;
   background-color: #11151D;
   border-bottom: 2px solid #1E2532;
-  width: 100%;
+  box-sizing: border-box;
   flex-shrink: 0;
+  width: 100%;
 }
 
 .logo {
@@ -290,14 +294,8 @@ onMounted(() => {
   font-weight: 900;
   letter-spacing: 2px;
 }
-
-.logo-bit {
-  color: #E2E8F0;
-}
-
-.logo-hub {
-  color: #00E5FF;
-}
+.logo-bit { color: #E2E8F0; }
+.logo-hub { color: #00E5FF; }
 
 .navegacion {
   display: flex;
@@ -310,15 +308,13 @@ onMounted(() => {
   padding: 0 20px;
   font-size: 0.85rem;
   font-weight: 600;
+  letter-spacing: 1px;
   color: #bac8db;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
 }
-
-.enlace:hover {
-  color: #E2E8F0;
-}
-
+.enlace:hover { color: #E2E8F0; }
 .enlace.activo {
   color: #00E5FF;
   border-bottom: 2px solid #00E5FF;
@@ -326,8 +322,8 @@ onMounted(() => {
 
 .info-usuario {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  align-items: center; 
+  gap: 25px;
 }
 
 .bloque-bytes {
@@ -338,21 +334,19 @@ onMounted(() => {
   padding: 6px 12px;
   border-radius: 4px;
 }
-
 .etiqueta-bytes {
   font-size: 0.7rem;
   font-weight: 700;
   color: #bac8db;
+  letter-spacing: 1px;
   text-transform: uppercase;
 }
-
 .valor-bytes {
   font-family: 'Consolas', monospace;
-  color: #FACC15;
   font-weight: bold;
   font-size: 1.1rem;
+  color: #FACC15;
 }
-
 .nombre-jugador {
   font-family: 'Consolas', monospace;
   font-size: 0.9rem;
@@ -365,15 +359,18 @@ onMounted(() => {
   color: #bac8db;
   padding: 8px 16px;
   font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.2s;
 }
-
 .boton-salir:hover {
   background: #EF4444;
   border-color: #EF4444;
   color: #fff;
 }
+
 
 .contenido-juego {
   flex: 1;
@@ -618,32 +615,12 @@ onMounted(() => {
   transform: scale(1.05);
 }
 
+
 @media (max-width: 1024px) {
-  .cabecera {
-    height: auto;
-    flex-direction: column;
-    padding: 20px;
-    gap: 15px;
-  }
-
-  .navegacion {
-    height: auto;
-    width: 100%;
-    justify-content: center;
-    gap: 5px;
-  }
-
-  .enlace {
-    padding: 10px;
-    border-bottom: none !important;
-    font-size: 0.75rem;
-  }
-
-  .info-usuario {
-    width: 100%;
-    justify-content: center;
-    gap: 15px;
-  }
+  .cabecera { height: auto; flex-direction: column; padding: 20px; gap: 15px; }
+  .navegacion { height: auto; width: 100%; justify-content: center; gap: 5px; }
+  .enlace { padding: 10px; font-size: 0.75rem; border-bottom: none !important; }
+  .info-usuario { width: 100%; justify-content: center; gap: 15px; }
 
   .contenido-juego {
     flex-direction: column;
