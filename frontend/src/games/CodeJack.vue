@@ -478,9 +478,21 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   transition: 0.2s;
+  padding: 8px; 
+  overflow: hidden; 
 }
-.mini .carta-dato { width: 60px; height: 85px; background: #0B0E14; }
-.carta-dato:hover { transform: translateY(-5px); border-color: #00E5FF; }
+
+.mini .carta-dato { 
+  width: 60px; 
+  height: 85px; 
+  background: #0B0E14; 
+  padding: 4px; 
+}
+
+.carta-dato:hover { 
+  transform: translateY(-5px); 
+  border-color: #00E5FF; 
+}
 
 .texto-carta {
   font-family: 'Consolas', monospace;
@@ -488,6 +500,10 @@ onMounted(() => {
   font-weight: bold;
   text-align: center;
   color: #F8FAFC;
+  width: 100%; 
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+  line-height: 1.2; 
 }
 
 .resultados { 
