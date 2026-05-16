@@ -226,7 +226,7 @@ onMounted(() => {
             <div class="zona-cartas">
               <div v-for="(carta, index) in miMano" :key="index" class="carta-dato">
                 <div class="carta-interior">
-                  <span class="icono-dato">≡</span>
+                  
                   <span class="texto-carta">{{ carta.texto }}</span>
                 </div>
               </div>
