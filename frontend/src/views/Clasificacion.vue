@@ -191,7 +191,7 @@ onMounted(cargarClasificacion)
 .etiqueta-bytes {
   font-size: 0.7rem;
   font-weight: 700;
-  color: #64748B;
+  color: #bac8db;
   letter-spacing: 1px;
 }
 
