@@ -140,13 +140,18 @@ public class DataSeeder implements CommandLineRunner {
         }
     }
 
-    // ---------- Administrador (solo si se define ADMIN_PASSWORD en el servidor) ----------
+    // ---------- Administrador: su contraseña se sincroniza con ADMIN_PASSWORD en cada arranque ----------
     private void crearAdmin() {
         String pass = System.getenv("ADMIN_PASSWORD");
-        if (pass == null || pass.isBlank() || usuarios.findByAlias("admin").isPresent()) return;
-        Usuario admin = new Usuario();
+        if (pass == null || pass.isBlank()) return;
+        pass = pass.strip();
+        Usuario admin = usuarios.findByAlias("admin").orElseGet(Usuario::new);
+        if (admin.getId() != null && passwordEncoder.matches(pass, admin.getContrasena())
+                && "ADMIN".equals(admin.getRol())) {
+            return; // ya está al día
+        }
         admin.setAlias("admin");
-        admin.setCorreo("admin@bithub.local");
+        if (admin.getCorreo() == null) admin.setCorreo("admin@bithub.local");
         admin.setContrasena(passwordEncoder.encode(pass));
         admin.setRol("ADMIN");
         usuarios.save(admin);
