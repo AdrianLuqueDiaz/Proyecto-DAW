@@ -1,5 +1,7 @@
 package com.arcade.backend.entidades;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,10 +21,14 @@ public class Usuario {
     @Column(unique = true, nullable = false)
     private String alias;
 
+    // Solo se recibe (registro); nunca se devuelve en las respuestas de la API
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Email(message = "El formato del correo no es válido")
     @Column(unique = true, nullable = false)
     private String correo;
 
+    // Solo se recibe (registro/login); nunca se devuelve en las respuestas de la API
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String contrasena;
 
