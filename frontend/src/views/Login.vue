@@ -44,7 +44,7 @@ const entrar = async () => {
   }
 }
 
-// Acceso rápido con el usuario de demo público
+// entrar con el usuario invitado
 const entrarInvitado = () => {
   alias.value = 'invitado'
   contrasena.value = 'invitado'
@@ -84,7 +84,7 @@ const entrarInvitado = () => {
         <button @click="entrarInvitado" class="btn-invitado">
           ENTRAR COMO INVITADO
         </button>
-        <p class="nota-demo">Usuario de prueba: invitado · contraseña: invitado</p>
+        <p class="nota-demo">Usuario y contraseña de prueba: invitado</p>
 
         <div class="enlace-registro" @click="router.push('/registro')">
           ¿No tienes cuenta? Crear un usuario nuevo
