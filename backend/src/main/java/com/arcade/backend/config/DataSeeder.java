@@ -52,6 +52,7 @@ public class DataSeeder implements CommandLineRunner {
         cargarLogicLink();
         cargarEstadisticas();
         crearAdmin();
+        crearInvitado();
     }
 
     // ---------- Logic Slots (memory): 8 parejas de cartas + 1 pregunta por pareja ----------
@@ -155,5 +156,18 @@ public class DataSeeder implements CommandLineRunner {
         admin.setContrasena(passwordEncoder.encode(pass));
         admin.setRol("ADMIN");
         usuarios.save(admin);
+    }
+
+    // ---------- Usuario de demo público (invitado / invitado) para quien quiera probar la web ----------
+    private void crearInvitado() {
+        Usuario invitado = usuarios.findByAlias("invitado").orElseGet(Usuario::new);
+        if (invitado.getId() != null && passwordEncoder.matches("invitado", invitado.getContrasena())) {
+            return;
+        }
+        invitado.setAlias("invitado");
+        if (invitado.getCorreo() == null) invitado.setCorreo("invitado@bithub.local");
+        invitado.setContrasena(passwordEncoder.encode("invitado"));
+        invitado.setRol("USUARIO");
+        usuarios.save(invitado);
     }
 }
