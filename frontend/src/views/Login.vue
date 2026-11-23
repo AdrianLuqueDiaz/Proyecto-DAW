@@ -43,6 +43,13 @@ const entrar = async () => {
     alert("ERROR: Imposible conectar con el servidor.")
   }
 }
+
+// Acceso rápido con el usuario de demo público
+const entrarInvitado = () => {
+  alias.value = 'invitado'
+  contrasena.value = 'invitado'
+  entrar()
+}
 </script>
 
 <template>
@@ -73,6 +80,11 @@ const entrar = async () => {
         <button @click="entrar" class="btn-conectar">
           CONECTAR
         </button>
+
+        <button @click="entrarInvitado" class="btn-invitado">
+          ENTRAR COMO INVITADO
+        </button>
+        <p class="nota-demo">Usuario de prueba: invitado · contraseña: invitado</p>
 
         <div class="enlace-registro" @click="router.push('/registro')">
           ¿No tienes cuenta? Crear un usuario nuevo
@@ -221,5 +233,31 @@ input:focus {
 
 .enlace-registro:hover {
   color: #E2E8F0;
+}
+
+.btn-invitado {
+  width: 100%;
+  background-color: transparent;
+  color: #00E5FF;
+  border: 1px solid #00E5FF;
+  border-radius: 4px;
+  padding: 12px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s ease;
+}
+
+.btn-invitado:hover {
+  background-color: rgba(0, 229, 255, 0.1);
+}
+
+.nota-demo {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #64748B;
+  margin: 10px 0 0 0;
 }
 </style>
