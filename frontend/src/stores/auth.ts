@@ -36,6 +36,11 @@ export const useAuthStore = defineStore('auth', {
     },
     
     logout() {
+      // si sale el invitado se le devuelve el saldo inicial
+      if (this.jugador === 'invitado') {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/usuarios/invitado/reiniciar`, { method: 'PUT' })
+      }
+
       this.jugador = null
       this.bytes = 0
       this.partidasJugadas = 0
