@@ -17,11 +17,7 @@ import com.arcade.backend.repositorios.LogicLinkRepositorio;
 import com.arcade.backend.repositorios.PreguntaRepositorio;
 import com.arcade.backend.repositorios.UsuarioRepositorio;
 
-/**
- * Carga datos iniciales la primera vez que arranca el backend con una base de datos vacia.
- * Si una tabla ya tiene datos, no la toca. El usuario administrador solo se crea si existe
- * la variable de entorno ADMIN_PASSWORD (la contrasena nunca se guarda en el codigo).
- */
+// mete los datos iniciales si las tablas estan vacias
 @Component
 public class DataSeeder implements CommandLineRunner {
 
@@ -55,7 +51,7 @@ public class DataSeeder implements CommandLineRunner {
         crearInvitado();
     }
 
-    // ---------- Logic Slots (memory): 8 parejas de cartas + 1 pregunta por pareja ----------
+    // cartas y preguntas del Logic Slots
     private void cargarMemory() {
         if (cartas.count() == 0) {
             String[][] parejas = {
@@ -95,7 +91,7 @@ public class DataSeeder implements CommandLineRunner {
         }
     }
 
-    // ---------- Code-Jack 21: cartas con un valor numérico ----------
+    // cartas del Code-Jack
     private void cargarCodejack() {
         if (codejack.count() > 0) return;
         Object[][] baraja = {
@@ -108,7 +104,7 @@ public class DataSeeder implements CommandLineRunner {
         }
     }
 
-    // ---------- Logic Link: completar la línea que falta ----------
+    // retos del Logic Link
     private void cargarLogicLink() {
         if (logicLink.count() > 0) return;
         String[][] retos = {
@@ -130,7 +126,7 @@ public class DataSeeder implements CommandLineRunner {
         }
     }
 
-    // ---------- Estadísticas: una fila por juego (los nombres que usa el frontend) ----------
+    // una fila de estadisticas por juego
     private void cargarEstadisticas() {
         for (String juego : new String[] {"Logic Slots", "Code-Jack 21", "Logic Link", "Decibit"}) {
             if (estadisticas.findByNombreJuego(juego).isEmpty()) {
@@ -141,7 +137,7 @@ public class DataSeeder implements CommandLineRunner {
         }
     }
 
-    // ---------- Administrador: su contraseña se sincroniza con ADMIN_PASSWORD en cada arranque ----------
+    // usuario admin, la contraseña sale de la variable ADMIN_PASSWORD
     private void crearAdmin() {
         String pass = System.getenv("ADMIN_PASSWORD");
         if (pass == null || pass.isBlank()) return;
@@ -149,7 +145,7 @@ public class DataSeeder implements CommandLineRunner {
         Usuario admin = usuarios.findByAlias("admin").orElseGet(Usuario::new);
         if (admin.getId() != null && passwordEncoder.matches(pass, admin.getContrasena())
                 && "ADMIN".equals(admin.getRol())) {
-            return; // ya está al día
+            return;
         }
         admin.setAlias("admin");
         if (admin.getCorreo() == null) admin.setCorreo("admin@bithub.local");
@@ -158,7 +154,7 @@ public class DataSeeder implements CommandLineRunner {
         usuarios.save(admin);
     }
 
-    // ---------- Usuario de demo público (invitado / invitado) para quien quiera probar la web ----------
+    // usuario invitado para probar la web sin registrarse
     private void crearInvitado() {
         Usuario invitado = usuarios.findByAlias("invitado").orElseGet(Usuario::new);
         if (invitado.getId() != null && passwordEncoder.matches("invitado", invitado.getContrasena())) {
