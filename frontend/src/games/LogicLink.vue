@@ -670,4 +670,18 @@ onMounted(() => {
     font-size: 0.8rem;
   }
 }
+
+.solo-movil {
+  display: none;
+}
+
+@media (hover: none) {
+  .solo-pc {
+    display: none;
+  }
+
+  .solo-movil {
+    display: inline;
+  }
+}
 </style>
