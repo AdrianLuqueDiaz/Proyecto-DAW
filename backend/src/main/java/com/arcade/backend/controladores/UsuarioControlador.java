@@ -85,9 +85,28 @@ public class UsuarioControlador {
         Usuario usuario = usuarioRepositorio.findByAlias(datosLogin.getAlias()).orElse(null);
 
         if (usuario != null && passwordEncoder.matches(datosLogin.getContrasena(), usuario.getContrasena())) {
+            // el invitado empieza siempre con el saldo inicial
+            if (usuario.getAlias().equals("invitado")) {
+                usuario.setSaldoBytes(1000);
+                usuario.setPartidasJugadas(0);
+                usuarioRepositorio.save(usuario);
+            }
+
             return usuario;
         }
         
         throw new RuntimeException("Usuario o contraseña incorrectos");
+    }
+
+    // se llama al salir para que el siguiente que entre como invitado empiece de cero
+    @PutMapping("/invitado/reiniciar")
+    public void reiniciarInvitado() {
+        Usuario invitado = usuarioRepositorio.findByAlias("invitado").orElse(null);
+
+        if (invitado != null) {
+            invitado.setSaldoBytes(1000);
+            invitado.setPartidasJugadas(0);
+            usuarioRepositorio.save(invitado);
+        }
     }
 }
